@@ -36,6 +36,9 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
   @SerializedName("lookupKey")
   @Expose
   private Map<String,Object> lookupKey = new HashMap<>();
+  @SerializedName("lookupKey_cn")
+  @Expose
+  private Map<String,Object> lookupKeyCn = new HashMap<>();
   @SerializedName("dosingInformation")
   @Expose
   private boolean dosingInformation;
@@ -143,6 +146,14 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
 
   public void setLookupKey(Map<String,Object> lookupKey) {
     this.lookupKey = lookupKey;
+  }
+
+  public Map<String,Object> getLookupKeyCn() {
+    return lookupKeyCn;
+  }
+
+  public void setLookupKeyCn(Map<String,Object> lookupKeyCn) {
+    this.lookupKeyCn = lookupKeyCn;
   }
 
 

@@ -171,6 +171,10 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
     return m_phenotypes;
   }
 
+  public Map<String,Object> getLookupKey() {
+    return m_lookupKey;
+  }
+
   public String getDrugRecommendation() {
     return m_drugRecommendation;
   }
