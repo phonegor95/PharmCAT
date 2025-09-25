@@ -1,0 +1,36 @@
+chr10:94981296
+	ALT uses structural variation '<NON_REF>'
+chr10:94981297
+	ALT uses structural variation '<NON_REF>'
+chr12:21176804
+	ALT uses structural variation '<NON_REF>'
+chr12:21222355
+	ALT uses structural variation '<NON_REF>'
+chr16:31096368
+	ALT uses structural variation '<NON_REF>'
+chr19:15878886
+	ALT uses structural variation '<NON_REF>'
+chr19:15878920
+	ALT uses structural variation '<NON_REF>'
+chr19:15879621
+	ALT uses structural variation '<NON_REF>'
+chr19:15897578
+	ALT uses structural variation '<NON_REF>'
+chr19:38500904
+	ALT uses structural variation '<NON_REF>'
+chr19:41006936
+	ALT uses structural variation '<NON_REF>'
+chr19:41009358
+	ALT uses structural variation '<NON_REF>'
+chr1:97515839
+	ALT uses structural variation '<NON_REF>'
+chr2:233760498
+	ALT uses structural variation '<NON_REF>'
+chr4:88131171
+	ALT uses structural variation '<NON_REF>'
+chr7:99672916
+	ALT uses structural variation '<NON_REF>'
+chr8:18400593
+	ALT uses structural variation '<NON_REF>'
+chr8:18400806
+	ALT uses structural variation '<NON_REF>'

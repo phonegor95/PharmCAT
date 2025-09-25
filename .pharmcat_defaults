@@ -1,0 +1,32 @@
+# PharmCAT Default Configuration
+# This file sets Chinese translation as the default configuration
+
+# Language and Translation Settings
+PHARMCAT_LANG=zh-CN
+PHARMCAT_TRANSLATION=chinese
+PHARMCAT_DEFAULT_CONFIG=example_chinese_config.json
+
+# Default Branch
+PHARMCAT_DEFAULT_BRANCH=chinese-translation
+
+# Default Scripts
+PHARMCAT_RUN_SCRIPT=run_pharmcat_chinese.sh
+PHARMCAT_TEST_SCRIPT=test_chinese_translation.sh
+
+# Default Input Files
+PHARMCAT_DEFAULT_INPUT=PT_04.filtered.vcf.gz
+
+# Build Settings
+PHARMCAT_SKIP_PULL=false
+PHARMCAT_BUILD_LOCAL=false
+PHARMCAT_DOCKER_IMAGE=phonegor95/pharmcat:chinese
+
+# Output Settings
+PHARMCAT_OUTPUT_HTML=true
+PHARMCAT_OUTPUT_JSON=true
+PHARMCAT_MISSING_TO_REF=true
+
+# Chinese Translation Features
+PHARMCAT_CHINESE_DRUG_NAMES=true
+PHARMCAT_CHINESE_PHENOTYPES=true
+PHARMCAT_CHINESE_RECOMMENDATIONS=true

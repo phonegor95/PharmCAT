@@ -86,12 +86,21 @@ compile_pharmcat() {
     print_success "PharmCAT compiled successfully"
 }
 
-# Build Docker image
+# Pull Docker image from Docker Hub
+pull_docker() {
+    print_status "Pulling PharmCAT Chinese translation image from Docker Hub..."
+
+    sudo docker pull phonegor95/pharmcat:chinese
+
+    print_success "Docker image pulled successfully"
+}
+
+# Build Docker image (fallback option)
 build_docker() {
     print_status "Building Docker image with Chinese translation support..."
-    
-    sudo docker build --network=host -t pcat .
-    
+
+    sudo docker build --network=host -t phonegor95/pharmcat:chinese .
+
     print_success "Docker image built successfully"
 }
 
@@ -113,7 +122,7 @@ run_pipeline() {
     print_status "Input file: $input_file"
     
     # Run the pipeline
-    sudo docker run --rm -v $(pwd):/pharmcat/data pcat pharmcat_pipeline "data/$input_file" --missing-to-ref -G -reporterHtml -reporterJson
+    sudo docker run --rm -v $(pwd):/pharmcat/data phonegor95/pharmcat:chinese pharmcat_pipeline "data/$input_file" --missing-to-ref -G -reporterHtml -reporterJson
     
     print_success "Pipeline completed successfully"
 }
@@ -138,16 +147,26 @@ main() {
     
     # Parse command line arguments
     INPUT_FILE=""
-    SKIP_BUILD=false
-    
+    SKIP_PULL=false
+    BUILD_LOCAL=false
+
     while [[ $# -gt 0 ]]; do
         case $1 in
             -i|--input)
                 INPUT_FILE="$2"
                 shift 2
                 ;;
+            --skip-pull)
+                SKIP_PULL=true
+                shift
+                ;;
+            --build-local)
+                BUILD_LOCAL=true
+                shift
+                ;;
             --skip-build)
-                SKIP_BUILD=true
+                # Legacy option for backward compatibility
+                SKIP_PULL=true
                 shift
                 ;;
             -h|--help)
@@ -155,12 +174,15 @@ main() {
                 echo ""
                 echo "Options:"
                 echo "  -i, --input FILE    Input VCF file (required)"
-                echo "  --skip-build        Skip compilation and Docker build"
+                echo "  --skip-pull         Skip pulling Docker image from Docker Hub"
+                echo "  --build-local       Build Docker image locally instead of pulling"
+                echo "  --skip-build        Legacy option (same as --skip-pull)"
                 echo "  -h, --help          Show this help message"
                 echo ""
-                echo "Example:"
-                echo "  $0 -i PT_04.filtered.vcf.gz"
-                echo "  $0 --skip-build -i PT_04.filtered.vcf.gz"
+                echo "Examples:"
+                echo "  $0 -i PT_04.filtered.vcf.gz                    # Pull and run"
+                echo "  $0 --skip-pull -i PT_04.filtered.vcf.gz        # Use existing image"
+                echo "  $0 --build-local -i PT_04.filtered.vcf.gz      # Build locally"
                 exit 0
                 ;;
             *)
@@ -180,13 +202,18 @@ main() {
     # Check prerequisites
     check_prerequisites
     
-    # Build steps (unless skipped)
-    if [ "$SKIP_BUILD" = false ]; then
+    # Docker image steps
+    if [ "$BUILD_LOCAL" = true ]; then
+        print_status "Building Docker image locally..."
         clean_build
         compile_pharmcat
         build_docker
+    elif [ "$SKIP_PULL" = false ]; then
+        print_status "Using online Docker image..."
+        pull_docker
     else
-        print_warning "Skipping build steps as requested"
+        print_warning "Skipping Docker image pull/build as requested"
+        print_status "Using existing Docker image if available"
     fi
     
     # Run pipeline
