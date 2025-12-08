@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import com.google.common.base.Splitter;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jspecify.annotations.Nullable;
 import org.pharmgkb.common.util.CliHelper;
 import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
@@ -36,25 +37,26 @@ public class BaseConfig {
   public static final Pattern OUTSIDE_EXTENSION_PATTERN = Pattern.compile("^\\.outside\\d*\\.tsv$");
   private static final Splitter sf_commaSplitter = Splitter.on(",").trimResults().omitEmptyStrings();
   boolean runMatcher = true;
-  Path definitionDir;
+  @Nullable Path definitionDir;
   boolean topCandidateOnly = true;
   boolean findCombinations;
   boolean callCyp2d6;
   boolean matcherHtml;
   boolean runPhenotyper = true;
   boolean runReporter = true;
-  String reporterTitle;
+  @Nullable String reporterTitle;
   boolean reporterCompact = true;
-  List<PrescribingGuidanceSource> reporterSources;
+  @Nullable List<PrescribingGuidanceSource> reporterSources;
   boolean reporterJson;
   boolean reporterHtml = true;
   boolean reporterCallsOnlyTsv = false;
-  Path outputDir;
-  String baseFilename;
-  boolean deleteIntermediateFiles;
-  boolean verbose;
-  SortedSet<String> samples = new TreeSet<>();
-  Path sampleMetadataFile;
+  @Nullable Path outputDir;
+  @Nullable String baseFilename;
+  final boolean deleteIntermediateFiles;
+  final boolean verbose;
+  final SortedSet<String> samples = new TreeSet<>();
+  @Nullable Path sampleMetadataFile;
+  final SortedSet<String> genes = new TreeSet<>();
 
 
   BaseConfig(CliHelper cliHelper) throws IOException, ReportableException {
@@ -97,6 +99,13 @@ public class BaseConfig {
     }
     if (cliHelper.hasOption("sm")) {
       sampleMetadataFile = cliHelper.getValidFile("sm", true);
+    }
+
+    if (cliHelper.hasOption("g")) {
+      List<String> values = cliHelper.getValues("g");
+      for (String v : values) {
+        sf_commaSplitter.splitToList(v).forEach(g -> genes.add(g.toUpperCase()));
+      }
     }
 
     boolean researchMode = false;

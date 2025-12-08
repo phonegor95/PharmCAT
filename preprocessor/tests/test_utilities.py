@@ -116,41 +116,51 @@ def test_validate_file():
         assert 'is not a file' in context.value.msg
 
 
-def test_find_vcf_files():
-    vcf_files = utils.find_vcf_files(helpers.test_dir)
+def test_find_vcf_or_bcf_files():
+    vcf_files = utils.find_vcf_or_bcf_files(helpers.test_dir)
+    # for vcf_file in vcf_files:
+    #     print(vcf_file)
     assert len(vcf_files) > 1
+    assert helpers.test_dir / 'raw.bcf.bgzf' in vcf_files
+    assert helpers.test_dir / 'raw.bcf' not in vcf_files
+    assert helpers.test_dir / 'raw.vcf.bgz' not in vcf_files
+    assert helpers.test_dir / 'raw.vcf' not in vcf_files
 
 
-def test_find_vcf_files_fail():
+def test_find_vcf_or_bcf_files_fail():
     with pytest.raises(ReportableException) as context:
-        utils.find_vcf_files(helpers.src_dir)
+        utils.find_vcf_or_bcf_files(helpers.src_dir)
     assert 'no VCF files found' in context.value.msg
 
     with pytest.raises(ReportableException) as context:
-        utils.find_vcf_files(helpers.src_dir / 'bad-dir')
+        utils.find_vcf_or_bcf_files(helpers.src_dir / 'bad-dir')
     # print(context.value)
     assert 'not a directory' in context.value.msg
 
 
-def test_is_vcf_file():
+def test_is_vcf_or_bcf_file():
     valid_paths = [
         Path('/this/dir/file.vcf'),
         Path('/this/dir/file.vcf.bgz'),
-        Path('/this/dir/file.vcf.gz')
+        Path('/this/dir/file.vcf.gz'),
+        Path('/this/dir/file.bcf'),
+        Path('/this/dir/file.bcf.bgzf'),
     ]
     for p in valid_paths:
-        assert utils.is_vcf_file(p), str(p)
-        assert utils.is_vcf_file(p.name), str(p)
+        assert utils.is_vcf_or_bcf_file(p), str(p)
+        assert utils.is_vcf_or_bcf_file(p.name), str(p)
 
     invalid_paths = [
         Path('/this/dir/'),
         Path('/this/dir'),
         Path('/this/dir/file.txt'),
         Path('/this/dir/file.vcf.zip'),
+        Path('/this/dir/file.bcf.txt'),
+        Path('/this/dir/file.bcf.bgz'),
     ]
     for p in invalid_paths:
-        assert not utils.is_vcf_file(p), str(p)
-        assert not utils.is_vcf_file(p.name), str(p)
+        assert not utils.is_vcf_or_bcf_file(p), str(p)
+        assert not utils.is_vcf_or_bcf_file(p.name), str(p)
 
 
 def test_is_gvcf_file():
@@ -159,6 +169,8 @@ def test_is_gvcf_file():
     test_vcf_end_file = helpers.test_dir / 'test_not_gvcf_block.vcf'
     test_gvcf_end_file = helpers.test_dir / 'test_gvcf_block.vcf'
     test_gvcf_header_file = helpers.test_dir / 'test_gvcf_block_in_header.vcf'
+    test_bcf_file = helpers.test_dir / 'raw.bcf'
+    test_bcf_gz_file = helpers.test_dir / 'raw.bcf.bgzf'
     with tempfile.TemporaryDirectory() as td:
         assert not utils.is_gvcf_file(test_vcf_file)
         # is gVCF as the END annotation indicates a large genomic block
@@ -200,31 +212,52 @@ def test_is_gvcf_file():
         f = tmp_dir / 'test.vcf'
         assert utils.is_gvcf_file(f)
 
+        f1 = tmp_dir / 'test.bcf'
+        shutil.copyfile(test_bcf_file, f1)
+        # fail because it's BCF
+        assert not utils.is_gvcf_file(f1)
 
-def test_get_vcf_basename():
+        f1 = tmp_dir / 'test.bcf.bgzf'
+        shutil.copyfile(test_bcf_gz_file, f1)
+        # fail because it's BCF
+        assert not utils.is_gvcf_file(f1)
+
+
+def test_get_vcf_or_bcf_basename():
     valid_paths = [
         Path('/this/dir/file.vcf'),
         Path('/this/dir/file.vcf.bgz'),
         Path('/this/dir/file.vcf.gz'),
         Path('/this/dir/file.pgx_regions.vcf.gz'),
         Path('/this/dir/file.normalized.vcf.gz'),
-        Path('/this/dir/file.pgx_regions.normalized.vcf.gz')
+        Path('/this/dir/file.pgx_regions.normalized.vcf.gz'),
+        Path('/this/dir/file.bcf'),
+        Path('/this/dir/file.bcf.bgzf'),
+        Path('/this/dir/file.pgx_regions.bcf.bgzf'),
+        Path('/this/dir/file.normalized.bcf.bgzf'),
+        Path('/this/dir/file.pgx_regions.normalized.bcf.bgzf')
     ]
     for p in valid_paths:
-        assert 'file' == utils.get_vcf_basename(p), str(p)
-        assert 'file' == utils.get_vcf_basename(p.name), str(p)
+        assert 'file' == utils.get_vcf_or_bcf_basename(p), str(p)
+        assert 'file' == utils.get_vcf_or_bcf_basename(p.name), str(p)
 
-    invalid_path = Path('/this/dir/file.txt')
-    with pytest.raises(InappropriateVCFSuffix) as context:
-        utils.get_vcf_basename(invalid_path)
-    # print(context.value)
-    assert 'Inappropriate VCF suffix' in context.value.msg
-    assert str(invalid_path) in context.value.msg
+    invalid_paths = [
+        Path('/this/dir/file.txt'),
+        Path('/this/dir/file.vcf.zip'),
+        Path('/this/dir/file.bcf.gz'),
+        Path('/this/dir/file.bcf.bgz')
+    ]
+    for invalid_path in invalid_paths:
+        with pytest.raises(InappropriateVCFSuffix) as context:
+            utils.get_vcf_or_bcf_basename(invalid_path)
+        # print(context.value)
+        assert 'Inappropriate VCF suffix' in context.value.msg
+        assert str(invalid_path) in context.value.msg
 
-    with pytest.raises(InappropriateVCFSuffix) as context:
-        utils.get_vcf_basename(invalid_path.name)
-    # print(context.value)
-    assert invalid_path.name in context.value.msg
+        with pytest.raises(InappropriateVCFSuffix) as context:
+            utils.get_vcf_or_bcf_basename(invalid_path.name)
+        # print(context.value)
+        assert invalid_path.name in context.value.msg
 
 
 def test_read_sample_file():
@@ -251,9 +284,21 @@ def test_read_vcf_samples():
     assert 2 == len(samples)
     assert ['Sample_1', 'Sample_2'] == samples
 
+    samples = utils.read_vcf_samples(helpers.test_dir / 'raw.bcf')
+    assert samples is not None
+    # print(samples)
+    assert 2 == len(samples)
+    assert ['Sample_1', 'Sample_2'] == samples
+
+    samples = utils.read_vcf_samples(helpers.test_dir / 'raw.bcf.bgzf')
+    assert samples is not None
+    # print(samples)
+    assert 2 == len(samples)
+    assert ['Sample_1', 'Sample_2'] == samples
 
 def test_is_gz_file():
     assert utils.is_gz_file(helpers.test_dir / 'raw.vcf.bgz')
+    assert utils.is_gz_file(helpers.test_dir / 'raw.bcf.bgzf')
     assert not utils.is_gz_file(helpers.test_dir / 'raw.Sample_1.preprocessed.vcf')
 
 

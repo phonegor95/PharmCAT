@@ -47,7 +47,7 @@ updateData: clean
 	mv -f src/main/resources/org/pharmgkb/pharmcat/definition/alleles/pharmcat_regions.bed .
 	@echo ""
 	@echo "Updating examples..."
-	@${GRADLE_CMD} updateExample
+	@${GRADLE_CMD} updateExampleSamples updateExample1 updateExample2
 	# this reverts files with only EOL changes
 	@git stash
 	@git stash pop
@@ -61,6 +61,13 @@ _dockerPrep: clean
 .PHONY: docker
 docker: _dockerPrep
 	docker build ${dockerPlatform} -t pcat .
+
+# quick sanity check to make sure docker build is not completely broken
+.PHONY: docker-test
+docker-test:
+	docker run pcat pharmcat -version
+	docker run pcat pharmcat_pipeline -V
+	docker run pcat pharmcat_vcf_preprocessor -V
 
 
 .PHONY: scriptPkg

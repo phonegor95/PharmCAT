@@ -71,15 +71,19 @@ public class DefinitionFile {
   @Expose
   @SerializedName("positionToLocus")
   private SortedMap<Long, Integer> m_positionToLocusMap;
+
+  // these are for dealing with ambiguous core PharmVar alleles that have to be mapped via suballeles
   @Expose
-  @SerializedName("shellAlleles")
-  // shell named allele to subset named alleles
-  private Map<String, List<String>> m_shellAlleles;
+  @SerializedName("hiddenCoreAlleles")
+  private SortedSet<NamedAllele> m_ambiguousCoreAlleles = new TreeSet<>();
+  @Expose
+  @SerializedName("suballelesMap")
+  private SortedMap<String, String> m_suballelesMap = new TreeMap<>();
 
 
   //-- cache
-  private transient Map<String, NamedAllele> m_namedAlleleMap;
-  private transient NamedAllele m_referenceNamedAllele;
+  private transient @Nullable Map<String, NamedAllele> m_namedAlleleMap;
+  private transient @Nullable NamedAllele m_referenceNamedAllele;
 
 
 
@@ -140,7 +144,7 @@ public class DefinitionFile {
   }
 
   /**
-   * The human genome assembly (build) the positions in this translation are from (e.g. b38 or b37)
+   * The human genome assembly (build) the positions in this translation are from (e.g., b38 or b37)
    */
   public String getGenomeBuild() {
     return m_genomeBuild;
@@ -166,6 +170,8 @@ public class DefinitionFile {
    * All VCF pos that are only used by a single {@link NamedAllele}s that only has 1 {@link VariantLocus}.
    */
   public SortedSet<Long> getSingularVariants() {
+    // m_singularVariants is only ever null during data ingestion
+    //noinspection ConstantValue
     if (m_singularVariants == null) {
       return Collections.emptySortedSet();
     }
@@ -184,12 +190,16 @@ public class DefinitionFile {
     return m_variants[m_positionToLocusMap.get(position)];
   }
 
-
-  /**
-   * Gets shell alleles - a named allele that encompasses other named alleles.
-   */
-  public @Nullable Map<String, List<String>> getShellAlleles() {
-    return m_shellAlleles;
+  public int getIndexForPosition(long position) {
+    if (!m_positionToLocusMap.containsKey(position)) {
+      throw new IllegalArgumentException("Unknown position: " + position);
+    }
+    for (int x = 0; x < m_variants.length; x += 1) {
+      if (m_variants[x].getPosition() == position) {
+        return x;
+      }
+    }
+    throw new IllegalArgumentException("Unknown position: " + position);
   }
 
 
@@ -238,6 +248,7 @@ public class DefinitionFile {
    * Resets this {@link DefinitionFile}'s named alleles to the specified set.
    * This helper method makes sure that dependent caches are deleted.
    * <p>
+   * NOT PART OF PUBLIC API.  Only used during data ingestion.
    * <b><i>Only call this if you know what you're doing!</i></b>
    */
   void resetNamedAlleles(SortedSet<NamedAllele> namedAlleles) {
@@ -250,6 +261,8 @@ public class DefinitionFile {
    * Adds a {@link NamedAllele} to this {@link DefinitionFile}.
    * This helper method makes sure that dependent caches are deleted.
    * <p>
+   * <p>
+   * NOT PART OF PUBLIC API.  Only used during data ingestion.
    * <b><i>Only call this if you know what you're doing!</i></b>
    */
   void addNamedAllele(NamedAllele namedAllele) {
@@ -258,6 +271,59 @@ public class DefinitionFile {
       m_referenceNamedAllele = null;
     }
   }
+
+  /**
+   * Removes a {@link NamedAllele} to this {@link DefinitionFile}.
+   * This helper method makes sure that dependent caches are deleted.
+   * <p>
+   * NOT PART OF PUBLIC API.  Only used during data ingestion.
+   * <b><i>Only call this if you know what you're doing!</i></b>
+   */
+  void removeNamedAllele(NamedAllele namedAllele) {
+    if (m_namedAlleles.remove(namedAllele)) {
+      m_namedAlleleMap = null;
+      m_referenceNamedAllele = null;
+    }
+  }
+
+
+  /**
+   * Gets ambiguous core PharmVar alleles that have been suppressed because we need to map to suballeles instead.
+   */
+  public SortedSet<NamedAllele> getAmbiguousCoreAlleles() {
+    return m_ambiguousCoreAlleles;
+  }
+
+  /**
+   * Adds specified {@link NamedAllele} as an ambiguous core PharmVar allele and removes it from the main collection of
+   * alleles.
+   * <p>
+   * NOT PART OF PUBLIC API.  Only used during data ingestion.
+   * <b><i>Only call this if you know what you're doing!</i></b>
+   */
+  void addAmbiguousCoreAllele(NamedAllele coreAllele) {
+    m_ambiguousCoreAlleles.add(coreAllele);
+    removeNamedAllele(coreAllele);
+  }
+
+
+  /**
+   * Gets a map of suballele names to it's core allele name.
+   */
+  public Map<String, String> getSuballelesMap() {
+    return m_suballelesMap;
+  }
+
+  /**
+   * Adds suballele and tracks parent core allele.
+   * <p>
+   * <b><i>Only call this if you know what you're doing!</i></b>
+   */
+  void addSuballele(NamedAllele suballele, String coreAlleleName) {
+    m_suballelesMap.put(suballele.getName(), coreAlleleName);
+    addNamedAllele(suballele);
+  }
+
 
 
   @Override
@@ -344,6 +410,7 @@ public class DefinitionFile {
     }
 
     // remove unused/ignored positions
+    @SuppressWarnings("unused")
     int numIgnored = 0;
     int numUnused = 0;
     Set<Integer> skipPositions = new HashSet<>();
@@ -380,7 +447,7 @@ public class DefinitionFile {
         throw new IllegalStateException("Number of variants (" + m_variants.length + ") and number of CPIC alleles (" +
             totalAlleles + ") don't match up for " + namedAllele.getName());
       }
-      String[] cpicAlleles = new String[totalAlleles];
+      @Nullable String[] cpicAlleles = new String[totalAlleles];
       for (int x = 0, y = 0; x < namedAllele.getCpicAlleles().length; x += 1) {
         if (skipPositions.contains(x)) {
           continue;
@@ -394,6 +461,8 @@ public class DefinitionFile {
         System.out.println("WARNING: Removing " + namedAllele.getName() +
             " because it has no alleles after removing unused/ignored positions");
       } else {
+        // setting alleles to null here because this happens during data ingestion before alleles are calculated
+        //noinspection DataFlowIssue
         updatedNamedAlleles.add(new NamedAllele(namedAllele.getId(), namedAllele.getName(), null, cpicAlleles,
             namedAllele.isReference()));
       }
@@ -431,7 +500,7 @@ public class DefinitionFile {
 
     SortedSet<NamedAllele> updatedNamedAlleles = new TreeSet<>();
     for (NamedAllele na : m_namedAlleles) {
-      String[] fixedAlleles = new String[na.getCpicAlleles().length];
+      @Nullable String[] fixedAlleles = new String[na.getCpicAlleles().length];
       for (int x = 0; x < fixedAlleles.length; x += 1) {
         String cpicAllele = na.getCpicAlleles()[x];
         if (cpicAllele != null) {
@@ -457,7 +526,7 @@ public class DefinitionFile {
       }
       updatedNamedAlleles.add(updated);
     }
-    resetNamedAlleles(Collections.unmodifiableSortedSet(updatedNamedAlleles));
+    resetNamedAlleles(updatedNamedAlleles);
     m_variants = sortedVariants;
 
     m_positionToAlleleMap = new TreeMap<>();
@@ -488,22 +557,6 @@ public class DefinitionFile {
       for (long pos : m_positionToAlleleMap.keySet()) {
         if (m_positionToAlleleMap.get(pos).size() == 1 && allelesWith1Position.contains(m_positionToAlleleMap.get(pos).get(0))) {
           m_singularVariants.add(pos);
-        }
-      }
-    }
-
-    m_shellAlleles = new HashMap<>();
-    for (NamedAllele curNa : m_namedAlleles) {
-      if (curNa.isReference()) {
-        continue;
-      }
-      for (NamedAllele checkNa : m_namedAlleles) {
-        if (checkNa.isReference() || curNa == checkNa) {
-          continue;
-        }
-        if (curNa.getCorePositions().containsAll(checkNa.getCorePositions())) {
-          m_shellAlleles.computeIfAbsent(curNa.getName(), id -> new ArrayList<>())
-              .add(checkNa.getName());
         }
       }
     }
@@ -611,19 +664,7 @@ public class DefinitionFile {
     } else if (!repeats.isEmpty()) {
       Map<String, VcfHelper.VcfData> firstPass = new HashMap<>();
       for (String h : hgvsNames) {
-        String repeatAlt;
-        // treat dups as a form of repeat
-        if (h.endsWith("dup")) {
-          String repeatedSequence = repeats.get(0);
-          repeatedSequence = repeatedSequence.substring(0, repeatedSequence.indexOf("("));
-          repeatAlt = repeatedSequence + "(2)";
-        } else {
-          Matcher m = sf_hgvsRepeatPattern.matcher(h);
-          if (!m.matches()) {
-            throw new IllegalStateException(errorLocation + ": Invalid HGVS repeat (" + h + ")");
-          }
-          repeatAlt = m.group(1).replaceAll("\\[", "(").replaceAll("]", ")");
-        }
+        String repeatAlt = getRepeatAlt(h, repeats, errorLocation);
         if (repeatAlt.equals(refAllele)) {
           continue;
         }
@@ -656,21 +697,7 @@ public class DefinitionFile {
         String hgvs = m_refSeqChromosome + ":" + h;
         VcfHelper.VcfData vcf = vcfHelper.hgvsToVcf(hgvs);
 
-        String alt;
-        Matcher m = sf_hgvsDelPattern.matcher(h);
-        if (m.matches()) {
-          alt = "del" + refAllele;
-        } else if (h.endsWith("dup")) {
-          alt = refAllele + refAllele;
-        } else if (h.contains("ins")) {
-          m = sf_hgvsInsPattern.matcher(h);
-          if (!m.matches()) {
-            throw new IllegalStateException(errorLocation + ": unsupported ins or delins - " + h);
-          }
-          alt = m.group(2);
-        } else {
-          throw new IllegalStateException(errorLocation + ": Unsupported HGVS - " + h);
-        }
+        String alt = getDelInsDupAlt(h, refAllele, errorLocation);
 
         vcfPosition = validateVcfPosition(vcfPosition, vcf, errorLocation);
         validateVcfRef(vcfMap, refAllele, vcf, errorLocation);
@@ -704,6 +731,42 @@ public class DefinitionFile {
     String vcfRef = vcfMap.get(refAllele);
     vl.setRef(vcfRef);
     vl.setAlts(altAlleles.stream().map(vcfMap::get).toList());
+  }
+
+  private static String getDelInsDupAlt(String h, String refAllele, String errorLocation) {
+    String alt;
+    Matcher m = sf_hgvsDelPattern.matcher(h);
+    if (m.matches()) {
+      alt = "del" + refAllele;
+    } else if (h.endsWith("dup")) {
+      alt = refAllele + refAllele;
+    } else if (h.contains("ins")) {
+      m = sf_hgvsInsPattern.matcher(h);
+      if (!m.matches()) {
+        throw new IllegalStateException(errorLocation + ": unsupported ins or delins - " + h);
+      }
+      alt = m.group(2);
+    } else {
+      throw new IllegalStateException(errorLocation + ": Unsupported HGVS - " + h);
+    }
+    return alt;
+  }
+
+  private static String getRepeatAlt(String h, List<String> repeats, String errorLocation) {
+    String repeatAlt;
+    // treat dups as a form of repeat
+    if (h.endsWith("dup")) {
+      String repeatedSequence = repeats.get(0);
+      repeatedSequence = repeatedSequence.substring(0, repeatedSequence.indexOf("("));
+      repeatAlt = repeatedSequence + "(2)";
+    } else {
+      Matcher m = sf_hgvsRepeatPattern.matcher(h);
+      if (!m.matches()) {
+        throw new IllegalStateException(errorLocation + ": Invalid HGVS repeat (" + h + ")");
+      }
+      repeatAlt = m.group(1).replaceAll("\\[", "(").replaceAll("]", ")");
+    }
+    return repeatAlt;
   }
 
   private long validateVcfPosition(long vcfPosition, VcfHelper.VcfData vcf, String errorLocation) {
@@ -744,12 +807,12 @@ public class DefinitionFile {
    * Get updated {@link NamedAllele} with re-ordered alleles based on re-sorted positions.
    */
   private NamedAllele reorderHaplotypeAlleles(NamedAllele hap, VariantLocus[] oldPositions,
-      VariantLocus[] newPositions, String[] fixedAlleles) {
+      VariantLocus[] newPositions, @Nullable String[] fixedAlleles) {
 
     List<VariantLocus> oldPos = Arrays.stream(oldPositions).toList();
     // resort alleles, cpicAlleles
-    String[] alleles = new String[newPositions.length];
-    String[] cpicAlleles = new String[newPositions.length];
+    @Nullable String[] alleles = new String[newPositions.length];
+    @Nullable String[] cpicAlleles = new String[newPositions.length];
     for (int x = 0; x < newPositions.length; x += 1) {
       if (oldPositions[x] == newPositions[x]) {
         alleles[x] = fixedAlleles[x];

@@ -1,7 +1,7 @@
 {
   "formatVersion": "2",
   "source": "CLINPGX",
-  "version": "2025-07-31-15-02",
+  "version": "2025-11-05-00-25",
   "modificationDate": "2022-02-18T18:47:52.807Z",
   "gene": "CYP3A5",
   "orientation": null,
@@ -125,8 +125,8 @@
       ],
       "reference": true,
       "structuralVariant": false,
-      "corePositions": null,
-      "score": 0,
+      "corePositions": [],
+      "score": 5,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -152,7 +152,7 @@
       "corePositions": [
         99672916
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -178,7 +178,7 @@
       "corePositions": [
         99665212
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -204,7 +204,7 @@
       "corePositions": [
         99652770
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -230,7 +230,7 @@
       "corePositions": [
         99676198
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -256,7 +256,7 @@
       "corePositions": [
         99660516
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     }
@@ -292,5 +292,6 @@
     "99672916": 3,
     "99676198": 4
   },
-  "shellAlleles": {}
+  "hiddenCoreAlleles": [],
+  "suballelesMap": {}
 }

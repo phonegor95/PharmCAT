@@ -1,6 +1,15 @@
 package org.pharmgkb.pharmcat.reporter.model.result;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.annotations.Expose;
@@ -38,8 +47,6 @@ import static org.pharmgkb.pharmcat.reporter.caller.Slco1b1CustomCaller.isSlco1b
 public class GeneReport implements Comparable<GeneReport> {
   // never display these genes in the gene call list
   private static final Set<String> IGNORED_GENES = ImmutableSet.of("IFNL4");
-  public static final String YES = "Yes";
-  public static final String NO = "No";
 
 
   @Expose
@@ -50,10 +57,7 @@ public class GeneReport implements Comparable<GeneReport> {
   private DataSource m_alleleDefinitionSource = DataSource.UNKNOWN;
   @Expose
   @SerializedName("phenotypeVersion")
-  private String m_phenotypeVersion;
-  @Expose
-  @SerializedName("phenotypeSource")
-  private DataSource m_phenotypeSource;
+  private @Nullable String m_phenotypeVersion;
 
   @Expose
   @SerializedName("geneSymbol")
@@ -78,7 +82,7 @@ public class GeneReport implements Comparable<GeneReport> {
   private final SortedSet<MessageAnnotation> m_messages = new TreeSet<>();
   @Expose
   @SerializedName("relatedDrugs")
-  private SortedSet<DrugLink> m_relatedDrugs = new TreeSet<>();
+  private final SortedSet<DrugLink> m_relatedDrugs = new TreeSet<>();
 
   @Expose
   @SerializedName("sourceDiplotypes")
@@ -124,15 +128,13 @@ public class GeneReport implements Comparable<GeneReport> {
   /**
    * Constructor for genes that get their data from {@link GeneCall}.
    */
-  public GeneReport(GeneCall call, Env env, DataSource phenotypeSource) {
-    Preconditions.checkNotNull(phenotypeSource);
-
+  public GeneReport(GeneCall call, Env env) {
     m_gene = call.getGene();
     m_alleleDefinitionVersion = call.getVersion();
     m_alleleDefinitionSource = call.getSource();
-    m_phenotypeSource = phenotypeSource;
-    m_phenotypeVersion = env.getPhenotypeVersion(m_gene, phenotypeSource);
+    m_phenotypeVersion = env.getPhenotypeVersion(m_gene);
     m_callSource = CallSource.MATCHER;
+    //noinspection ConstantValue
     if (call.getWarnings() != null) {
       call.getWarnings().forEach(this::addMessage);
     }
@@ -161,8 +163,8 @@ public class GeneReport implements Comparable<GeneReport> {
     m_hasUndocumentedVariations = !call.getMatchData().getPositionsWithUndocumentedVariations().isEmpty();
     m_treatUndocumentedVariationsAsReference = call.getMatchData().isTreatUndocumentedVariationsAsReference();
 
-    if (call.getHaplotypes().stream()
-        .anyMatch(Objects::isNull)) {
+    //noinspection ConstantValue
+    if (call.getHaplotypes().stream().anyMatch(Objects::isNull)) {
       throw new IllegalStateException("When does this happen?");
     }
 
@@ -170,10 +172,10 @@ public class GeneReport implements Comparable<GeneReport> {
     if (isLowestFunctionGene(m_gene)) {
 
       if (!call.getDiplotypes().isEmpty()) {
-        m_sourceDiplotypes.addAll(diplotypeFactory.makeDiplotypes(call.getDiplotypes(), m_phenotypeSource));
-        m_matcherComponentHaplotypes.addAll(diplotypeFactory.makeComponentDiplotypes(call, m_phenotypeSource));
+        m_sourceDiplotypes.addAll(diplotypeFactory.makeDiplotypes(call.getDiplotypes()));
+        m_matcherComponentHaplotypes.addAll(diplotypeFactory.makeComponentDiplotypes(call));
         m_recommendationDiplotypes.addAll(LowestFunctionGeneCaller.inferFromDiplotypes(m_gene, env,
-            phenotypeSource, diplotypeFactory, call.getDiplotypes()));
+            diplotypeFactory, call.getDiplotypes()));
       } else {
         List<HaplotypeMatch> uniqueMatches = new ArrayList<>();
         Map<String, Integer> counts = new HashMap<>();
@@ -185,8 +187,8 @@ public class GeneReport implements Comparable<GeneReport> {
             counts.compute(h, (k, v) -> v == null ? 1 : v + 1);
           }
         });
-        m_sourceDiplotypes.addAll(diplotypeFactory.makeDiplotypesFromHaplotypeMatches(uniqueMatches, m_phenotypeSource));
-        m_recommendationDiplotypes.addAll(LowestFunctionGeneCaller.inferFromHaplotypeMatches(m_gene, env, phenotypeSource,
+        m_sourceDiplotypes.addAll(diplotypeFactory.makeDiplotypesFromHaplotypeMatches(uniqueMatches));
+        m_recommendationDiplotypes.addAll(LowestFunctionGeneCaller.inferFromHaplotypeMatches(m_gene, env,
             diplotypeFactory, call.getHaplotypeMatches()));
         if (isLowestFunctionGene(m_gene)) {
           for (String h : counts.keySet()) {
@@ -198,11 +200,11 @@ public class GeneReport implements Comparable<GeneReport> {
       }
 
     } else {
-      List<Diplotype> diplotypes = diplotypeFactory.makeDiplotypes(call.getDiplotypes(), m_phenotypeSource);
+      List<Diplotype> diplotypes = diplotypeFactory.makeDiplotypes(call.getDiplotypes());
       m_sourceDiplotypes.addAll(diplotypes);
 
       if (isSlco1b1(m_gene)) {
-        m_recommendationDiplotypes.addAll(Slco1b1CustomCaller.inferDiplotypes(this, env, phenotypeSource));
+        m_recommendationDiplotypes.addAll(Slco1b1CustomCaller.inferDiplotypes(this, env));
       } else {
         m_recommendationDiplotypes.addAll(diplotypes);
       }
@@ -215,12 +217,9 @@ public class GeneReport implements Comparable<GeneReport> {
   /**
    * Constructor for genes that get their data from an {@link OutsideCall} that comes from the {@link Phenotyper}.
    */
-  public GeneReport(OutsideCall call, Env env, DataSource phenotypeSource) {
-    Preconditions.checkNotNull(phenotypeSource);
-
+  public GeneReport(OutsideCall call, Env env) {
     m_gene = call.getGene();
-    m_phenotypeSource = phenotypeSource;
-    m_phenotypeVersion = env.getPhenotypeVersion(m_gene, phenotypeSource);
+    m_phenotypeVersion = env.getPhenotypeVersion(m_gene);
     m_callSource = CallSource.OUTSIDE;
     m_hasUndocumentedVariations = false;
     m_treatUndocumentedVariationsAsReference = false;
@@ -236,13 +235,19 @@ public class GeneReport implements Comparable<GeneReport> {
     Preconditions.checkState(m_callSource == CallSource.OUTSIDE);
     Preconditions.checkState(m_gene.equals(call.getGene()));
 
-    Diplotype diplotype = new Diplotype(call, env, m_phenotypeSource);
-    m_sourceDiplotypes.add(diplotype);
-    if (isLowestFunctionGene(m_gene)) {
-      m_recommendationDiplotypes.addAll(LowestFunctionGeneCaller.inferFromOutsideCall(call, env, m_phenotypeSource));
-    } else if (Cyp2d6CopyNumberCaller.GENE.equals(m_gene)) {
-      m_recommendationDiplotypes.add(Cyp2d6CopyNumberCaller.inferDiplotype(this, diplotype, env, m_phenotypeSource));
+    if (!call.isNoCall()) {
+      Diplotype diplotype = new Diplotype(call, env);
+      m_sourceDiplotypes.add(diplotype);
+      if (isLowestFunctionGene(m_gene)) {
+        m_recommendationDiplotypes.addAll(LowestFunctionGeneCaller.inferFromOutsideCall(call, env));
+      } else if (Cyp2d6CopyNumberCaller.GENE.equals(m_gene)) {
+        m_recommendationDiplotypes.add(Cyp2d6CopyNumberCaller.inferDiplotype(this, diplotype, env));
+      } else {
+        m_recommendationDiplotypes.add(diplotype);
+      }
     } else {
+      Diplotype diplotype = DiplotypeFactory.makeUnknownDiplotype(call.getGene(), env);
+      m_sourceDiplotypes.add(diplotype);
       m_recommendationDiplotypes.add(diplotype);
     }
   }
@@ -251,32 +256,29 @@ public class GeneReport implements Comparable<GeneReport> {
   /**
    * Constructor for unspecified {@link GeneReport}.
    */
-  private GeneReport(String geneSymbol, Env env, DataSource phenotypeSource) {
+  private GeneReport(String geneSymbol, Env env) {
     m_gene = geneSymbol;
-    m_phenotypeSource = phenotypeSource;
-    m_phenotypeVersion = env.getPhenotypeVersion(m_gene, phenotypeSource);
+    m_phenotypeVersion = env.getPhenotypeVersion(m_gene);
     m_callSource = CallSource.NONE;
     m_hasUndocumentedVariations = false;
     m_treatUndocumentedVariationsAsReference = false;
 
-    Diplotype unknownDiplotype = DiplotypeFactory.makeUnknownDiplotype(geneSymbol, env, phenotypeSource);
+    Diplotype unknownDiplotype = DiplotypeFactory.makeUnknownDiplotype(geneSymbol, env);
     m_sourceDiplotypes.add(unknownDiplotype);
     m_recommendationDiplotypes.add(unknownDiplotype);
   }
 
   public static GeneReport unspecifiedGeneReport(String gene, Env env, DataSource source) {
-    return new GeneReport(gene, env, source);
+    return new GeneReport(gene, env);
   }
 
 
   /**
    * Constructor for tests.
    */
-  protected GeneReport(String geneSymbol, DataSource phenotypeSource, @Nullable String phenotypeVersion) {
-    Preconditions.checkNotNull(phenotypeSource);
+  protected GeneReport(String geneSymbol, @Nullable String phenotypeVersion) {
 
     m_gene = geneSymbol;
-    m_phenotypeSource = phenotypeSource;
     m_phenotypeVersion = phenotypeVersion;
     m_callSource = CallSource.NONE;
     m_hasUndocumentedVariations = false;
@@ -311,10 +313,6 @@ public class GeneReport implements Comparable<GeneReport> {
    */
   public @Nullable String getPhenotypeVersion() {
     return m_phenotypeVersion;
-  }
-
-  public DataSource getPhenotypeSource() {
-    return m_phenotypeSource;
   }
 
 
@@ -368,7 +366,7 @@ public class GeneReport implements Comparable<GeneReport> {
    *
    * @param variantWarnings a Map of all variant warnings by "chr:position" strings
    */
-  public void addVariantWarningMessages(Map<String, Collection<String>> variantWarnings) {
+  public void addVariantWarningMessages(@Nullable Map<String, Collection<String>> variantWarnings) {
     if (variantWarnings != null && !variantWarnings.isEmpty()) {
       for (VariantReport variantReport : m_variantReports) {
         Collection<String> warnings = variantWarnings.get(variantReport.toChrPosition());
@@ -439,7 +437,7 @@ public class GeneReport implements Comparable<GeneReport> {
    * True if this gene does not use allele function to assign phenotype but instead relies on the presence or absense of
    * alleles for its phenotypes (e.g. HLA's).
    *
-   * @return true if this gene assigns phenotype based on allele presence
+   * @return true if this gene assigns a phenotype based on allele presence
    */
   public boolean isAllelePresenceType() {
     return Constants.isAllelePresenceGene(m_gene);
@@ -453,9 +451,6 @@ public class GeneReport implements Comparable<GeneReport> {
   }
 
   private void addRelatedDrug(DrugLink drug) {
-    if (m_relatedDrugs == null) {
-      m_relatedDrugs = new TreeSet<>();
-    }
     m_relatedDrugs.add(drug);
   }
 
@@ -583,20 +578,20 @@ public class GeneReport implements Comparable<GeneReport> {
     boolean comboOrPartialCall = geneCall.getHaplotypes().stream()
         .anyMatch((h) -> h.getHaplotype() != null && (h.getHaplotype().isCombination() || h.getHaplotype().isPartial()));
     if (comboOrPartialCall && !isLowestFunctionGene(geneCall.getGene())) {
-      addMessage(env.getMessageHelper().getMessage(MessageHelper.MSG_COMBO_NAMING));
+      addMessage(Objects.requireNonNull(env.getMessageHelper().getMessage(MessageHelper.MSG_COMBO_NAMING)));
 
       if (!isPhased()) {
-        addMessage(env.getMessageHelper().getMessage(MessageHelper.MSG_COMBO_UNPHASED));
+        addMessage(Objects.requireNonNull(env.getMessageHelper().getMessage(MessageHelper.MSG_COMBO_UNPHASED)));
       }
     }
 
     if (geneCall.getGene().equals("CYP2D6")) {
-      addMessage(env.getMessageHelper().getMessage(MessageHelper.MSG_CYP2D6_MODE));
-      addMessage(env.getMessageHelper().getMessage(MessageHelper.MSG_CYP2D6_NOTE));
+      addMessage(Objects.requireNonNull(env.getMessageHelper().getMessage(MessageHelper.MSG_CYP2D6_MODE)));
+      addMessage(Objects.requireNonNull(env.getMessageHelper().getMessage(MessageHelper.MSG_CYP2D6_NOTE)));
     }
 
     if (!geneCall.getGene().equals("CFTR")) {
-      // add reference allele message
+      // add a message about reference allele
       m_sourceDiplotypes.stream()
           .map((d) -> {
             if (showReferenceMessage(env.getDefinitionReader(), d.getAllele1())) {
@@ -647,7 +642,6 @@ public class GeneReport implements Comparable<GeneReport> {
     }
     int rez = new ComparisonChain()
         .compareIgnoreCase(m_gene, o.getGene())
-        .compare(m_phenotypeSource, o.getPhenotypeSource())
         .result();
     if (rez != 0) {
       return rez;
@@ -664,13 +658,12 @@ public class GeneReport implements Comparable<GeneReport> {
       return true;
     }
     return Objects.equals(m_gene, gr.getGene()) &&
-        Objects.equals(m_phenotypeSource, gr.getPhenotypeSource()) &&
         Objects.equals(m_callSource, gr.getCallSource())
         ;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(m_gene, m_phenotypeSource, m_callSource);
+    return Objects.hash(m_gene, m_callSource);
   }
 }

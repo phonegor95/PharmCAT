@@ -76,20 +76,17 @@ Table 1: Cases for which there is an overlap in the allele definitions.
 | TPMT    | \*1/\*3A                   | Intermediate       | \*3B/\*3C                            | Poor                        |
 | NUDT15  | \*1/\*2                    | Intermediate       | \*3/\*6                              | Possible Intermediate       |
 | CYP2C9  | \*1/\*71                   | Indeterminate      | \*10/\*22                            | Indeterminate               |
-| CYP2C9  | \*1/\*36                   | Indeterminate      | \*5/\*36                             | Indeterminate               |
+| CYP2C19 | \*1/\*34                   | Indeterminate      | \*38/\*40                            | N/A                         |
 | CYP2B6  | \*1/\*36                   | Intermediate       | \*6/\*22                             | Intermediate                |
 | CYP2B6  | \*1/\*34                   | Intermediate       | \*33/\*36                            | Indeterminate               |
 | CYP2B6  | \*1/\*6                    | Intermediate       | \*4/\*9                              | Intermediate                |
 | CYP2B6  | \*1/\*7                    | Intermediate       | \*5/\*6                              | Intermediate                |
 | CYP2B6  | \*1/\*13                   | Intermediate       | \*6/\*8                              | Intermediate                |
-| SLCO1B1 | \*1/\*46                   | Decreased function | \*15/\*45                            | Possible Decreased Function |
-| SLCO1B1 | \*1/\*20                   | Normal Function    | \*19/\*37                            | Indeterminate               |
-| SLCO1B1 | \*1/\*12                   | Indeterminate      | \*2/\*10                             | Indeterminate               |
-| SLCO1B1 | \*1/\*13                   | Indeterminate      | \*3/\*11                             | Indeterminate               |
 | SLCO1B1 | \*1/\*14                   | Normal Function    | \*4/\*37                             | Indeterminate               |
-| SLCO1B1 | \*1/\*15                   | Decreased function | \*5/\*37                             | Decreased function          |
+| SLCO1B1 | \*1/\*15                   | Decreased Function | \*5/\*37                             | Decreased Function          |
+| SLCO1B1 | \*1/\*20                   | Normal Function    | \*19/\*37                            | Indeterminate               |
 | SLCO1B1 | \*1/\*25                   | Indeterminate      | \*4/\*28                             | Indeterminate               |
-| SLCO1B1 | \*1/\*31                   | Decreased function | \*9/\*37                             | Decreased Function          |
+| SLCO1B1 | \*1/\*31                   | Decreased Function | \*9/\*37                             | Decreased Function          |
 | SLCO1B1 | \*1/\*32                   | Indeterminate      | \*4/\*24                             | Indeterminate               |
 | SLCO1B1 | \*1/\*40                   | Indeterminate      | \*5/\*19                             | Possible Decreased Function |
 | SLCO1B1 | \*1/\*43                   | Indeterminate      | \*4/\*44                             | Indeterminate               |
@@ -111,12 +108,14 @@ in the genotype with the lower score. Both genotypes cannot be ruled out with un
 overlaps between the respective alleles is heterozygous (0/1) in addition to heterozygous calls for the other variants
 that define the non-\*1 allele in the genotype with the higher score.
 
-| Gene    | Genotype (Higher Score) | Phenotype    | Genotype (Lower Score)| Phenotype     |
-| ------- | ----------------------- |--------------| --------------------- |---------------|
-| CYP2C19 | \*1/\*4                 | Intermediate | \*17/\*4              | Intermediate  |
-| CYP2C19 | \*1/\*2                 | Intermediate | \*11/\*2              | Intermediate  |
-| CYP2C19 | \*1/\*35                | Intermediate | \*15/\*35             | Intermediate  |
-| CYP2B6  | \*1/\*18                | Intermediate | \*4/\*18              | Indeterminate |
+| Gene    | Genotype (Higher Score) | Phenotype          | Genotype (Lower Score)| Phenotype     |
+| ------- | ----------------------- |--------------------| --------------------- |---------------|
+| CYP2C19 | \*1/\*4                 | Intermediate       | \*17/\*4              | Intermediate  |
+| CYP2C19 | \*1/\*2                 | Intermediate       | \*11/\*2              | Intermediate  |
+| CYP2C19 | \*1/\*35                | Intermediate       | \*15/\*35             | Intermediate  |
+| CYP2B6  | \*1/\*18                | Intermediate       | \*4/\*18              | Indeterminate |
+| CYP2C9  | \*1/\*36                | Indeterminate      | \*5/\*36              | Indeterminate |
+| SLCO1B1 | \*1/\*45                | Decreased Function | \*15/\*45             | Poor Function |
 
 9. For NAT2, PharmCAT requires variant input for rs1801279 (191G>A), rs1801280 (341T>C), rs1799930 (590G>A), rs1208 (803G>A),
    and rs1799931 (857G>A). The default PharmCAT behavior is changed for unphased NAT2 data, details are noted in the
@@ -131,21 +130,13 @@ All content is sourced from the [CPIC database](https://github.com/cpicpgx/cpic-
 ## C. DPWG Allele Function, Phenotype and Recommendation
 
 1. ClinPGx annotates PGx-based drug dosing guidelines published by the [Royal Dutch Association for the Advancement of
-   Pharmacy - Pharmacogenetics Working Group (DPWG)](https://www.clinpgx.org/page/dpwg). ClinPGx curates allele 
-   function assignments and phenotype mappings from the DPWG to provide genotype specific DPWG guideline
-   recommendations. Where possible, ClinPGx maps DPWG terms to CPIC terms, as outlined on
-   [ClinPGx](https://www.clinpgx.org/page/dpwgMapping).
+   Pharmacy - Pharmacogenetics Working Group (DPWG)](https://www.clinpgx.org/page/dpwg). PharmCAT uses [ClinPGx/CPIC allele function and phenotype information](https://www.clinpgx.org/page/cpicFuncPhen) to connect diplotypes with DPWG guideline recommendations. 
 
 2. CYP3A4 is currently not part of a CPIC guideline. Since the DPWG CYP3A4 documentation includes limit variant
    notations for the included alleles (only \*16, \*20, and \*22 are specified) PharmCAT relies on
    [PharmVar CYP3A4 allele definitions](https://www.pharmvar.org/gene/CYP3A4). However, the CYP3A4\*16, \*20 and \*22
    definitions are the same in both sources.
 
-3. The CPIC UGT1A1 allele definition file includes \*6, \*27, \*28, \*36, \*37, and \*80. Since the DPWG UGT1A1 document
-   does not include allele definitions besides for the UGT1A1 TA box promoter polymorphism, PharmCAT only includes the
-   UGT1A1 positions from the CPIC UGT1A1 allele definition file. Other UGT1A1 alleles can be supplied as
-   [outside calls](https://pharmcat.org/using/Outside-Call-Format/) but not be determined from the VCF file by the
-   Named Allele Matcher.
 
 ## D. FDA drug-label and Table of Pharmacogenetic Associations recommendations
 

@@ -1,7 +1,7 @@
 {
   "formatVersion": "2",
   "source": "CLINPGX",
-  "version": "2025-07-31-15-02",
+  "version": "2025-11-05-00-25",
   "modificationDate": "2023-02-03T16:20:52.044Z",
   "gene": "ABCG2",
   "orientation": null,
@@ -41,8 +41,8 @@
       ],
       "reference": true,
       "structuralVariant": false,
-      "corePositions": null,
-      "score": 0,
+      "corePositions": [],
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -60,7 +60,7 @@
       "corePositions": [
         88131171
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     }
@@ -76,5 +76,6 @@
   "positionToLocus": {
     "88131171": 0
   },
-  "shellAlleles": {}
+  "hiddenCoreAlleles": [],
+  "suballelesMap": {}
 }

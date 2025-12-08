@@ -8,7 +8,6 @@ import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.Env;
 import org.pharmgkb.pharmcat.haplotype.model.Metadata;
 import org.pharmgkb.pharmcat.phenotype.Phenotyper;
-import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.MessageAnnotation;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
 import org.pharmgkb.pharmcat.reporter.model.pgkb.GuidelinePackage;
@@ -26,28 +25,28 @@ import org.pharmgkb.pharmcat.util.CliUtils;
 public class ReportContext {
   @Expose
   @SerializedName("title")
-  private final String f_title;
+  private @Nullable final String m_title;
   @Expose
   @SerializedName("timestamp")
   private final Date m_timestamp = new Date();
   @Expose
   @SerializedName("pharmcatVersion")
-  private final String f_pharmcatVersion = CliUtils.getVersion();
+  private final String m_pharmcatVersion = CliUtils.getVersion();
   @Expose
   @SerializedName("dataVersion")
   private String m_dataVersion;
   @Expose
   @SerializedName("genes")
-  private final SortedMap<DataSource, SortedMap<String, GeneReport>> m_geneReports;
+  private final SortedMap<String, GeneReport> m_geneReports;
   @Expose
   @SerializedName("drugs")
   private final SortedMap<PrescribingGuidanceSource, SortedMap<String, DrugReport>> m_drugReports = new TreeMap<>();
   @Expose
   @SerializedName("messages")
-  private final List<MessageAnnotation> f_messages = new ArrayList<>();
+  private final List<MessageAnnotation> m_messages = new ArrayList<>();
   @SerializedName("matcherMetadata")
   @Expose
-  private Metadata m_matcherMetadata;
+  private @Nullable Metadata m_matcherMetadata;
   @Expose
   @SerializedName("unannotatedGeneCalls")
   private SortedSet<GeneReport> m_unannotatedGeneCalls = new TreeSet<>();
@@ -59,11 +58,13 @@ public class ReportContext {
    * @param phenotyper phenotyper data to build this report from
    * @param title the optional text to show as a user-friendly title or identifier for this report
    */
-  public ReportContext(Env env, Phenotyper phenotyper, String title) throws IOException {
-    f_title = title;
+  public ReportContext(Env env, Phenotyper phenotyper, @Nullable String title) throws IOException {
+    m_title = title;
     m_matcherMetadata = phenotyper.getMatcherMetadata();
     m_geneReports = phenotyper.getGeneReports();
     m_dataVersion = validateVersions(env.getDrugs());
+    // result files from pre-3.0 won't have this property
+    //noinspection ConstantValue
     if (phenotyper.getUnannotatedGeneCalls() != null && !phenotyper.getUnannotatedGeneCalls().isEmpty()) {
       m_unannotatedGeneCalls.addAll(phenotyper.getUnannotatedGeneCalls());
     }
@@ -73,7 +74,7 @@ public class ReportContext {
       // go through all drugs, we iterate this way because one guideline may have multiple chemicals/drugs
       for (String drugName : env.getDrugs().getGuidelineMap().keys()) {
         List<GuidelinePackage> guidelinePackages = env.getDrugs().findGuidelinePackages(drugName, dataSourceType);
-        if (guidelinePackages != null && !guidelinePackages.isEmpty()) {
+        if (!guidelinePackages.isEmpty()) {
           DrugReport newDrugReport = new DrugReport(drugName, guidelinePackages, this);
           drugReports.put(drugName.toLowerCase(), newDrugReport);
         }
@@ -83,9 +84,7 @@ public class ReportContext {
     // now that all reports are generated, apply applicable messages
     MessageHelper messageHelper = env.getMessageHelper();
     // to gene reports
-    m_geneReports.values().stream()
-        .flatMap((m) -> m.values().stream())
-        .forEach(messageHelper::addMatchingMessagesTo);
+    m_geneReports.values().forEach(messageHelper::addMatchingMessagesTo);
     // to drug reports
     for (PrescribingGuidanceSource source : m_drugReports.keySet()) {
       for (DrugReport drugReport : m_drugReports.get(source).values()) {
@@ -93,7 +92,7 @@ public class ReportContext {
 
         // add a message for any gene that has missing data
         drugReport.getRelatedGeneSymbols().stream()
-            .map((s) -> getGeneReport(source, s))
+            .map(this::getGeneReport)
             .filter((gr) -> gr != null && !gr.isOutsideCall() && gr.isMissingVariants() && !gr.isNoData())
             .forEach((gr) -> drugReport.addMessage(new MessageAnnotation(MessageAnnotation.TYPE_NOTE,
                 "missing-variants",
@@ -107,7 +106,7 @@ public class ReportContext {
 
   private String validateVersions(PgkbGuidelineCollection guidelineCollection) {
     Set<String> observedVersions = new HashSet<>();
-    List<GeneReport> ungroupedGeneReports = m_geneReports.values().stream().flatMap((m) -> m.values().stream()).toList();
+    Collection<GeneReport> ungroupedGeneReports = m_geneReports.values();
 
     for (GeneReport geneReport : ungroupedGeneReports) {
         if (geneReport.getAlleleDefinitionVersion() != null) {
@@ -149,7 +148,7 @@ public class ReportContext {
   /**
    * Gets the set of all {@link GeneReport} objects that are reported in this context
    */
-  public SortedMap<DataSource, SortedMap<String, GeneReport>> getGeneReports() {
+  public SortedMap<String, GeneReport> getGeneReports() {
     return m_geneReports;
   }
 
@@ -164,19 +163,8 @@ public class ReportContext {
     return m_drugReports.get(type).get(drug);
   }
 
-  public List<GeneReport> getGeneReports(String gene) {
-    return m_geneReports.keySet().stream()
-        .map((k) -> m_geneReports.get(k).get(gene))
-        .filter(Objects::nonNull)
-        .toList();
-  }
-
-  public @Nullable GeneReport getGeneReport(DataSource source, String gene) {
-    return m_geneReports.get(source).get(gene);
-  }
-
-  public @Nullable GeneReport getGeneReport(PrescribingGuidanceSource source, String gene) {
-    return m_geneReports.get(source.getPhenoSource()).get(gene);
+  public @Nullable GeneReport getGeneReport(String gene) {
+    return m_geneReports.get(gene);
   }
 
   /**
@@ -184,8 +172,8 @@ public class ReportContext {
    *
    * @return the title string
    */
-  public String getTitle() {
-    return f_title;
+  public @Nullable String getTitle() {
+    return m_title;
   }
 
   /**
@@ -202,7 +190,7 @@ public class ReportContext {
    * @return a version tag string in the form vX.Y
    */
   public String getPharmcatVersion() {
-    return f_pharmcatVersion;
+    return m_pharmcatVersion;
   }
 
   public String getDataVersion() {
@@ -210,14 +198,14 @@ public class ReportContext {
   }
 
   public List<MessageAnnotation> getMessages() {
-    return f_messages;
+    return m_messages;
   }
 
   public void addMessage(MessageAnnotation message) {
-    f_messages.add(message);
+    m_messages.add(message);
   }
 
-  public Metadata getMatcherMetadata() {
+  public @Nullable Metadata getMatcherMetadata() {
     return m_matcherMetadata;
   }
 

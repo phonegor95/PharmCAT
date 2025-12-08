@@ -31,10 +31,12 @@ public class MatchData {
   private final boolean m_isHaploid;
   /** Positions at which data is available for sample. */
   private final VariantLocus[] m_positions;
+  /** Maps VCF position to the index of the matching VariantLocus in the m_positions array. */
+  private final SortedMap<Long, Integer> m_vcfPositionIndex = new TreeMap<>();
   @Expose
   @SerializedName("missingPositions")
   private final SortedSet<VariantLocus> m_missingPositions = new TreeSet<>();
-  private final Set<VariantLocus> m_ignoredPositions = new HashSet<>();
+  private final SortedSet<Long> m_missingVcfPositions = new TreeSet<>();
   private final SortedSet<Variant> m_extraPositions = new TreeSet<>();
   @Expose
   @SerializedName("positionsWithUndocumentedVariations")
@@ -77,16 +79,11 @@ public class MatchData {
    * @param alleleMap map of chr:positions to {@link SampleAllele}s from VCF
    * @param allPositions all {@link VariantLocus} positions of interest for the gene
    * @param extraPositions extra positions to track sample alleles for
-   * @param ignoredPositions ignored positions to remove from matching (used for special cases like DPYD)
    */
   public MatchData(String sampleId, String gene, SortedMap<String, SampleAllele> alleleMap, VariantLocus[] allPositions,
-      @Nullable SortedSet<VariantLocus> extraPositions, @Nullable SortedSet<VariantLocus> ignoredPositions,
-      @Nullable DefinitionExemption exemption) {
+      @Nullable SortedSet<VariantLocus> extraPositions, @Nullable DefinitionExemption exemption) {
     m_sampleId = sampleId;
     m_gene = gene;
-    if (ignoredPositions != null) {
-      m_ignoredPositions.addAll(ignoredPositions);
-    }
 
     List<VariantLocus> positions = new ArrayList<>();
     boolean isPhased = true;
@@ -95,10 +92,8 @@ public class MatchData {
       SampleAllele allele = alleleMap.get(chrPos);
       if (allele == null) {
         m_missingPositions.add(variant);
+        m_missingVcfPositions.add(variant.getPosition());
         sf_logger.debug("Sample has no allele for {}", chrPos);
-        continue;
-      }
-      if (m_ignoredPositions.contains(variant)) {
         continue;
       }
       if (!allele.getUndocumentedVariations().isEmpty()) {
@@ -119,6 +114,9 @@ public class MatchData {
       m_sampleMap.put(variant.getPosition(), allele);
     }
     m_positions = positions.toArray(new VariantLocus[0]);
+    for (int x = 0; x < m_positions.length; x += 1) {
+      m_vcfPositionIndex.put(m_positions[x].getPosition(), x);
+    }
     if (extraPositions != null) {
       for (VariantLocus vl : extraPositions) {
         SampleAllele allele = alleleMap.get(vl.getVcfChrPosition());
@@ -161,6 +159,10 @@ public class MatchData {
   }
 
 
+  public String getSampleId() {
+    return m_sampleId;
+  }
+
   public String getGene() {
     return m_gene;
   }
@@ -172,7 +174,7 @@ public class MatchData {
    */
   void marshallHaplotypes(String gene, SortedSet<NamedAllele> allHaplotypes, boolean findCombinations) {
 
-    if (m_missingPositions.isEmpty() && m_ignoredPositions.isEmpty()) {
+    if (m_missingPositions.isEmpty()) {
       if (findCombinations) {
         m_haplotypes = new TreeSet<>();
         for (NamedAllele hap : allHaplotypes) {
@@ -195,8 +197,8 @@ public class MatchData {
           }
         }
         // get alleles for positions we have data on
-        String[] availableAlleles = new String[m_positions.length];
-        String[] cpicAlleles = new String[m_positions.length];
+        @Nullable String[] availableAlleles = new String[m_positions.length];
+        @Nullable String[] cpicAlleles = new String[m_positions.length];
         for (int x = 0; x < m_positions.length; x += 1) {
           availableAlleles[x] = hap.getAllele(m_positions[x]);
           cpicAlleles[x] = hap.getCpicAllele(m_positions[x]);
@@ -249,6 +251,9 @@ public class MatchData {
    * Assumes that missing alleles in {@link NamedAllele}s should be the reference.
    */
   void defaultMissingAllelesToReference() {
+    if (m_haplotypes == null) {
+      throw new IllegalStateException("Not initialized - call marshallHaplotypes()");
+    }
 
     SortedSet<NamedAllele> updatedHaplotypes = new TreeSet<>();
     NamedAllele referenceHaplotype = m_haplotypes.stream().filter(NamedAllele::isReference).findAny()
@@ -260,16 +265,16 @@ public class MatchData {
         continue;
       }
 
-      String[] curAlleles = hap.getAlleles();
+      @Nullable String[] curAlleles = hap.getAlleles();
       Preconditions.checkState(numAlleles == curAlleles.length);
 
-      String[] newAlleles = new String[numAlleles];
-      String[] cpicAlleles = new String[numAlleles];
+      @Nullable String[] newAlleles = new String[numAlleles];
+      @Nullable String[] cpicAlleles = new String[numAlleles];
       for (int x = 0; x < numAlleles; x += 1) {
         if (curAlleles[x] == null) {
           // ref allele can be null if the position is missing
           String refAllele = referenceHaplotype.getAllele(x);
-          if (refAllele != null && Iupac.isWobble(refAllele)) {
+          if (Iupac.isWobble(refAllele)) {
             newAlleles[x] = m_positions[x].getRef();
           } else {
             newAlleles[x] = refAllele;
@@ -371,7 +376,8 @@ public class MatchData {
   }
 
   /**
-   * Gets whether data is "effectively phased" (i.e. actually phased or unphased but homozygous at all positions).
+   * Gets whether data is "effectively phased" (i.e., actually phased or unphased but homozygous at all positions).
+   * More specifically, there is a maximum of 2 permutations of this sample's alleles.
    */
   public boolean isEffectivelyPhased() {
     return m_isEffectivelyPhased;
@@ -392,6 +398,14 @@ public class MatchData {
    */
   public SortedSet<VariantLocus> getMissingPositions() {
     return m_missingPositions;
+  }
+
+  /**
+   * Gets the positions that are missing from the sample VCF that would have been helpful for calling the haplotypes for
+   * the gene.
+   */
+  public SortedSet<Long> getMissingVcfPositions() {
+    return m_missingVcfPositions;
   }
 
   /**
@@ -445,6 +459,13 @@ public class MatchData {
       seqMap.put(idx, allele);
     }
     return allele;
+  }
+
+  public @Nullable String getAllele(String sequence, long vcfPosition) {
+    if (!m_vcfPositionIndex.containsKey(vcfPosition)) {
+      return null;
+    }
+    return getAllele(sequence, m_vcfPositionIndex.get(vcfPosition));
   }
 
 

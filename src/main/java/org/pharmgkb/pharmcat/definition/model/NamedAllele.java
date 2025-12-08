@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -58,6 +60,7 @@ public class NamedAllele implements Comparable<NamedAllele> {
   private boolean m_isInitialized;
   private @Nullable HashMap<VariantLocus, @Nullable String> m_alleleMap;
   private @Nullable HashMap<VariantLocus, @Nullable String> m_cpicAlleleMap;
+  private @Nullable Map<Long, VariantLocus> m_positionToLocusMap;
   private @Nullable SortedSet<Integer> m_wobbleIndices;
   private @Nullable SortedSet<Long> m_wobblePositions;
   @Expose
@@ -106,6 +109,7 @@ public class NamedAllele implements Comparable<NamedAllele> {
     m_numPartials = numPartials;
 
     // m_alleles will be null after initial import when removing ignored positions
+    //noinspection ConstantValue
     if (isReference && m_alleles != null && Arrays.stream(m_alleles).anyMatch(java.util.Objects::isNull)) {
       try {
         throw new IllegalStateException("check: " + name + " (" + id + ")\n" + String.join(", ", m_alleles));
@@ -118,7 +122,7 @@ public class NamedAllele implements Comparable<NamedAllele> {
 
 
   /**
-   * Call this to initialize {@link NamedAllele} for use after initial import.
+   * Call this to initialize {@link NamedAllele} for use after initial import during data ingestion.
    */
    void initializeForImport(VariantLocus[] refVariants) {
     Preconditions.checkNotNull(refVariants);
@@ -144,6 +148,16 @@ public class NamedAllele implements Comparable<NamedAllele> {
 
 
   /**
+   * Force reinitialization.
+   * <p>
+   * NOT PART OF PUBLIC API.  Only used during data ingestion.
+   */
+  void forceReinitialize(VariantLocus[] refVariants) {
+    m_isInitialized = false;
+    initialize(refVariants);
+  }
+
+  /**
    * Call this to initialize this object for use.
    */
   public void initialize(VariantLocus[] refVariants) {
@@ -158,12 +172,15 @@ public class NamedAllele implements Comparable<NamedAllele> {
     }
     m_alleleMap = new HashMap<>();
     m_cpicAlleleMap = new HashMap<>();
+    m_positionToLocusMap = new HashMap<>();
     m_wobbleIndices = new TreeSet<>();
     m_wobblePositions = new TreeSet<>();
     m_corePositions = new TreeSet<>();
+    m_score = 0;
     for (int x = 0; x < refVariants.length; x += 1) {
       m_alleleMap.put(refVariants[x], m_alleles[x]);
       m_cpicAlleleMap.put(refVariants[x], m_cpicAlleles[x]);
+      m_positionToLocusMap.put(refVariants[x].getPosition(), refVariants[x]);
       if (m_alleles[x] != null) {
         if (Iupac.isWobble(m_alleles[x])) {
           m_wobbleIndices.add(x);
@@ -285,6 +302,13 @@ public class NamedAllele implements Comparable<NamedAllele> {
     return m_wobblePositions.contains(position);
   }
 
+  public SortedSet<Long> getWobblePositions() {
+    if (!m_isInitialized || m_wobblePositions == null) {
+      throw new IllegalStateException("This NamedAllele has not been initialized");
+    }
+    return m_wobblePositions;
+  }
+
 
   /**
    * The array of alleles that define this allele.
@@ -306,14 +330,18 @@ public class NamedAllele implements Comparable<NamedAllele> {
     return m_alleleMap.get(variantLocus);
   }
 
+  public @Nullable String getAllele(long position) {
+    if (!m_isInitialized || m_positionToLocusMap == null) {
+      throw new IllegalStateException("This NamedAllele has not been initialized");
+    }
+    return getAllele(Objects.requireNonNull(m_positionToLocusMap.get(position)));
+  }
+
   public @Nullable String[] getCpicAlleles() {
     return m_cpicAlleles;
   }
 
   public @Nullable String getCpicAllele(int x) {
-    if (!m_isInitialized || m_cpicAlleles == null) {
-      throw new IllegalStateException("This NamedAllele has not been initialized");
-    }
     return m_cpicAlleles[x];
   }
 
@@ -322,6 +350,13 @@ public class NamedAllele implements Comparable<NamedAllele> {
       throw new IllegalStateException("This NamedAllele has not been initialized");
     }
     return m_cpicAlleleMap.get(variantLocus);
+  }
+
+  public @Nullable String getCpicAllele(long position) {
+    if (!m_isInitialized || m_positionToLocusMap == null) {
+      throw new IllegalStateException("This NamedAllele has not been initialized");
+    }
+    return getCpicAllele(Objects.requireNonNull(m_positionToLocusMap.get(position)));
   }
 
 

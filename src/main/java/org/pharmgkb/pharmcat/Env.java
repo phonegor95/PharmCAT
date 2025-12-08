@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TreeMap;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -20,8 +21,8 @@ import org.pharmgkb.pharmcat.reporter.PgkbGuidelineCollection;
 import org.pharmgkb.pharmcat.reporter.caller.Cyp2d6CopyNumberCaller;
 import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.MessageAnnotation;
-import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
 import org.pharmgkb.pharmcat.reporter.model.result.Haplotype;
+import org.pharmgkb.pharmcat.util.DataManager;
 
 
 /**
@@ -33,24 +34,28 @@ public class Env {
   private final DefinitionReader m_definitionReader;
   private final PhenotypeMap m_phenotypeMap;
   private final PgkbGuidelineCollection m_drugs;
-  private MessageHelper m_messageHelper;
-  private final Map<DataSource, Map<String, Map<String, Haplotype>>> m_haplotypeCache = new HashMap<>();
+  private final MessageHelper m_messageHelper;
+  private final Map<String, Map<String, Haplotype>> m_haplotypeCache = new HashMap<>();
   private final Multimap<String, String> m_validHaplotypes = HashMultimap.create();
   private final Map<Path, Map<String, Map<String, String>>> m_sampleDataMap = new HashMap<>();
 
 
   public Env() throws IOException, ReportableException {
-    this(null);
+    this(null, null);
   }
 
-  public Env(@Nullable Path definitionDir) throws IOException, ReportableException {
-    if (definitionDir != null) {
-      m_definitionReader = new DefinitionReader(definitionDir);
-      if (m_definitionReader.getGenes().isEmpty()) {
-        throw new ReportableException("Did not find any allele definitions at " + definitionDir);
-      }
-    } else {
-      m_definitionReader = DefinitionReader.defaultReader();
+  public Env(@Nullable Path definitionDir, @Nullable Set<String> genes) throws IOException, ReportableException {
+    if (definitionDir == null) {
+      definitionDir = DataManager.DEFAULT_DEFINITION_DIR;
+    }
+    m_definitionReader = new DefinitionReader(definitionDir, genes);
+    if (m_definitionReader.getGenes().isEmpty()) {
+      throw new ReportableException("Did not find any allele definitions at " + definitionDir);
+    }
+    try {
+      m_messageHelper = new MessageHelper();
+    } catch (IOException ex) {
+      throw new RuntimeException("Error loading messages", ex);
     }
 
     m_phenotypeMap = new PhenotypeMap();
@@ -70,18 +75,13 @@ public class Env {
   }
 
 
-  public @Nullable String getPhenotypeVersion(String gene, DataSource source) {
-    return m_phenotypeMap.getVersion(gene, source);
+  public @Nullable String getPhenotypeVersion(String gene) {
+    return m_phenotypeMap.getVersion(gene);
   }
 
-  public @Nullable GenePhenotype getPhenotype(String gene, DataSource source) {
-    return m_phenotypeMap.getPhenotype(gene, source);
+  public @Nullable GenePhenotype getPhenotype(String gene) {
+    return m_phenotypeMap.getPhenotype(gene);
   }
-
-  public @Nullable GenePhenotype getPhenotype(String gene, PrescribingGuidanceSource source) {
-    return m_phenotypeMap.getPhenotype(gene, source.getPhenoSource());
-  }
-
 
   /**
    * Checks if the specified allele is used in either definition files or phenotype.
@@ -108,20 +108,12 @@ public class Env {
     if (gene.equals("CYP2D6")) {
       inferredAllele = Cyp2d6CopyNumberCaller.inferHaplotypeName(allele);
     }
-    GenePhenotype gp = m_phenotypeMap.getPhenotype(gene, DataSource.CPIC);
+    GenePhenotype gp = m_phenotypeMap.getPhenotype(gene);
     if (gp != null) {
       if (gp.getHaplotypes().containsKey(inferredAllele) || gp.getActivityValues().containsKey(inferredAllele)) {
         m_validHaplotypes.put(gene, allele);
         return true;
       }
-    }
-    gp = m_phenotypeMap.getPhenotype(gene, DataSource.DPWG);
-    if (gp != null) {
-      boolean rez = gp.getHaplotypes().containsKey(inferredAllele) || gp.getActivityValues().containsKey(inferredAllele);
-      if (rez) {
-        m_validHaplotypes.put(gene, allele);
-      }
-      return rez;
     }
     return false;
   }
@@ -142,6 +134,7 @@ public class Env {
   /**
    * Checks if gene can be called by NamedAlleleMatcher or is used in any drug recommendation from any source.
    */
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public boolean hasGene(String gene) {
     return m_definitionReader.getGenes().contains(gene) ||
         m_drugs.getGenesWithRecommendations().contains(gene);
@@ -151,40 +144,29 @@ public class Env {
    * Checks if this gene is matched by activity score in any source.
    */
   public boolean isActivityScoreGene(String gene) {
-    GenePhenotype gp = getPhenotype(gene, DataSource.CPIC);
-    if (gp != null && gp.isMatchedByActivityScore()) {
-      return true;
-    }
-    gp = getPhenotype(gene, DataSource.DPWG);
+    GenePhenotype gp = getPhenotype(gene);
     return gp != null && gp.isMatchedByActivityScore();
   }
 
 
   public MessageHelper getMessageHelper() {
-    if (m_messageHelper == null) {
-      try {
-        m_messageHelper = new MessageHelper();
-      } catch (IOException ex) {
-        throw new RuntimeException("Error loading messages", ex);
-      }
-    }
     return m_messageHelper;
   }
 
-  public MessageAnnotation getMessage(String key) {
-    return getMessageHelper().getMessage(key);
+  public @Nullable MessageAnnotation getMessage(String key) {
+    return m_messageHelper.getMessage(key);
   }
 
 
   /**
    * Make or retrieve a cached {@link Haplotype} object that corresponds to the given allele name.
    */
-  public synchronized Haplotype makeHaplotype(String gene, String name, DataSource source) {
-    return m_haplotypeCache.computeIfAbsent(source, (s) -> new HashMap<>())
+  public synchronized Haplotype makeHaplotype(String gene, String name) {
+    return m_haplotypeCache
         .computeIfAbsent(gene, (g) -> new HashMap<>())
         .computeIfAbsent(name, (n) -> {
           Haplotype haplotype = new Haplotype(gene, name);
-          GenePhenotype gp = getPhenotype(gene, source);
+          GenePhenotype gp = getPhenotype(gene);
           if (gp != null) {
             haplotype.setFunction(gp.getHaplotypeFunction(name));
             haplotype.setActivityValue(gp.getHaplotypeActivity(name));

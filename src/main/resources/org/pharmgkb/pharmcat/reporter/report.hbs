@@ -92,11 +92,14 @@
           <tr class="top-aligned gs-{{{sanitizeCssSelector symbol}}}">
             <td>
               {{#each relatedDrugs}}
-                <div class="drugName">
-                  {{#if (contains ../../drugsWithRecommendations this) }}
-                    <a href="#{{{sanitizeCssSelector this}}}">{{this}}</a>
-                  {{/if}}
-                </div>
+                {{#if (contains ../../drugsWithRecommendations this) }}
+                  <div class="gsDrugs">
+                    <span class="drugName">
+                      <a href="#{{{sanitizeCssSelector this}}}">{{this}}</a>
+                    </span>
+                    <span class="drugTags">{{{drugTags this ../../drugTags}}}</span>
+                  </div>
+                {{/if}}
               {{/each}}
             </td>
             <td>
@@ -217,8 +220,6 @@
         <section class="guideline {{{sanitizeCssSelector drug}}}">
           <h3 id="{{{sanitizeCssSelector drug}}}">{{{getChineseDrugName drug this}}}</h3>
 
-
-
           {{#each messages}}
             <div class="alert alert-info {{messageClass this}}">{{{message}}}</div>
           {{/each}}
@@ -287,7 +288,7 @@
                           {{{drugRecommendation}}}
                           {{#if ../fda}}<a href="#rx-ast-{{../../../drug}}" style="text-decoration: none">&ast;</a>{{/if}}
                         </td>
-                        <td>{{capitalizeNA classification}}</td>
+                        <td class="drugRecClass">{{capitalizeNA classification}}</td>
                     {{/if}}
                   {{/each}}
                 {{/each}}
