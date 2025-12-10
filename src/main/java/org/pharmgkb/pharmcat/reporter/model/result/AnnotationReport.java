@@ -169,7 +169,7 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
     return m_phenotypes;
   }
 
-  public Map<String,Object> getLookupKey() {
+  public List<Map<String,Object>> getLookupKey() {
     return m_lookupKey;
   }
 

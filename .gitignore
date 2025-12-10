@@ -62,7 +62,5 @@ __pycache__/
 
 # Local Netlify folder
 .netlify
-
-test/*.vcf.gz
-test/*.csi
+test/
 .vscode/
