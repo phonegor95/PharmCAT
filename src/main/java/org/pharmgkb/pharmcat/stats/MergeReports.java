@@ -21,6 +21,7 @@ import com.google.common.base.Stopwatch;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
 import org.pharmgkb.common.util.CliHelper;
 import org.pharmgkb.common.util.StreamUtils;
@@ -35,7 +36,8 @@ import static org.pharmgkb.pharmcat.reporter.format.CallsOnlyFormat.HEADER_SAMPL
  * @author Mark Woon
  */
 public class MergeReports {
-  private static final Pattern sf_fileIdPattern = Pattern.compile("^(?:.+\\.)?(\\d+)\\.report\\.tsv");
+  // expect sample ID to be composed of letters and numbers
+  private static final Pattern sf_fileIdPattern = Pattern.compile("^(?:.+\\.)?([A-Za-z\\d]+)\\.report\\.tsv");
   private static final Splitter sf_tabSplitter = Splitter.on("\t").trimResults();
   private final boolean m_anonymize;
   private final boolean m_verbose;
@@ -224,9 +226,7 @@ public class MergeReports {
         newHeaders.remove(HEADER_SAMPLE_ID);
       }
     } else {
-      if (sampleId != null) {
-        newHeaders.add(0, HEADER_SAMPLE_ID);
-      }
+      newHeaders.add(0, HEADER_SAMPLE_ID);
     }
     if (m_metadataHeaders != null) {
       newHeaders.addAll(m_metadataHeaders);
@@ -238,6 +238,9 @@ public class MergeReports {
     }
 
     while ((line = reader.readLine()) != null) {
+      if (StringUtils.isBlank(line)) {
+        continue;
+      }
       List<String> data = sf_tabSplitter.splitToList(line);
       if (sampleId == null && fileHasSampleId) {
         sampleId = data.get(0);
@@ -250,8 +253,10 @@ public class MergeReports {
       } else {
         if (sampleId != null) {
           writer.print(sampleId);
-          writer.print("\t");
+        } else {
+          System.out.println("Warning: no sample id for file " + filename);
         }
+        writer.print("\t");
       }
       writer.print(String.join("\t", data));
       if (m_metadata != null && sampleId != null) {

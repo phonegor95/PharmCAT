@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.reporter.RecommendationUtils;
 import org.pharmgkb.pharmcat.reporter.model.result.Genotype;
 
@@ -35,7 +38,7 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
   private List<String> implications = new ArrayList<>();
   @SerializedName("lookupKey")
   @Expose
-  private Map<String,Object> lookupKey = new HashMap<>();
+  private List<Map<String,Object>> lookupKey = new ArrayList<>();
   @SerializedName("lookupKey_cn")
   @Expose
   private Map<String,Object> lookupKeyCn = new HashMap<>();
@@ -86,7 +89,7 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
   }
 
 
-  public OntologyTerm getClassification() {
+  public @Nullable OntologyTerm getClassification() {
     return classification;
   }
 
@@ -140,11 +143,11 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
   }
 
 
-  public Map<String,Object> getLookupKey() {
+  public List<Map<String,Object>> getLookupKey() {
     return lookupKey;
   }
 
-  public void setLookupKey(Map<String,Object> lookupKey) {
+  public void setLookupKey(List<Map<String,Object>> lookupKey) {
     this.lookupKey = lookupKey;
   }
 
@@ -154,6 +157,12 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
 
   public void setLookupKeyCn(Map<String,Object> lookupKeyCn) {
     this.lookupKeyCn = lookupKeyCn;
+  }
+
+  public Set<String> getLookupGenes() {
+    return this.lookupKey.stream()
+        .flatMap(k -> k.keySet().stream())
+        .collect(Collectors.toSet());
   }
 
 
@@ -190,17 +199,19 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
    * @return true if the genotype matches this recommendation
    */
   public boolean matchesGenotype(Genotype genotype) {
-    if (getLookupKey() == null) {
+    if (getLookupKey().isEmpty()) {
       return false;
     }
-    return genotype.getLookupKeys().stream().anyMatch(k -> RecommendationUtils.mapContains(k, getLookupKey()));
+    return genotype.getLookupKeys().stream()
+        .anyMatch(k -> getLookupKey().stream().anyMatch(l -> RecommendationUtils.mapContains(k, l)));
   }
 
   public boolean matchesDiplotype(Genotype genotype) {
-    if (getLookupKey() == null) {
+    if (getLookupKey().isEmpty()) {
       return false;
     }
 
-    return RecommendationUtils.mapContains(genotype.getDiplotypeKey(), getLookupKey());
+    return getLookupKey().stream()
+        .anyMatch((lookupKey) -> RecommendationUtils.mapContains(genotype.getDiplotypeKey(), lookupKey));
   }
 }

@@ -10,6 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -18,7 +19,6 @@ import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.Env;
 import org.pharmgkb.pharmcat.reporter.ReportContext;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
-import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.VariantReport;
 import org.pharmgkb.pharmcat.reporter.model.result.Diplotype;
 import org.pharmgkb.pharmcat.reporter.model.result.GeneReport;
@@ -36,10 +36,16 @@ import static org.pharmgkb.pharmcat.Constants.isLowestFunctionGene;
 public class CallsOnlyFormat extends AbstractFormat {
   public static final String ENV_DEBUG_KEY = "PHARMCAT_REPORTER_DEBUG";
   public static final String NO_CALL_TAG = "no call";
+  public static final String TREAT_AS_REFERENCE_TAG = "(treat as reference)";
   public static final String HEADER_SAMPLE_ID = "Sample ID";
+  public static final String HEADER_VARIANTS = "Variants";
+  public static final String HEADER_UNDOCUMENTED_VARIANTS = "Undocumented variants";
   private boolean m_singleFileMode;
   // this is only used in single file mode
   private boolean m_showSampleId = true;
+  private boolean m_showVariants;
+  private boolean m_showMissingVariants;
+  private boolean m_showUndocumentedVariants;
   private final boolean m_debug;
 
 
@@ -47,6 +53,37 @@ public class CallsOnlyFormat extends AbstractFormat {
     super(outputPath, env);
     m_debug = Boolean.parseBoolean(System.getenv(ENV_DEBUG_KEY)) ||
         Boolean.parseBoolean(System.getProperty(ENV_DEBUG_KEY));
+    if (m_debug) {
+      m_showVariants = true;
+      m_showMissingVariants = true;
+      m_showUndocumentedVariants = true;
+    }
+  }
+
+
+  /**
+   * Sets whether results should include variants.
+   */
+  public CallsOnlyFormat showVariants() {
+    m_showVariants = true;
+    return this;
+  }
+
+
+  /**
+   * Sets whether results should specify missing variants (defaults to yes/no).
+   */
+  public CallsOnlyFormat showMissingVariants() {
+    m_showMissingVariants = true;
+    return this;
+  }
+
+  /**
+   * Sets whether results should specify undocumented variants.
+   */
+  public CallsOnlyFormat showUndocumentedVariants() {
+    m_showUndocumentedVariants = true;
+    return this;
   }
 
   /**
@@ -58,8 +95,8 @@ public class CallsOnlyFormat extends AbstractFormat {
   }
 
   /**
-   * Sets whether Sample ID column should be written.
-   * This only matters in single file mode.
+   * Sets whether the Sample ID column should be written.
+   * This only matters in single-file mode.
    */
   public CallsOnlyFormat hideSampleId() {
     m_showSampleId = false;
@@ -87,14 +124,12 @@ public class CallsOnlyFormat extends AbstractFormat {
 
     Map<String, GeneReport> calledGenes = new HashMap<>();
     for (String gene : getEnv().getDefinitionReader().getGenes()) {
-      GeneReport cpicReport = reportContext.getGeneReport(DataSource.CPIC, gene);
-      GeneReport dpwgReport = reportContext.getGeneReport(DataSource.DPWG, gene);
-      if ((cpicReport == null || cpicReport.isNoData()) && (dpwgReport == null || dpwgReport.isNoData())) {
+      GeneReport geneReport = reportContext.getGeneReport(gene);
+      if (geneReport == null || geneReport.isNoData()) {
         continue;
       }
 
-      GeneReport primary = cpicReport == null ? dpwgReport : cpicReport;
-      calledGenes.put(gene, primary);
+      calledGenes.put(gene, geneReport);
     }
 
     String sampleId = null;
@@ -117,14 +152,12 @@ public class CallsOnlyFormat extends AbstractFormat {
             "\tHaplotype 1\tHaplotype 1 Function\tHaplotype 1 Activity Value" +
             "\tHaplotype 2\tHaplotype 2 Function\tHaplotype 2 Activity Value" +
             "\tOutside Call\tMatch Score\t");
-        if (m_debug) {
-          writer.print("Variants\t");
+        if (m_showVariants) {
+          writer.print(HEADER_VARIANTS + "\t");
         }
         writer.print("Missing positions\t");
-        if (m_debug) {
-          // CalcAlleleFrequencies keys off this column name to check if debug mode is enabled
-          // Make sure it is updated if this column name is changed
-          writer.print("Undocumented variants\t");
+        if (m_showUndocumentedVariants) {
+          writer.print(HEADER_UNDOCUMENTED_VARIANTS + "\t");
         }
         writer.print("Recommendation Lookup Diplotype\tRecommendation Lookup Phenotype\t" +
             "Recommendation Lookup Activity Score");
@@ -187,11 +220,11 @@ public class CallsOnlyFormat extends AbstractFormat {
   }
 
 
-  private boolean isIgnorableValue(String text) {
+  private boolean isIgnorableValue(@Nullable String text) {
     return StringUtils.isBlank(text) || text.equals(TextConstants.NA) || text.equals(TextConstants.NO_RESULT);
   }
 
-  private String generateStandardizedValue(String text) {
+  private String generateStandardizedValue(@Nullable String text) {
     return isIgnorableValue(text) ? " " : text;
   }
 
@@ -208,7 +241,7 @@ public class CallsOnlyFormat extends AbstractFormat {
 
     boolean hasPhenotypes = !lowestFunctionSingles && report.getSourceDiplotypes().stream()
         .anyMatch(d -> !d.getPhenotypes().isEmpty() && !isIgnorableValue(d.getPhenotypes().get(0)));
-    boolean hasActivityScores = isActivityScoreGene(report.getGene(), report.getPhenotypeSource()) &&
+    boolean hasActivityScores = isActivityScoreGene(report.getGene()) &&
         report.getSourceDiplotypes().stream()
             .anyMatch(d -> !isIgnorableValue(d.getActivityScore()));
 
@@ -242,7 +275,7 @@ public class CallsOnlyFormat extends AbstractFormat {
         }
         matchScores.append(dip.getMatchScore());
       }
-    };
+    }
 
     if (m_singleFileMode && m_showSampleId) {
       if (sampleId != null) {
@@ -283,7 +316,7 @@ public class CallsOnlyFormat extends AbstractFormat {
     writer.print(generatePhenotypeValue(dip.getPhenotypes()));
     writer.print("\t");
     // activity score
-    if (isActivityScoreGene(report.getGene(), report.getPhenotypeSource()) && dip.getActivityScore() != null) {
+    if (isActivityScoreGene(report.getGene()) && dip.getActivityScore() != null) {
       writer.print(generateStandardizedValue(dip.getActivityScore()));
     }
     writer.print("\t");
@@ -291,9 +324,7 @@ public class CallsOnlyFormat extends AbstractFormat {
     if (dip.getAllele1() != null) {
       writer.print(dip.getAllele1().getName());
       writer.print("\t");
-      if (dip.getAllele1().getFunction() != null) {
-        writer.print(dip.getAllele1().getFunction());
-      }
+      writer.print(dip.getAllele1().getFunction());
       writer.print("\t");
       if (dip.getAllele1().getActivityValue() != null &&
           !dip.getAllele1().getActivityValue().equals(TextConstants.NA)) {
@@ -306,11 +337,9 @@ public class CallsOnlyFormat extends AbstractFormat {
     writer.print("\t");
     // haplotype 2
     if (dip.getAllele2() != null) {
-      writer.print(dip.getAllele2());
+      writer.print(dip.getAllele2().getName());
       writer.print("\t");
-      if (dip.getAllele2().getFunction() != null) {
-        writer.print(dip.getAllele2().getFunction());
-      }
+      writer.print(dip.getAllele2().getFunction());
       writer.print("\t");
       if (dip.getAllele2().getActivityValue() != null &&
           !dip.getAllele2().getActivityValue().equals(TextConstants.NA)) {
@@ -328,49 +357,60 @@ public class CallsOnlyFormat extends AbstractFormat {
 
 
   private void writeCommon(PrintWriter writer,  @Nullable Map<String, String> sampleProps, GeneReport report,
-      String matchScore, boolean showRecommendationDiplotype) {
+      @Nullable String matchScore, boolean showRecommendationDiplotype) {
     // outside call
     writer.print(report.isOutsideCall() ? "yes" : "no");
     writer.print("\t");
     writer.print(matchScore == null ? "" : matchScore);
     writer.print("\t");
-    // missing positions
-    if (m_debug) {
+    // variants
+    if (m_showVariants) {
       StringBuilder varBuilder = new StringBuilder();
+      for (VariantReport vr : report.getVariantReports()) {
+        if (!vr.isMissing() && vr.isNonReference()) {
+            if (!varBuilder.isEmpty()) {
+              varBuilder.append(", ");
+            }
+            varBuilder.append(vr.getPosition())
+                .append(":")
+                .append(vr.getCall());
+          }
+        }
+      writer.print(varBuilder);
+      writer.print("\t");
+    }
+    // missing positions
+    if (m_showMissingVariants) {
       StringBuilder missingBuilder = new StringBuilder();
       for (VariantReport vr : report.getVariantReports()) {
         if (vr.isMissing()) {
-          if (!missingBuilder.isEmpty()) {
-            missingBuilder.append(", ");
+          if (m_showMissingVariants) {
+            if (!missingBuilder.isEmpty()) {
+              missingBuilder.append(", ");
+            }
+            missingBuilder.append(vr.getPosition());
           }
-          missingBuilder.append(vr.getPosition());
-        } else if (vr.isNonReference()) {
-          if (!varBuilder.isEmpty()) {
-            varBuilder.append(", ");
-          }
-          varBuilder.append(vr.getPosition())
-              .append(":")
-              .append(vr.getCall());
         }
       }
-      writer.print(varBuilder);
-      writer.print("\t");
       writer.print(missingBuilder);
-      writer.print("\t");
+    } else {
+      writer.print(report.isMissingVariants() ? "yes" : "no");
+    }
+    writer.print("\t");
+    if (m_showUndocumentedVariants) {
       if (report.isHasUndocumentedVariations()) {
         writer.print(report.getVariantReports().stream()
             .filter(VariantReport::isHasUndocumentedVariations)
             .map(vr -> Long.toString(vr.getPosition()))
             .collect(Collectors.joining(", ")));
         if (report.isTreatUndocumentedVariationsAsReference()) {
-          writer.print(" (treat as reference)");
+          writer.print(" " + TREAT_AS_REFERENCE_TAG);
         }
       }
-    } else {
-      writer.print(report.isMissingVariants() ? "yes" : "no");
+      writer.print("\t");
     }
-    writer.print("\t");
     // recommendation lookup fields
+    //noinspection ConstantValue
     if (showRecommendationDiplotype && report.getRecommendationDiplotypes() != null &&
         report.getRecommendationDiplotypes().size() == 1) {
       Diplotype recDip = report.getRecommendationDiplotypes().first();
@@ -381,8 +421,8 @@ public class CallsOnlyFormat extends AbstractFormat {
       writer.print(generatePhenotypeValue(recDip.getPhenotypes()));
       writer.print("\t");
       // recommendation lookup activity score
-      if (isActivityScoreGene(report.getGene(), report.getPhenotypeSource())) {
-        writer.print(generateStandardizedValue(recDip.getActivityScore()));
+      if (isActivityScoreGene(report.getGene())) {
+        writer.print(generateStandardizedValue(Objects.requireNonNull(recDip.getActivityScore())));
       }
     } else {
       writer.print("\t\t");

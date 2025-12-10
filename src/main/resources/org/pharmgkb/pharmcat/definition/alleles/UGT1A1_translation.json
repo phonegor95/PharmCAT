@@ -1,7 +1,7 @@
 {
   "formatVersion": "2",
   "source": "CLINPGX",
-  "version": "2025-07-31-15-02",
+  "version": "2025-11-05-00-25",
   "modificationDate": "2023-06-29T22:31:18.415Z",
   "gene": "UGT1A1",
   "orientation": null,
@@ -110,8 +110,8 @@
       ],
       "reference": true,
       "structuralVariant": false,
-      "corePositions": null,
-      "score": 0,
+      "corePositions": [],
+      "score": 4,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -135,7 +135,7 @@
       "corePositions": [
         233760498
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -159,7 +159,7 @@
       "corePositions": [
         233760973
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -183,7 +183,7 @@
       "corePositions": [
         233760233
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -207,7 +207,7 @@
       "corePositions": [
         233760233
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -231,7 +231,7 @@
       "corePositions": [
         233760233
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -255,7 +255,7 @@
       "corePositions": [
         233759924
       ],
-      "score": 0,
+      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -280,7 +280,7 @@
         233759924,
         233760233
       ],
-      "score": 0,
+      "score": 2,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -305,7 +305,7 @@
         233759924,
         233760233
       ],
-      "score": 0,
+      "score": 2,
       "numCombinations": 0,
       "numPartials": 0
     }
@@ -340,32 +340,6 @@
     "233760498": 2,
     "233760973": 3
   },
-  "shellAlleles": {
-    "*28": [
-      "*36",
-      "*37"
-    ],
-    "*80+*37": [
-      "*28",
-      "*36",
-      "*37",
-      "*80",
-      "*80+*28"
-    ],
-    "*80+*28": [
-      "*28",
-      "*36",
-      "*37",
-      "*80",
-      "*80+*37"
-    ],
-    "*36": [
-      "*28",
-      "*37"
-    ],
-    "*37": [
-      "*28",
-      "*36"
-    ]
-  }
+  "hiddenCoreAlleles": [],
+  "suballelesMap": {}
 }

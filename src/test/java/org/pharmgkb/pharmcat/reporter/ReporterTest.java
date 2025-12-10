@@ -16,7 +16,6 @@ import org.pharmgkb.pharmcat.TestUtils;
 import org.pharmgkb.pharmcat.phenotype.Phenotyper;
 import org.pharmgkb.pharmcat.reporter.format.HtmlFormat;
 import org.pharmgkb.pharmcat.reporter.format.html.ReportHelpers;
-import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
 import org.pharmgkb.pharmcat.reporter.model.result.DrugReport;
 import org.pharmgkb.pharmcat.reporter.model.result.GeneReport;
@@ -53,7 +52,7 @@ class ReporterTest {
     ReportContext reportContext = new ReportContext(m_env, phenotyper, null);
 
     // test the CYP2C9 data
-    GeneReport geneReport = reportContext.getGeneReport(DataSource.CPIC, "CYP2C9");
+    GeneReport geneReport = reportContext.getGeneReport("CYP2C9");
     assertNotNull(geneReport);
     assertTrue(geneReport.isReportable());
     assertTrue(geneReport.isCalled());
@@ -88,7 +87,7 @@ class ReporterTest {
     ReportContext reportContext = new ReportContext(new Env(), phenotyper, null);
 
     // test the CYP2C9 data
-    GeneReport geneReport = reportContext.getGeneReport(DataSource.CPIC, "CYP2C9");
+    GeneReport geneReport = reportContext.getGeneReport("CYP2C9");
     assertNotNull(geneReport);
     assertTrue(geneReport.isReportable());
     assertTrue(geneReport.isCalled());
@@ -119,18 +118,20 @@ class ReporterTest {
     // should have tags for DPWG
     tags = document.select(".dpwg-guideline-warfarin .tag");
     assertEquals(2, tags.size());
+    tags = document.select(".dpwg-guideline-warfarin");
+    assertEquals(2, tags.size());
 
     Elements phenotype = document.select(".cpic-guideline-warfarin .rx-phenotype");
     assertEquals(0, phenotype.size());
     phenotype = document.select(".dpwg-guideline-warfarin .rx-phenotype");
     assertEquals(2, phenotype.size());
 
-    // CPIC guidance lookup for warfarin does not use phenotypes so no activity score will be there
+    // CPIC guidance lookup for warfarin does not use phenotype, so no activity score will be there
     Elements activityScore = document.select(".cpic-guideline-warfarin .rx-activity");
     assertEquals(0, activityScore.size());
-    // none of the DPWG genes for warfarin use activity score
+    // DPWG genes for warfarin use activity score
     activityScore = document.select(".dpwg-guideline-warfarin .rx-activity");
-    assertEquals(0, activityScore.size());
+    assertEquals(2, activityScore.size());
   }
 
   @Test
@@ -141,7 +142,7 @@ class ReporterTest {
     ReportContext reportContext = new ReportContext(new Env(), phenotyper, null);
 
     // test the CYP2C9 data
-    GeneReport geneReport = reportContext.getGeneReport(DataSource.CPIC, "CYP2C9");
+    GeneReport geneReport = reportContext.getGeneReport("CYP2C9");
     assertNotNull(geneReport);
     assertTrue(geneReport.isReportable());
     assertTrue(geneReport.isCalled());
@@ -171,17 +172,17 @@ class ReporterTest {
     assertEquals(0, tags.size());
     // should have tags for DPWG
     tags = document.select(".dpwg-guideline-warfarin .tag");
-    assertEquals(1, tags.size());
+    assertEquals(2, tags.size());
 
     Elements phenotype = document.select(".cpic-guideline-warfarin .rx-phenotype");
     assertEquals(0, phenotype.size());
     phenotype = document.select(".dpwg-guideline-warfarin .rx-phenotype");
-    assertEquals(1, phenotype.size());
+    assertEquals(2, phenotype.size());
 
     Elements activityScore = document.select(".cpic-guideline-warfarin .rx-activity");
     assertEquals(0, activityScore.size());
     activityScore = document.select(".dpwg-guideline-warfarin .rx-activity");
-    assertEquals(0, activityScore.size());
+    assertEquals(2, activityScore.size());
   }
 
   private Path printReport(TestInfo testInfo, ReportContext reportContext) throws Exception {

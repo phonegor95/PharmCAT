@@ -18,7 +18,7 @@ This branch adds comprehensive Chinese translation support to PharmCAT, enabling
 
 3. **Chinese Prescribing Guidance**: Full support for Chinese prescribing guidance content
 
-## Quick Start
+## 🎯 Quick Start
 
 ### Prerequisites
 
@@ -26,35 +26,91 @@ This branch adds comprehensive Chinese translation support to PharmCAT, enabling
 - Docker
 - Gradle (included via wrapper)
 
-### Running the Pipeline
+### Recommended: Using Online Docker Image
 
-Use the provided script to compile and run PharmCAT with Chinese translation:
+The fastest way to use PharmCAT with Chinese translation:
 
 ```bash
-# Full build and run
-./run_pharmcat_chinese.sh -i PT_04.filtered.vcf.gz
+# Run with online Docker image (recommended - always up to date)
+./run_pharmcat_chinese.sh -i your_file.vcf.gz
 
-# Skip build if already compiled
-./run_pharmcat_chinese.sh --skip-build -i PT_04.filtered.vcf.gz
+# Quick run without updating image
+./run_pharmcat_chinese.sh --skip-pull -i your_file.vcf.gz
+
+# Show Docker image information
+./run_pharmcat_chinese.sh --info
+```
+
+### Alternative: Local Build
+
+```bash
+# Build locally instead of pulling from Docker Hub
+./run_pharmcat_chinese.sh --build-local -i your_file.vcf.gz
 
 # Show help
 ./run_pharmcat_chinese.sh --help
 ```
 
-### Manual Steps
+### Command Aliases (Optional)
+
+For convenience, you can set up aliases:
+
+```bash
+# Add to your ~/.bashrc or ~/.zshrc
+alias pharmcat-cn='./run_pharmcat_chinese.sh'
+alias pharmcat-test-cn='./test_chinese_translation.sh'
+
+# Then use:
+pharmcat-cn -i your_file.vcf.gz
+```
+
+## 📋 Usage Examples
+
+### Basic Usage
+
+```bash
+# Run with default file
+./run_pharmcat_chinese.sh
+
+# Run with specific VCF file
+./run_pharmcat_chinese.sh -i your_file.vcf.gz
+
+# Skip image pull/update (faster for repeated runs)
+./run_pharmcat_chinese.sh --skip-pull -i your_file.vcf.gz
+```
+
+### Advanced Usage
+
+```bash
+# Build Docker image locally
+./run_pharmcat_chinese.sh --build-local -i your_file.vcf.gz
+
+# Show Docker image details
+./run_pharmcat_chinese.sh --info
+
+# Test Chinese translation features
+./test_chinese_translation.sh
+```
+
+### Manual Docker Commands
 
 If you prefer to run steps manually:
 
 ```bash
-# 1. Compile PharmCAT
+# 1. Pull the online Docker image
+sudo docker pull phonegor95/pharmcat:chinese
+
+# 2. Run pipeline directly
+sudo docker run --rm \
+  -v $(pwd):/pharmcat/data \
+  phonegor95/pharmcat:chinese \
+  pharmcat_pipeline "data/your_file.vcf.gz" \
+  --missing-to-ref -G -reporterHtml -reporterJson
+
+# 3. Build locally (optional)
 ./gradlew clean shadowJar
 cp build/libs/pharmcat-*-all.jar build/pharmcat.jar
-
-# 2. Build Docker image
-sudo docker build --network=host -t pcat .
-
-# 3. Run pipeline
-sudo docker run --rm -v $(pwd):/pharmcat/data pcat pharmcat_pipeline data/PT_04.filtered.vcf.gz --missing-to-ref -G -reporterHtml -reporterJson
+sudo docker build --network=host -t phonegor95/pharmcat:chinese .
 ```
 
 ## Configuration
@@ -139,24 +195,90 @@ After running the pipeline, you'll find:
 - `*.phenotype.json` - Phenotype calling results
 - `*.match_warnings.txt` - Any matching warnings
 
-## Troubleshooting
+## 🔧 Chinese Translation Setup (Optional)
+
+### Default Configuration
+
+To make Chinese translation the default for all operations:
+
+```bash
+# Set environment variables in your shell profile (~/.bashrc or ~/.zshrc)
+export PHARMCAT_LANG=zh-CN
+export PHARMCAT_TRANSLATION=chinese
+export PHARMCAT_DOCKER_IMAGE=phonegor95/pharmcat:chinese
+
+# Create convenient aliases
+alias pharmcat-cn='./run_pharmcat_chinese.sh'
+alias pharmcat-test-cn='./test_chinese_translation.sh'
+alias pharmcat-quick='./run_pharmcat_chinese.sh --skip-pull'
+
+# Reload your shell
+source ~/.bashrc  # or source ~/.zshrc
+```
+
+### File Structure
+
+```
+PharmCAT/
+├── run_pharmcat_chinese.sh          # Unified Chinese translation script
+├── test_chinese_translation.sh      # Test script
+├── setup_contribution.sh            # Git setup for contributing
+├── README_Chinese.md                # This documentation
+└── CONTRIBUTING_Chinese.md          # Contribution guide
+```
+
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
 1. **Java Version**: Ensure Java 17+ is installed and set as default
+   ```bash
+   java -version  # Should show 17 or higher
+   ```
+
 2. **Docker Permissions**: The script uses `sudo docker` - ensure your user has Docker access
-3. **File Permissions**: Make sure the script is executable: `chmod +x run_pharmcat_chinese.sh`
+   ```bash
+   sudo usermod -aG docker $USER
+   newgrp docker
+   ```
+
+3. **File Permissions**: Make sure scripts are executable
+   ```bash
+   chmod +x run_pharmcat_chinese.sh test_chinese_translation.sh
+   ```
+
+4. **Docker Not Available**: Install Docker first
+   ```bash
+   # On Ubuntu/Debian
+   sudo apt-get update
+   sudo apt-get install docker.io
+   ```
 
 ### Verification
 
 To verify Chinese translations are working:
 
 ```bash
+# Run the test script
+./test_chinese_translation.sh
+
 # Check for Chinese drug names in section headers
 grep -o '<h3 id="[^"]*">[^<]*</h3>' *.report.html
 
 # Check for Chinese phenotypes in prescribing recommendations
 grep -A 5 -B 5 "rx-phenotype" *.report.html | grep -E "(慢代谢型|正常代谢型|中等代谢型)"
+```
+
+### Reset to Defaults
+
+If you need to reset or reconfigure:
+
+```bash
+# Pull fresh Docker image
+sudo docker pull phonegor95/pharmcat:chinese
+
+# Rebuild locally if needed
+./run_pharmcat_chinese.sh --build-local -i your_file.vcf.gz
 ```
 
 ## Contributing

@@ -87,11 +87,11 @@ def find_regions_file(pharmcat_positions: Path, must_exist: bool = True) -> Path
     return regions_file
 
 
-def run(command: List[str]):
+def run(command: List[str]) -> subprocess.CompletedProcess:
     try:
         # 'check=True' raises a 'CalledProcessError' if the subprocess does not complete
         # 'stdout=subprocess.PIPE' print out the output/stdout from the subprocess
-        subprocess.run(command, check=True, capture_output=True, universal_newlines=True)
+        return subprocess.run(command, check=True, capture_output=True, universal_newlines=True)
     except FileNotFoundError:
         raise ReportableException('Error: %s not found' % command[0])
     except subprocess.TimeoutExpired:
@@ -261,27 +261,28 @@ def validate_file(file: Union[Path, str]) -> Path:
         if file.exists():
             raise ReportableException("Error: %s is not a file" % file)
         else:
-            raise ReportableException("Error: %s does not exist" % file)
+            raise ReportableException("Error: File '%s' does not exist" % file)
     return file
 
 
-def find_vcf_files(vcf_dir: Path, verbose: int = 0) -> List[Path]:
+def find_vcf_or_bcf_files(vcf_dir: Path, verbose: int = 0) -> List[Path]:
     """
-    Finds all VCF files in the specified directory.
-    VCF file can be compressed (either .bgz or .gz extension).
+    Finds all VCF/BCF files in the specified directory.
+    File can be compressed (either .bgz or .gz extension for VCF, .bgzf for BCF).
+    If the file exists in both BCF and VCF form, pick the BCF form.
     If the file exists in both compressed and uncompressed form, pick the compressed form.
 
-    :raises ReportableException: if no VCF files can be found
+    :raises ReportableException: if no VCF/BCF files can be found
     """
     if not vcf_dir.is_dir():
         raise ReportableException('%s is not a directory' % vcf_dir)
     if verbose:
-        print('Looking for VCF files in', str(vcf_dir.absolute()))
+        print('Looking for VCF/BCF files in', str(vcf_dir.absolute()))
     vcf_dict: dict[str, List[str]] = {}
     for f in vcf_dir.iterdir():
         if f.is_file():
-            if is_vcf_file(f.name):
-                vcf_basename = get_vcf_basename(f.name)
+            if is_vcf_or_bcf_file(f.name):
+                vcf_basename = get_vcf_or_bcf_basename(f.name)
                 if vcf_basename in vcf_dict:
                     vcf_dict[vcf_basename].append(f.name)
                 else:
@@ -309,6 +310,10 @@ def find_vcf_files(vcf_dir: Path, verbose: int = 0) -> List[Path]:
         vcfs: List[str] = vcf_dict[basename]
         if len(vcfs) == 1:
             vcf_files.append(vcf_dir / vcfs[0])
+        elif (basename + '.bcf.bgzf') in vcfs:
+            vcf_files.append(vcf_dir / (basename + '.bcf.bgzf'))
+        elif (basename + '.bcf') in vcfs:
+            vcf_files.append(vcf_dir / (basename + '.bcf'))
         elif (basename + '.vcf.bgz') in vcfs:
             vcf_files.append(vcf_dir / (basename + '.vcf.bgz'))
         elif (basename + '.vcf.gz') in vcfs:
@@ -333,11 +338,17 @@ def find_file(filename: str, dirs: List[Path]) -> Optional[Path]:
     return file
 
 
-def is_vcf_file(file: Union[Path, str]):
-    return re.search('\\.vcf(\\.b?gz)?$', str(file)) is not None
+def is_vcf_or_bcf_file(file: Union[Path, str]):
+    return re.search('\\.((vcf(\\.b?gz)?)|(bcf(\\.bgzf)?))$', str(file)) is not None
+
+def is_bcf_file(file: Union[Path, str]):
+    return re.search('\\.bcf(\\.bgzf)?$', str(file)) is not None
 
 
 def is_gvcf_file(file: Path):
+    # BCF files cannot implement gVCF format
+    if is_bcf_file(file):
+        return False
     return re.search('\\.(g|genomic)\\.vcf(\\.b?gz)?', str(file)) or _is_gvcf_file(file)
 
 
@@ -395,15 +406,15 @@ def _check_for_gvcf(in_f) -> bool:
     return False
 
 
-def get_vcf_basename(path: Union[Path, str]) -> str:
+def get_vcf_or_bcf_basename(path: Union[Path, str]) -> str:
     """
-    Gets the base filename of a VCF file (can be compressed).
+    Gets the base filename of a VCF or BCF file (can be compressed).
 
     :raises InappropriateVCFSuffix: if the file does not have the expected file extension
     """
     if not isinstance(path, Path):
         path = Path(path)
-    match = re.search('(.+?)((\\.pgx_regions)|(\\.normalized))*\\.vcf(\\.b?gz)?$', path.name)
+    match = re.search('^(.+?)((\\.pgx_regions)|(\\.normalized))*\\.((bcf(\\.bgzf)?)|(vcf(\\.b?gz)?))$', path.name)
     if not match:
         raise InappropriateVCFSuffix(path)
     return match.group(1)
@@ -441,11 +452,12 @@ def read_sample_file(sample_file: Path, verbose: int = 0) -> List[str]:
 
 def read_vcf_samples(vcf_file: Path, verbose: int = 0) -> List[str]:
     """
-    Obtain a list of samples from the input VCF.
+    Get a list of samples from the input VCF.
 
-    "bcftools query <options> <input_vcf>". For bcftools common options, see running_bcftools().
+    "bcftools query <options> <input_vcf>".
     "-l" list sample names and exit.
-    Samples are delimited by '\\\\n' and the last line ends as 'last_sample_ID\\\\n\\\\n'.
+    For bcftools common options, see running_bcftools().
+    Samples are delimited by '\n' and the last line ends as 'last_sample_ID\n\n'.
     """
 
     if verbose:
@@ -598,7 +610,7 @@ def download_reference_fasta_and_index(download_dir: Union[Path, str], force_upd
     tar_file = download_from_url('https://zenodo.org/record/7288118/files/GRCh38_reference_fasta.tar',
                                  download_dir, force_update, verbose)
     with tarfile.open(tar_file, 'r') as tar:
-        tar.extractall(path=download_dir)
+        tar.extractall(path=download_dir, filter='data')
     os.remove(tar_file)
 
     return ref_file
@@ -673,10 +685,11 @@ def create_uniallelic_vcf(uniallelic_positions_vcf: Path, pharmcat_positions_vcf
     # convert PharmCAT PGx variants to the uniallelic format needed for extracting exact PGx positions
     # and generating an accurate missing report
     bcftools_command = [common.BCFTOOLS_PATH, 'norm', '--no-version', '-m-', '-c', 'ws', '-f',
-                        str(reference_genome_fasta), '-Oz', '-o', str(uniallelic_positions_vcf),
+                        str(reference_genome_fasta), '-Ob', '-W', '-o', str(uniallelic_positions_vcf),
                         str(pharmcat_positions_vcf)]
     run(bcftools_command)
-    index_vcf(uniallelic_positions_vcf, verbose)
+    # handle with the -W flag to bcftools
+    #index_vcf(uniallelic_positions_vcf, verbose)
 
 
 def create_regions_file(regions_file: Path, pharmcat_positions_vcf: Path, verbose: int = 0):
@@ -707,9 +720,25 @@ def create_regions_file(regions_file: Path, pharmcat_positions_vcf: Path, verbos
 
 def _is_valid_chr(vcf_file: Path) -> bool:
     """
-    Quick check to see if CHROM column uses our expected chr format.
-    This ONLY CHECKS THE FIRST non-comment line!
+    Quick check to see if the CHROM column uses our expected chr format.
     """
+    if is_bcf_file(vcf_file):
+        # if BCF, use bcftools head and check contig header - ONLY CHECKING THE FIRST CONTIG HEADER!
+        bcftools_command = [common.BCFTOOLS_PATH, 'head', str(vcf_file)]
+        headers = run(bcftools_command).stdout
+        for line in headers.splitlines():
+            ##contig=<ID=chr1,assembly=hg38,species="Homo sapiens">
+            got_chr = re.search('##contig=<ID=(.+?)(,.+)?>$', line)
+            if got_chr is not None:
+                if got_chr.group(1) in _chr_lengths:
+                    return True
+                elif got_chr.group(1) in _chr_invalid_dict:
+                    return False
+                else:
+                    raise ReportableException('The CHROM column does not conform with either "chr##" or "##" format.')
+        raise ReportableException('Cannot find contig header in BCF file.')
+
+    # if VCF, ONLY CHECKING THE FIRST NON-COMMENT LINE!
     with gzip.open(vcf_file, mode='rt', encoding='utf-8') as in_f:
         for line in in_f:
             if line[0] != '#':
@@ -743,7 +772,7 @@ def extract_pgx_regions(vcf_files: List[Path], samples: List[str],
             for sample in samples:
                 w.write('%s\n' % sample)
 
-        pgx_region_vcf_file: Path = output_dir / (output_basename + '.pgx_regions.vcf.bgz')
+        pgx_region_vcf_file: Path = output_dir / (output_basename + '.pgx_regions.bcf.bgzf')
         if len(vcf_files) == 1:
             # this should create pgx_region_vcf_file
             _extract_pgx_regions(vcf_files[0], tmp_sample_file, output_dir, output_basename, regions_to_retain, verbose)
@@ -756,14 +785,14 @@ def extract_pgx_regions(vcf_files: List[Path], samples: List[str],
                     futures = []
                     for vcf_file in vcf_files:
                         futures.append(e.submit(_extract_pgx_regions, vcf_file, tmp_sample_file, output_dir,
-                                                get_vcf_basename(vcf_file), regions_to_retain, verbose))
+                                                get_vcf_or_bcf_basename(vcf_file), regions_to_retain, verbose))
                     concurrent.futures.wait(futures, return_when=ALL_COMPLETED)
                     for future in futures:
                         tmp_files.append(future.result())
             else:
                 for vcf_file in vcf_files:
                     tmp_files.append(_extract_pgx_regions(vcf_file, tmp_sample_file, output_dir,
-                                                          get_vcf_basename(vcf_file), regions_to_retain, verbose))
+                                                          get_vcf_or_bcf_basename(vcf_file), regions_to_retain, verbose))
             # write file names to txt file for bcftools
             tmp_file_list = tmp_dir / 'regions.txt'
             with open(tmp_file_list, 'w+') as w:
@@ -773,11 +802,11 @@ def extract_pgx_regions(vcf_files: List[Path], samples: List[str],
             # concatenate vcfs
             if verbose:
                 print('Concatenating PGx VCFs')
-            bcftools_command = [common.BCFTOOLS_PATH, 'concat', '--no-version', '-a', '-f', str(tmp_file_list), '-Oz',
-                                '-o', str(pgx_region_vcf_file)]
+            bcftools_command = [common.BCFTOOLS_PATH, 'concat', '--no-version', '-a', '-f', str(tmp_file_list), '-Ob',
+                                '-W', '-o', str(pgx_region_vcf_file)]
             run(bcftools_command)
-            # index the VCF file
-            index_vcf(pgx_region_vcf_file, verbose)
+            # index the VCF file (handle with the -W flag to bcftools)
+            #index_vcf(pgx_region_vcf_file, verbose)
 
         return pgx_region_vcf_file
 
@@ -809,16 +838,16 @@ def _extract_pgx_regions(vcf_file: Path, sample_file: Path, output_dir: Path, ou
 
     # extract pgx regions and modify chromosome names if necessary
     if output_basename is None:
-        output_basename = get_vcf_basename(vcf_file)
-    pgx_regions_vcf = output_dir / (output_basename + '.pgx_regions.vcf.bgz')
+        output_basename = get_vcf_or_bcf_basename(vcf_file)
+    pgx_regions_vcf = output_dir / (output_basename + '.pgx_regions.bcf.bgzf')
     bcftools_command = [common.BCFTOOLS_PATH, 'annotate', '--no-version', '-S', str(sample_file),
                         '--rename-chrs', str(common.CHR_RENAME_FILE), '-r', pgx_regions, '-i', 'ALT="."', '-k',
-                        '-Oz', '-o', str(pgx_regions_vcf), str(bgz_file)]
+                        '-Ob', '-W', '-o', str(pgx_regions_vcf), str(bgz_file)]
     if verbose:
         print('* Extracting PGx regions and normalizing chromosome names')
     run(bcftools_command)
-    # index the PGx VCF file
-    index_vcf(pgx_regions_vcf, verbose)
+    # index the PGx VCF file (handle with the -W flag to bcftools)
+    # index_vcf(pgx_regions_vcf, verbose)
     return pgx_regions_vcf
 
 
@@ -835,7 +864,7 @@ def normalize_vcf(reference_genome: Path, vcf_file: Path, output_dir: Path, outp
     alleles and update GT and AC counts. Importantly, 's' will NOT fix strand issues in a VCF.
     """
     if output_basename is None:
-        output_basename = get_vcf_basename(vcf_file)
+        output_basename = get_vcf_or_bcf_basename(vcf_file)
     normalized_vcf = output_dir / (output_basename + '.normalized.vcf.bgz')
     bcftools_command = [common.BCFTOOLS_PATH, 'norm', '--no-version', '-m-', '-c', 'ws',
                         '-Oz', '-o', str(normalized_vcf),
@@ -847,16 +876,17 @@ def normalize_vcf(reference_genome: Path, vcf_file: Path, output_dir: Path, outp
     return normalized_vcf
 
 
-def _is_phased(gt_field) -> bool:
+def _is_phased(gt_field) -> bool | None:
     """
     Determines the phasing status of a position.
-    If any GT fields have '/', this means at least one sample is unphased.
+    If any GT fields have a '/', this means at least one sample is unphased.
     """
     for x in gt_field:
         if '/' in x:
             return False
         else:
             return True
+    return None
 
 
 def _is_haploid(gt_field) -> bool:
@@ -914,11 +944,12 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
         if custom_regions:
             selected_positions_only_bgz: Path = vcf_file
         else:
-            # extracting PGx positions from input using "bcftools view"
+            # extracting PGx positions from input using "bcftools view" - must be in VCF format
             selected_positions_only_bgz: Path = tmp_dir / (output_basename + '.selected_positions_or_regions.vcf.bgz')
-            run([common.BCFTOOLS_PATH, 'view', '--no-version', '-T', str(uniallelic_positions_vcf), '-Oz',
+            run([common.BCFTOOLS_PATH, 'view', '--no-version', '-T', str(uniallelic_positions_vcf), '-Oz', '-W',
                  '-o', str(selected_positions_only_bgz), str(vcf_file)])
-            index_vcf(selected_positions_only_bgz, verbose)
+            # handle with the -W flag to bcftools
+            #index_vcf(selected_positions_only_bgz, verbose)
 
         # add in missing multi-allelic variants as '0|0'
         # bcftools will take care of the rest (sorting, normalization, etc.)
@@ -1156,14 +1187,16 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
         # sort vcf
         if verbose:
             print('* Sorting by chromosomal location...')
-        sorted_bgz: Path = tmp_dir / (output_basename + '.sorted.vcf.bgz')
-        bcftools_command = [common.BCFTOOLS_PATH, 'sort', '-Oz', '-o', str(sorted_bgz), str(updated_pgx_pos_vcf)]
+        sorted_bgz: Path = tmp_dir / (output_basename + '.sorted.bcf.bgzf')
+        bcftools_command = [common.BCFTOOLS_PATH, 'sort', '-Ob', '-W', '-o', str(sorted_bgz), str(updated_pgx_pos_vcf)]
         run(bcftools_command)
-        index_vcf(sorted_bgz, verbose)
+        # handle with the -W flag to bcftools
+        #index_vcf(sorted_bgz, verbose)
 
         # make sure the output complies with the multi-allelic format
         if verbose:
             print('* Enforcing multi-allelic variant representation...')
+        # must be in VCF format
         normed_bgz: Path = tmp_dir / (output_basename + '.normed.vcf.bgz')
         run([common.BCFTOOLS_PATH, 'norm', '--no-version', '-m+', '-c', 'ws', '-f', str(reference_fasta), '-Oz',
              '-o', str(normed_bgz), str(sorted_bgz)])

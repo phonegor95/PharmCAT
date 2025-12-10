@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Splitter;
 import org.jspecify.annotations.Nullable;
 import org.pharmgkb.common.util.CliHelper;
 import org.pharmgkb.pharmcat.BaseConfig;
@@ -50,6 +51,7 @@ public class NamedAlleleMatcher {
       "RYR1",
       "TPMT"
   );
+  private static final Splitter sf_commaSplitter = Splitter.on(",").trimResults().omitEmptyStrings();
 
   private final Env m_env;
   private final DefinitionReader m_definitionReader;
@@ -96,6 +98,7 @@ public class NamedAlleleMatcher {
     try {
       CliHelper cliHelper = new CliHelper(MethodHandles.lookup().lookupClass())
           .addOption("vcf", "matcher-vcf", "input VCF file", true, "vcf")
+          .addOption("g", "genes", "Comma-separated list of genes", false, "genes")
           .addOption("a", "all-results", "return all possible diplotypes, not just top hits")
           // optional data
           .addOption("d", "definitions-dir", "directory containing named allele definitions (JSON files)", false, "dir")
@@ -109,7 +112,10 @@ public class NamedAlleleMatcher {
           ;
 
       if (!cliHelper.parse(args)) {
-        System.exit(1);
+        if (!cliHelper.isHelpRequested() && !cliHelper.isVersionRequested()) {
+          CliUtils.failIfNotTest();
+        }
+        return;
       }
 
       Path vcfFile = cliHelper.getValidFile("vcf", false);
@@ -120,7 +126,15 @@ public class NamedAlleleMatcher {
         definitionDir = DataManager.DEFAULT_DEFINITION_DIR;
       }
 
-      DefinitionReader definitionReader = new DefinitionReader(definitionDir);
+      SortedSet<String> genes = new TreeSet<>();
+      if (cliHelper.hasOption("g")) {
+        List<String> values = cliHelper.getValues("g");
+        for (String v : values) {
+          sf_commaSplitter.splitToList(v).forEach(g -> genes.add(g.toUpperCase()));
+        }
+      }
+
+      DefinitionReader definitionReader = new DefinitionReader(definitionDir, genes);
       if (definitionReader.getGenes().isEmpty()) {
         System.out.println("Did not find any allele definitions at " + definitionDir);
         System.exit(1);
@@ -304,24 +318,69 @@ public class NamedAlleleMatcher {
     MatchData workingData = origData;
     if (gene.equals("DPYD")) {
       dpydHapB3Matcher = new DpydHapB3Matcher(m_env, alleleMap, origData);
-      if (!dpydHapB3Matcher.isMissingHapB3Positions()) {
+      if (dpydHapB3Matcher.hasHapB3Variants()) {
         workingData = initializeDpydCallData(sampleId, alleleMap, true, false);
       }
     }
 
     // try for diplotypes if effectively phased
     if (origData.isEffectivelyPhased()) {
-      // first look for exact matches (use topCandidateOnly = false because looking for exact match)
+      // look for exact matches (use topCandidateOnly = false because looking for exact match)
       SortedSet<DiplotypeMatch> diplotypeMatches = new DiplotypeMatcher(m_env, workingData)
           .compute(false, false);
-      if (!diplotypeMatches.isEmpty()) {
-        if (dpydHapB3Matcher != null && !dpydHapB3Matcher.isMissingHapB3Positions()) {
+      if (dpydHapB3Matcher != null && dpydHapB3Matcher.hasHapB3Variants()) {
+        // must add HapB3 call
+        if (!diplotypeMatches.isEmpty()) {
+          // has matches, add HapB3 call
           MatchData mergerData = initializeCallData(sampleId, alleleMap, gene, false, false);
-          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.mergePhasedDiplotypeMatch(mergerData, diplotypeMatches);
+          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.mergePhasedHapB3Call(mergerData, diplotypeMatches);
           resultBuilder.diplotypes(gene, mergerData, mergedMatches, dpydHapB3Matcher.getWarnings());
-        } else {
-          resultBuilder.diplotypes(gene, workingData, diplotypeMatches);
+          return;
+        } else if (!dpydHapB3Matcher.hasNonHapB3Variants()) {
+          // no matches (so reference everywhere else) - only has HapB3
+          MatchData mergerData = initializeCallData(sampleId, alleleMap, gene, false, false);
+          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.addPhasedHapB3CallToRef(mergerData);
+          resultBuilder.diplotypes(gene, mergerData, mergedMatches, dpydHapB3Matcher.getWarnings());
+          return;
         }
+      }
+      // default behavior (including DPYD when there are no HapB3 variants)
+      if (!diplotypeMatches.isEmpty()) {
+        resultBuilder.diplotypes(gene, workingData, diplotypeMatches);
+        return;
+      }
+    }
+
+    // try for diplotypes with combinations
+    if (origData.isEffectivelyPhased() || origData.isUsingPhaseSets()) {
+      MatchData comboData;
+      if (dpydHapB3Matcher != null && dpydHapB3Matcher.hasHapB3Variants()) {
+        comboData = initializeDpydCallData(sampleId, alleleMap, false, true);
+      } else {
+        comboData = initializeCallData(sampleId, alleleMap, gene, false, true);
+      }
+      // look for combinations
+      SortedSet<DiplotypeMatch> diplotypeMatches = new DiplotypeMatcher(m_env, comboData)
+          .compute(true, false);
+      if (dpydHapB3Matcher != null && dpydHapB3Matcher.hasHapB3Variants()) {
+        // must add HapB3 call
+        if (!diplotypeMatches.isEmpty()) {
+          MatchData mergerData = initializeCallData(sampleId, alleleMap, gene, false, false);
+          diplotypeMatches = dpydHapB3Matcher.fixPartials(mergerData, diplotypeMatches);
+          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.mergePhasedHapB3Call(mergerData, diplotypeMatches);
+          resultBuilder.diplotypes(gene, mergerData, mergedMatches, dpydHapB3Matcher.getWarnings());
+          return;
+        } else if (!dpydHapB3Matcher.hasNonHapB3Variants()) {
+          // no matches (so reference everywhere else) - only has HapB3
+          MatchData mergerData = initializeCallData(sampleId, alleleMap, gene, false, false);
+          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.addPhasedHapB3CallToRef(mergerData);
+          resultBuilder.diplotypes(gene, mergerData, mergedMatches, dpydHapB3Matcher.getWarnings());
+          return;
+        }
+      }
+      // default behavior (including DPYD when there are no HapB3 variants)
+      if (!diplotypeMatches.isEmpty()) {
+        resultBuilder.diplotypes(gene, comboData, diplotypeMatches);
         return;
       }
     }
@@ -337,14 +396,23 @@ public class NamedAlleleMatcher {
         .compute(true, false, false);
     if (!comboDipMatches.isEmpty()) {
       if (origData.isEffectivelyPhased() || comboData.isUsingPhaseSets()) {
-        if (dpydHapB3Matcher != null && !dpydHapB3Matcher.isMissingHapB3Positions()) {
+        if (dpydHapB3Matcher != null && dpydHapB3Matcher.hasHapB3Variants()) {
           MatchData mergerData = initializeCallData(sampleId, alleleMap, gene, false, true);
-          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.mergePhasedDiplotypeMatch(mergerData, comboDipMatches);
+          SortedSet<DiplotypeMatch> mergedMatches = dpydHapB3Matcher.mergePhasedHapB3Call(mergerData, comboDipMatches);
           resultBuilder.diplotypes(gene, mergerData, mergedMatches, dpydHapB3Matcher.getWarnings());
         } else {
           resultBuilder.diplotypes(gene, comboData, comboDipMatches);
         }
         return;
+      } else {
+        // any unphased diplotype matches would be handled here
+        // TODO(markwoon): consider reporting all diplotypes, and letting reporter pick lowest function
+        // TODO(markwoon): this is a more reliable way of dealing with possible strand combinations
+        // the following commented out code would merge HapB3 calls into the diplotype results,
+        // but is not compatible with how DpydHapB3Matcher.callHapBeHaplotypes() works
+//      } else if (dpydHapB3Matcher != null && dpydHapB3Matcher.hasHapB3Variants()) {
+//        comboData = initializeCallData(sampleId, alleleMap, gene, false, true);
+//        comboDipMatches = dpydHapB3Matcher.mergePhasedHapB3Call(comboData, comboDipMatches);
       }
     }
 
@@ -360,17 +428,14 @@ public class NamedAlleleMatcher {
   private List<HaplotypeMatch> callHaplotypesForLowestFunctionGene(MatchData comboData,
       SortedSet<DiplotypeMatch> matches, @Nullable DpydHapB3Matcher dpydHapB3Matcher) {
 
-    // use diplotypes to check for homozygous and partials
-    Set<String> homozygous = new HashSet<>();
-    int numPartials = 0;
-    for (DiplotypeMatch dm : matches) {
-      // TODO(markwoon): don't bother counting partials because we're not looking for them
-      // TODO(markwoon): we might want to reconsider this
-//      if (dm.getHaplotype1().getHaplotype().isPartial() ||
-//          (dm.getHaplotype2() != null && dm.getHaplotype2().getHaplotype().isPartial())) {
-//        numPartials += 1;
-//      }
+    if (dpydHapB3Matcher != null) {
+      // must call regardless of whether we have HapB3Variants because it initializes variables used later
+      dpydHapB3Matcher.callHapB3HaplotypeMatches();
+    }
 
+    // check if any haplotype(s) show up on both strands in any diplotype
+    Set<String> homozygous = new HashSet<>();
+    for (DiplotypeMatch dm : matches) {
       Map<String, Integer> haps = new HashMap<>();
       for (String h : dm.getHaplotype1().getHaplotypeNames()) {
         if (!dm.getHaplotype1().getHaplotype().isPartial() || !h.equals(TextConstants.REFERENCE)) {
@@ -405,7 +470,7 @@ public class NamedAlleleMatcher {
     if (dpydHapB3Matcher != null) {
       numMatches += dpydHapB3Matcher.getNumHapB3Called();
     }
-    if (numMatches > 2 || numPartials > 0) {
+    if (numMatches > 2) {
       hapMatches = hapMatches.stream()
           .filter(m -> !m.getName().equals(TextConstants.REFERENCE))
           .collect(Collectors.toCollection(TreeSet::new));
@@ -449,7 +514,7 @@ public class NamedAlleleMatcher {
     }
 
     // grab SampleAlleles for all positions related to the current gene
-    MatchData data = new MatchData(sampleId, gene, alleleMap, allPositions, extraPositions, null, exemption);
+    MatchData data = new MatchData(sampleId, gene, alleleMap, allPositions, extraPositions, exemption);
     if (data.getNumSampleAlleles() == 0) {
       return data;
     }
@@ -467,6 +532,9 @@ public class NamedAlleleMatcher {
   }
 
 
+  /**
+   * Removes HapB3 NamedAlleles from {@link MatchData}.
+   */
   private MatchData initializeDpydCallData(String sampleId, SortedMap<String, SampleAllele> alleleMap,
       boolean assumeReference, boolean findCombinations) {
 
@@ -483,16 +551,9 @@ public class NamedAlleleMatcher {
     if (exemption != null) {
       extraPositions = exemption.getExtraPositions();
     }
-    SortedSet<VariantLocus> unusedPositions = new TreeSet<>();
-    // add HapB3 positions to ignore
-    for (VariantLocus vl : allPositions) {
-      if (DpydHapB3Matcher.isHapB3Rsid(vl.getRsid())) {
-        unusedPositions.add(vl);
-      }
-    }
 
     // grab SampleAlleles for all positions related to the current gene
-    MatchData data = new MatchData(sampleId, gene, alleleMap, allPositions, extraPositions, unusedPositions, exemption);
+    MatchData data = new MatchData(sampleId, gene, alleleMap, allPositions, extraPositions, exemption);
     if (data.getNumSampleAlleles() == 0) {
       return data;
     }

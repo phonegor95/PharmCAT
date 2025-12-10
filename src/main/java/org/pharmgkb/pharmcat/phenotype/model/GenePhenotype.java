@@ -88,7 +88,7 @@ public class GenePhenotype {
     return newMap;
   }
 
-  public void assignActivity(Haplotype haplotype) {
+  public void assignActivity(@Nullable Haplotype haplotype) {
     if (haplotype == null || haplotype.isUnknown()) {
       return;
     }
@@ -180,20 +180,20 @@ public class GenePhenotype {
 
   public void addHaplotypeRecord(String name, @Nullable String activityValue, @Nullable String functionValue,
       @Nullable String lookupKey) {
-    if (lookupKey == null) {
-      lookupKey = isActivityGene() ? activityValue : functionValue;
-    }
     if (isActivityGene()) {
       if (activityValue == null) {
         throw new IllegalStateException("Cannot add activity gene haplotype without activity value");
+      }
+      if (lookupKey == null) {
+        lookupKey = activityValue;
       }
     } else {
       if (functionValue == null) {
         throw new IllegalStateException("Cannot add function gene haplotype without function value");
       }
-    }
-    if (lookupKey == null) {
-      throw new IllegalStateException("Cannot add haplotype without lookupKey");
+      if (lookupKey == null) {
+        lookupKey = functionValue;
+      }
     }
     HaplotypeRecord hr = new HaplotypeRecord(name, activityValue, functionValue, lookupKey);
     m_namedAlleles.add(hr);
@@ -271,11 +271,11 @@ public class GenePhenotype {
    * <p>
    * NOT PART OF PUBLIC API.  Only used during data ingestion.
    */
-  public void generateDiplotypes(DataSource source) {
-    m_diplotypes = new TreeSet<>(makeDiplotypes(this, source));
+  public void generateDiplotypes() {
+    m_diplotypes = new TreeSet<>(makeDiplotypes(this));
   }
 
-  private static Set<DiplotypeRecord> makeDiplotypes(GenePhenotype gp, DataSource source) {
+  private static Set<DiplotypeRecord> makeDiplotypes(GenePhenotype gp) {
     Set<DiplotypeRecord> results = new HashSet<>();
     Multimap<String,String> functionToAlleleMap = HashMultimap.create();
     for (HaplotypeRecord haplotype : gp.getNamedAlleles()) {
@@ -283,7 +283,7 @@ public class GenePhenotype {
     }
 
     for (DiplotypeFunction diplotypeFunction : gp.getDiplotypeFunctions()) {
-      results.addAll(makeDiplotypes(diplotypeFunction, functionToAlleleMap, Constants.isActivityScoreGene(gp.getGene(), source)));
+      results.addAll(makeDiplotypes(diplotypeFunction, functionToAlleleMap, Constants.isActivityScoreGene(gp.getGene())));
     }
     return results;
   }
@@ -323,7 +323,7 @@ public class GenePhenotype {
 
   private static DiplotypeRecord makeDiplotype(
       String phenotype, Map<String,Integer> phenotypeKey,
-      String allele1, @Nullable String allele2, String activityScore, String lookupKey
+      String allele1, @Nullable String allele2, @Nullable String activityScore, String lookupKey
   ) {
     String diplotypeName;
     if (allele2 == null) {
@@ -335,7 +335,8 @@ public class GenePhenotype {
           .collect(Collectors.joining("/"));
     }
 
-    return new DiplotypeRecord(phenotype, diplotypeName, null, phenotype, makeDiplotypeKey(allele1, allele2), activityScore, lookupKey);
+    return new DiplotypeRecord(phenotype, diplotypeName, null, phenotype, makeDiplotypeKey(allele1, allele2),
+        activityScore, lookupKey);
   }
 
   private static SortedMap<String, Integer> makeDiplotypeKey(String allele1, @Nullable String allele2) {

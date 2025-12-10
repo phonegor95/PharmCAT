@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
@@ -28,7 +29,6 @@ import org.pharmgkb.pharmcat.haplotype.DpydHapB3Matcher;
 import org.pharmgkb.pharmcat.reporter.MessageHelper;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.reporter.format.html.ReportHelpers;
-import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
 import org.pharmgkb.pharmcat.reporter.model.VariantReport;
 import org.pharmgkb.pharmcat.reporter.model.result.AnnotationReport;
@@ -87,11 +87,11 @@ class DpydTest {
   }
 
   static void dpydHasReports(PipelineWrapper testWrapper, RecPresence hasCpicReport, RecPresence hasDpwgReport) {
-    GeneReport cpicDpydGeneReport = testWrapper.getContext().getGeneReport(DataSource.CPIC, "DPYD");
+    GeneReport cpicDpydGeneReport = testWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(cpicDpydGeneReport);
     assertEquals(1, cpicDpydGeneReport.getRecommendationDiplotypes().size());
 
-    GeneReport dpwgDpydGeneReport = testWrapper.getContext().getGeneReport(DataSource.DPWG, "DPYD");
+    GeneReport dpwgDpydGeneReport = testWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(dpwgDpydGeneReport);
     assertEquals(1, dpwgDpydGeneReport.getRecommendationDiplotypes().size());
 
@@ -140,9 +140,9 @@ class DpydTest {
       }
     }
     testWrapper.testCalledByMatcher("DPYD");
-    testWrapper.testSourceDiplotypes(DataSource.CPIC, "DPYD", expectedCalls, cpicStyleCalls);
-    testWrapper.testRecommendedDiplotypes(DataSource.CPIC, "DPYD", recommendedDips);
-    testWrapper.testPrintCalls(DataSource.CPIC, "DPYD", cpicStyleCalls);
+    testWrapper.testSourceDiplotypes("DPYD", expectedCalls, cpicStyleCalls);
+    testWrapper.testRecommendedDiplotypes("DPYD", recommendedDips);
+    testWrapper.testPrintCalls("DPYD", cpicStyleCalls);
 
     dpydHasReports(testWrapper, hasDpwgAnnotations);
 
@@ -165,16 +165,15 @@ class DpydTest {
 
     doStandardChecks(testWrapper, vcfFile, expectedCalls, false);
 
-    GeneReport dpwgReport = testWrapper.getContext().getGeneReport(DataSource.DPWG, "DPYD");
+    GeneReport dpwgReport = testWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(dpwgReport);
     assertTrue(dpwgReport.getRecommendationDiplotypes().stream().flatMap((d) -> d.getLookupKeys().stream()).noneMatch(TextConstants::isUnspecified), "DPWG missing lookup key for DPYD");
 
-    // DPWG does not include the 1627 allele in function definition so use Reference for lookup
     String gene = "DPYD";
-    testWrapper.testRecommendedDiplotypes(DataSource.DPWG, gene, expectedCallsToRecommendedDiplotypes(List.of("Reference/c.1905+1G>A (*2A)")));
+    testWrapper.testRecommendedDiplotypes(gene, expectedCallsToRecommendedDiplotypes(expectedCalls));
     // all other diplotype usage can use the alleles as called
-    testWrapper.testSourceDiplotypes(DataSource.DPWG, gene, expectedCalls);
-    testWrapper.testPrintCalls(DataSource.DPWG, gene, expectedCalls);
+    testWrapper.testSourceDiplotypes(gene, expectedCalls);
+    testWrapper.testPrintCalls(gene, expectedCalls);
   }
 
 
@@ -203,7 +202,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("Reference/Reference");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, false);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, null, false, RecPresence.NO);
   }
 
 
@@ -270,31 +269,16 @@ class DpydTest {
 
       Elements cpicCapecitabineDips = capecitabineSection.select(".cpic-guideline-capecitabine .rx-dip");
       if (hasCpicAnnotation == RecPresence.YES) {
-        assertEquals(expectedRxCalls,
-            cpicCapecitabineDips.stream()
-                .map(e -> cleanupRxDip(e, List.of("DPYD")))
-                .toList());
-
+        htmlCheckHasRecs("cpic", "capecitabine", capecitabineSection, cpicCapecitabineDips, expectedRxCalls);
       } else {
-        assertEquals(0, cpicCapecitabineDips.size());
-        Elements unmatchedDips = capecitabineSection.select(".cpic-guideline-capecitabine .rx-unmatched-dip");
-        assertEquals(expectedRxCalls, unmatchedDips.stream()
-            .map(e -> cleanupRxDip(e, List.of("DPYD")))
-            .toList());
+        htmlCheckNoRecs("cpic", "capecitabine", capecitabineSection, cpicCapecitabineDips, expectedRxCalls);
       }
 
       Elements dpwgCapecitabineDips = capecitabineSection.select(".dpwg-guideline-capecitabine .rx-dip");
       if (hasDpwgAnnotation == RecPresence.YES) {
-        assertEquals(expectedRxCalls,
-            dpwgCapecitabineDips.stream()
-                .map(e -> cleanupRxDip(e, List.of("DPYD")))
-                .toList());
+        htmlCheckHasRecs("dpwg", "capecitabine", capecitabineSection, cpicCapecitabineDips, expectedRxCalls);
       } else {
-        assertEquals(0, dpwgCapecitabineDips.size());
-        Elements unmatchedDips = capecitabineSection.select(".dpwg-guideline-capecitabine .rx-unmatched-dip");
-        assertEquals(expectedRxCalls, unmatchedDips.stream()
-            .map(e -> cleanupRxDip(e, List.of("DPYD")))
-            .toList());
+        htmlCheckNoRecs("dpwg", "capecitabine", capecitabineSection, dpwgCapecitabineDips, expectedRxCalls);
       }
     }
 
@@ -305,6 +289,37 @@ class DpydTest {
     assertEquals(1, gsResult.size());
     if (noCall) {
       assertEquals(TextConstants.UNCALLED, gsResult.get(0).text());
+    }
+  }
+
+
+  private static void htmlCheckNoRecs(String src, String drug, Elements drugSection, Elements drugDips,
+      List<String> expectedRxCalls) {
+    if (drugDips.isEmpty()) {
+      Elements unmatchedDips = drugSection.select("." + src + "-guideline-" + drug + " .rx-unmatched-dip");
+      assertEquals(expectedRxCalls, unmatchedDips.stream()
+          .map(e -> cleanupRxDip(e, List.of("DPYD")))
+          .toList());
+    } else {
+      assertEquals(expectedRxCalls, drugDips.stream()
+          .map(e -> cleanupRxDip(e, List.of("DPYD")))
+          .toList());
+    }
+    Elements recommendation = drugSection.select("." + src + "-guideline-" + drug + " .drugRecClass");
+    assertEquals("No recommendation",  recommendation.get(0).text());
+  }
+
+  private static void htmlCheckHasRecs(String src, String drug, Elements drugSection, Elements drugDips,
+      List<String> expectedRxCalls) {
+
+    assertEquals(expectedRxCalls,
+        drugDips.stream()
+            .map(e -> cleanupRxDip(e, List.of("DPYD")))
+            .toList());
+    Elements recommendation = drugSection.select("." + src + "-guideline-" + drug + " .drugRecClass");
+    if ("No recommendation".equals(recommendation.get(0).text())) {
+      fail("Expected recommendation from " + src.toUpperCase() + " for " + drug + " but got '" +
+          recommendation.get(0).text() + "'");
     }
   }
 
@@ -326,8 +341,8 @@ class DpydTest {
         "c.2279C>T"
     );
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.1024G>A", "c.1314T>G"), false, RecPresence.NO);
-    testWrapper.testLookupByActivity(DataSource.CPIC, "DPYD", "0.5");
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.1024G>A", "c.1314T>G"), false, RecPresence.YES);
+    testWrapper.testLookupByActivity("DPYD", "0.5");
   }
 
   @Test
@@ -348,10 +363,10 @@ class DpydTest {
         "c.2846A>T"
     );
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.1024G>A", "c.2846A>T"),
-        false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.1024G>A", "c.1314T>G"),
+        false, RecPresence.YES);
 
-    testWrapper.testLookupByActivity(DataSource.CPIC, "DPYD", "0.5");
+    testWrapper.testLookupByActivity("DPYD", "0.5");
 
     // in this instance, tegafur should have only a DPWG annotation, but it has no matching guidance
     DrugReport tegafur = testWrapper.getContext().getDrugReport(PrescribingGuidanceSource.DPWG_GUIDELINE, "tegafur");
@@ -360,7 +375,7 @@ class DpydTest {
     assertTrue(tegafur.getGuidelines().stream().anyMatch(g -> g.getSource() == PrescribingGuidanceSource.DPWG_GUIDELINE));
     assertFalse(tegafur.getGuidelines().stream().anyMatch(g -> g.getSource() == PrescribingGuidanceSource.FDA_LABEL));
     assertFalse(tegafur.getGuidelines().stream().anyMatch(g -> g.getSource() == PrescribingGuidanceSource.FDA_ASSOC));
-    assertFalse(tegafur.isMatched());
+    assertTrue(tegafur.isMatched());
   }
 
   @Test
@@ -394,7 +409,7 @@ class DpydTest {
     highScoreWrapper.testCalledByMatcher("DPYD");
     highScoreWrapper.testPrintCpicCalls("DPYD", "c.2846A>T (heterozygous)");
     highScoreWrapper.testRecommendedDiplotypes("DPYD", "Reference", "c.2846A>T");
-    GeneReport highScoreDpydReport = highScoreWrapper.getContext().getGeneReport(DataSource.CPIC, "DPYD");
+    GeneReport highScoreDpydReport = highScoreWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(highScoreDpydReport);
     assertTrue(highScoreDpydReport.getRecommendationDiplotypes().stream().allMatch((d) -> d.getActivityScore().equals("1.5")));
 
@@ -415,7 +430,7 @@ class DpydTest {
     lowScoreWrapper.testCalledByMatcher("DPYD");
     lowScoreWrapper.testPrintCpicCalls("DPYD", "c.2846A>T/c.2846A>T");
     lowScoreWrapper.testRecommendedDiplotypes("DPYD", "c.2846A>T", "c.2846A>T");
-    GeneReport lowScoreDpydReport = lowScoreWrapper.getContext().getGeneReport(DataSource.CPIC, "DPYD");
+    GeneReport lowScoreDpydReport = lowScoreWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(lowScoreDpydReport);
     assertTrue(lowScoreDpydReport.getRecommendationDiplotypes().stream().allMatch((d) -> d.getActivityScore().equals("1.0")));
 
@@ -453,7 +468,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("[c.498G>A + c.2582A>G]/[c.2846A>T + c.2933A>G]");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.498G>A", "c.2933A>G"), false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.498G>A", "c.2933A>G"), false, RecPresence.YES);
   }
 
   /**
@@ -474,7 +489,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("c.498G>A", "c.2582A>G", "c.2846A>T", "c.2933A>G");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.2933A>G", "c.2846A>T"), false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.2933A>G", "c.2846A>T"), false, RecPresence.YES);
   }
 
   @Test
@@ -490,7 +505,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("c.498G>A", "c.2582A>G", "c.2846A>T", "c.2933A>G (homozygous)");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.2933A>G", "c.2933A>G"), false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.2933A>G", "c.2933A>G"), false, RecPresence.YES);
   }
 
   @Test
@@ -504,7 +519,7 @@ class DpydTest {
     List<String> expectedCalls = List.of("Reference/c.1156G>T (*12)");
     List<String> cpicStyleCalls = List.of("c.1156G>T (*12) (heterozygous)");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, null, false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, null, false, RecPresence.YES);
   }
 
   @Test
@@ -518,7 +533,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("c.61C>T/[c.61C>T + c.313G>A]");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.61C>T", "c.61C>T"), false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.61C>T", "c.61C>T"), false, RecPresence.YES);
   }
 
   @Test
@@ -532,7 +547,7 @@ class DpydTest {
 
     List<String> expectedCalls = List.of("c.61C>T/[c.61C>T + c.313G>A]");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.61C>T", "c.61C>T"), false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.61C>T", "c.61C>T"), false, RecPresence.YES);
   }
 
   @Test
@@ -548,12 +563,12 @@ class DpydTest {
     List<String> expectedCalls = List.of("c.2582A>G", "c.2846A>T", "c.2933A>G (homozygous)");
 
     doStandardChecks(testWrapper, vcfFile, expectedCalls, null, List.of("c.2933A>G", "c.2933A>G"),
-        false, RecPresence.NO);
+        false, RecPresence.YES);
   }
 
 
   @Test
-  void test155(TestInfo testInfo) throws Exception {
+  void issue155_strandMismatch(TestInfo testInfo) throws Exception {
     PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
     testWrapper.getVcfBuilder()
         .phased()
@@ -570,7 +585,7 @@ class DpydTest {
     ;
 
     Path vcfFile = testWrapper.execute();
-
+    // phased combination code path
     List<String> expectedCalls = List.of(
         "[c.85T>C (*9A) + c.1129-5923C>G, c.1236G>A (HapB3)]/[c.85T>C (*9A) + c.496A>G + c.1601G>A (*4)]"
     );
@@ -580,7 +595,30 @@ class DpydTest {
   }
 
   @Test
-  void test156(TestInfo testInfo) throws Exception {
+  void issue209_strandMismatch(TestInfo testInfo) throws Exception {
+    PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
+    testWrapper.getVcfBuilder()
+        .phased()
+        .variationInPhaseSet("DPYD", "rs1801159", 97513581, "C", "T")  // [*5]       T->C 1|0 - 1.0
+        .variationInPhaseSet("DPYD", "rs56038477", 97571276, "C", "T") // [exonic]   C->T 0|1 - 0.5
+        .variationInPhaseSet("DPYD", "rs75017182", 97571276,"G", "C")  // [intronic] G->C 0|1
+        .variationInPhaseSet("DPYD", "rs1801265", 97879893, "G", "A")  // [*9]       A->G 1|0 - 1.0
+    ;
+    Path vcfFile = testWrapper.execute();
+    System.out.println(vcfFile);
+    List<String> expectedCalls = List.of(
+        "Reference/[c.85T>C (*9A) + c.1129-5923C>G, c.1236G>A (HapB3) + c.1627A>G (*5)]",
+        "c.85T>C (*9A)/[c.1129-5923C>G, c.1236G>A (HapB3) + c.1627A>G (*5)]",
+        "c.1129-5923C>G, c.1236G>A (HapB3)/[c.85T>C (*9A) + c.1627A>G (*5)]",
+        "c.1627A>G (*5)/[c.85T>C (*9A) + c.1129-5923C>G, c.1236G>A (HapB3)]"
+        );
+    List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
+    List<String> recommendedDiplotypes = List.of("Reference", DpydHapB3Matcher.HAPB3_ALLELE);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
+  }
+
+  @Test
+  void issue156(TestInfo testInfo) throws Exception {
     PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
     testWrapper.getVcfBuilder()
         .phased()
@@ -589,9 +627,9 @@ class DpydTest {
         // chr1	97515839	1|0 T->C
         .variation("DPYD", "rs1801159", "C", "T")
 
-        // chr1	97573863	1|0 C->T
+        // chr1	97573863	1|0 C->T [exonic]
         .variation("DPYD", "rs56038477", "T", "C")
-        // chr1	97579893	1|0 G->C
+        // chr1	97579893	1|0 G->C [intronic]
         .variation("DPYD", "rs75017182", "C", "G")
     ;
 
@@ -606,6 +644,32 @@ class DpydTest {
 
     doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls,
         List.of("Reference", DpydHapB3Matcher.HAPB3_ALLELE), false, RecPresence.YES);
+  }
+
+
+  /**
+   * Make sure lowest functions that only travel together get called correctly.
+   */
+  @Test
+  void phaseSet_lowFunctionsOnSameStrand(TestInfo testInfo) throws Exception {
+    PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
+    testWrapper.getVcfBuilder()
+        .phased()
+        .variationInPhaseSet("DPYD", "rs1801159", 97513581, "C", "T")  // [*5]       T->C 1|0 - 1.0
+        .variationInPhaseSet("DPYD", "rs56038477", 97571276, "C", "T") // [exonic]   C->T 0|1 - 0.5
+        .variationInPhaseSet("DPYD", "rs75017182", 97571276,"G", "C")  // [intronic] G->C 0|1
+        .variationInPhaseSet("DPYD", "rs72549310", 97571276, "G", "A")  // [c.61C>T] G->A 0|1 - 0.0
+    ;
+    Path vcfFile = testWrapper.execute();
+    System.out.println(vcfFile);
+    List<String> expectedCalls = List.of(
+        "Reference/[c.61C>T + c.1129-5923C>G, c.1236G>A (HapB3) + c.1627A>G (*5)]",
+        "c.1627A>G (*5)/[c.61C>T + c.1129-5923C>G, c.1236G>A (HapB3)]"
+    );
+    List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
+    // make sure lowest function is called based on strand possibilities
+    List<String> recommendedDiplotypes = List.of("c.61C>T", "Reference");
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
   }
 
 
@@ -627,7 +691,7 @@ class DpydTest {
         "Reference/Reference"
     );
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, false);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, null, false, RecPresence.NO);
   }
 
 
@@ -667,10 +731,28 @@ class DpydTest {
     Path vcfFile = testWrapper.execute();
 
     List<String> expectedCalls = List.of(
-        "Reference/Reference"
+        "Reference/c.1129-5923C>G, c.1236G>A (HapB3)"
+    );
+    List<String> cpicStyleCalls = List.of(
+        "c.1129-5923C>G, c.1236G>A (HapB3) (heterozygous)"
     );
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, true);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, null, true, RecPresence.YES);
+    GeneReport cpicGeneReport = Objects.requireNonNull(testWrapper.getContext()).getGeneReport("DPYD");
+    assertNotNull(cpicGeneReport);
+    assertEquals(
+        Collections.emptyList(),
+        cpicGeneReport.getMessages().stream()
+            .map(ma -> {
+              if (ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_EXONIC_ONLY) ||
+                  ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_INTRONIC_MISMATCH_EXONIC)) {
+                return ma.getName();
+              }
+              return null;
+            })
+            .filter(Objects::nonNull)
+            .toList()
+    );
   }
 
   @Test
@@ -713,13 +795,28 @@ class DpydTest {
     Path vcfFile = testWrapper.execute();
 
     List<String> expectedCalls = List.of(
-        "Reference/c.1129-5923C>G"
+        "c.1129-5923C>G/c.1129-5923C>G, c.1236G>A (HapB3)"
     );
     List<String> cpicStyleCalls = List.of(
-        "c.1129-5923C>G (heterozygous)"
+        "c.1129-5923C>G/c.1129-5923C>G, c.1236G>A (HapB3)"
     );
 
     doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, null, true, RecPresence.YES);
+    GeneReport cpicGeneReport = Objects.requireNonNull(testWrapper.getContext()).getGeneReport("DPYD");
+    assertNotNull(cpicGeneReport);
+    assertEquals(
+        List.of(MessageHelper.MSG_DPYD_HAPB3_EXONIC_ONLY),
+        cpicGeneReport.getMessages().stream()
+            .map(ma -> {
+              if (ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_EXONIC_ONLY) ||
+                  ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_INTRONIC_MISMATCH_EXONIC)) {
+                return ma.getName();
+              }
+              return null;
+            })
+            .filter(Objects::nonNull)
+            .toList()
+    );
   }
 
   @Test
@@ -738,13 +835,28 @@ class DpydTest {
     Path vcfFile = testWrapper.execute();
 
     List<String> expectedCalls = List.of(
-        "Reference/c.1129-5923C>G"
+        "c.1129-5923C>G/c.1129-5923C>G, c.1236G>A (HapB3)"
     );
     List<String> cpicStyleCalls = List.of(
-        "c.1129-5923C>G (heterozygous)"
+        "c.1129-5923C>G/c.1129-5923C>G, c.1236G>A (HapB3)"
     );
 
     doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, null, true, RecPresence.YES);
+    GeneReport cpicGeneReport = Objects.requireNonNull(testWrapper.getContext()).getGeneReport("DPYD");
+    assertNotNull(cpicGeneReport);
+    assertEquals(
+        List.of(MessageHelper.MSG_DPYD_HAPB3_EXONIC_ONLY),
+        cpicGeneReport.getMessages().stream()
+            .map(ma -> {
+              if (ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_EXONIC_ONLY) ||
+                  ma.getName().equals(MessageHelper.MSG_DPYD_HAPB3_INTRONIC_MISMATCH_EXONIC)) {
+                return ma.getName();
+              }
+              return null;
+            })
+            .filter(Objects::nonNull)
+            .toList()
+    );
   }
 
 
@@ -796,8 +908,8 @@ class DpydTest {
       int row = 3;
       while ((line = reader.readLine()) != null) {
         row += 1;
-        if (row < 20) {
-          //continue;
+        if (row < 0) {
+          continue;
         }
         String name = String.format("row_%03d", row);
         data = line.split("\t");
@@ -879,11 +991,11 @@ class DpydTest {
     }
 
     testWrapper.testCalledByMatcher("DPYD");
-    testWrapper.testSourceDiplotypes(DataSource.CPIC, "DPYD", expectedCalls, cpicStyleCalls);
-    testWrapper.testRecommendedDiplotypes(DataSource.CPIC, "DPYD", recommendedDiplotypes);
-    testWrapper.testPrintCalls(DataSource.CPIC, "DPYD", cpicStyleCalls == null ? expectedCalls : cpicStyleCalls);
+    testWrapper.testSourceDiplotypes("DPYD", expectedCalls, cpicStyleCalls);
+    testWrapper.testRecommendedDiplotypes("DPYD", recommendedDiplotypes);
+    testWrapper.testPrintCalls("DPYD", cpicStyleCalls == null ? expectedCalls : cpicStyleCalls);
 
-    GeneReport cpicGeneReport = testWrapper.getContext().getGeneReport(DataSource.CPIC, "DPYD");
+    GeneReport cpicGeneReport = testWrapper.getContext().getGeneReport("DPYD");
     assertNotNull(cpicGeneReport);
     int numMissing = 0;
     if ("missing".equals(data[0])) {
@@ -1088,7 +1200,7 @@ class DpydTest {
     List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
     List<String> recommendedDiplotypes = List.of("Reference", "c.2983G>T (*10)");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
   }
 
   @Test
@@ -1098,20 +1210,22 @@ class DpydTest {
     testWrapper.getVcfBuilder()
         .phased()
         // 1
-        .variationInPhaseSet("DPYD", "rs1801267", 1, "C", "T")
-        .variationInPhaseSet("DPYD", "rs55886062", 1, "A", "C")
-        .variationInPhaseSet("DPYD", "rs56038477", 1, "C", "T")
+        .variationInPhaseSet("DPYD", "rs1801267", 1, "C", "T")  // *9B C->T 0|1
+        .variationInPhaseSet("DPYD", "rs55886062", 1, "A", "C") // *13 A->C 0|1
+        .variationInPhaseSet("DPYD", "rs56038477", 1, "C", "T") // [exonic] C->T 0|1
         // 2
-        .variationInPhaseSet("DPYD", "rs75017182", 2, "G", "C")
+        .variationInPhaseSet("DPYD", "rs75017182", 2, "G", "C") // [intronic] G->C 0|1
     ;
     Path vcfFile = testWrapper.execute();
 
     List<String> expectedCalls = List.of(
-        "c.1129-5923C>G, c.1236G>A (HapB3)/[c.1679T>G (*13) + c.2657G>A (*9B)]"
+        "Reference/[c.1129-5923C>G, c.1236G>A (HapB3) + c.1679T>G (*13) + c.2657G>A (*9B)]",
+        "c.1129-5923C>G/[c.1679T>G (*13) + c.2657G>A (*9B)]"
     );
-    List<String> recommendedDiplotypes = List.of("c.1679T>G (*13)", "c.1129-5923C>G, c.1236G>A (HapB3)");
+    List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
+    List<String> recommendedDiplotypes = List.of("c.1679T>G (*13)", "c.1129-5923C>G");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, recommendedDiplotypes, false, RecPresence.YES);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
   }
 
   @Test
@@ -1158,7 +1272,7 @@ class DpydTest {
     );
     List<String> recommendedDiplotypes = List.of("c.1679T>G (*13)", "c.1774C>T");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, recommendedDiplotypes, false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, null, recommendedDiplotypes, false, RecPresence.YES);
   }
 
   @Test
@@ -1168,9 +1282,9 @@ class DpydTest {
     testWrapper.getVcfBuilder()
         .phased()
         // 1
-        .variationInPhaseSet("DPYD", "rs1801267", 1, "C", "T") // c.2657G>A (*9B) - normal function
+        .variationInPhaseSet("DPYD", "rs1801267", 1, "C", "T") // [*9B]        C->T 0|1 - normal function
         // 2
-        .variationInPhaseSet("DPYD", "rs59086055", 2, "G", "A") // c.1774C>T - no function, not in DPWG
+        .variationInPhaseSet("DPYD", "rs59086055", 2, "G", "A") // [c.1774C>T] G->A 0|1 - no function, not in DPWG
     ;
     Path vcfFile = testWrapper.execute();
 
@@ -1181,7 +1295,7 @@ class DpydTest {
     List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
     List<String> recommendedDiplotypes = List.of("c.1774C>T", "Reference");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
   }
 
   @Test
@@ -1209,6 +1323,6 @@ class DpydTest {
     List<String> cpicStyleCalls = expectedCallsToCpicStyleCalls(expectedCalls);
     List<String> recommendedDiplotypes = List.of("c.632A>G", "c.1679T>G (*13)");
 
-    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.NO);
+    doStandardChecks(testWrapper, vcfFile, expectedCalls, cpicStyleCalls, recommendedDiplotypes, false, RecPresence.YES);
   }
 }

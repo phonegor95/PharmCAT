@@ -62,10 +62,10 @@ This PR adds comprehensive Chinese translation support to PharmCAT, enabling the
 - **report.hbs**: Updated HTML template to use Chinese translation methods
 
 #### New Files
-- **README_Chinese.md**: Comprehensive documentation (174 lines)
-- **run_pharmcat_chinese.sh**: Automated build and run script
-- **example_chinese_config.json**: Example configuration
+- **README_Chinese.md**: Comprehensive documentation with setup guide
+- **run_pharmcat_chinese.sh**: Unified build/pull/run script with online Docker support
 - **test_chinese_translation.sh**: Validation script
+- **setup_contribution.sh**: Git setup helper for contributors
 
 ### Translation Examples
 
@@ -80,11 +80,14 @@ This PR adds comprehensive Chinese translation support to PharmCAT, enabling the
 ### Usage
 
 ```bash
-# Compile and run with Chinese translation
+# Run with online Docker image (recommended)
 ./run_pharmcat_chinese.sh -i your_file.vcf.gz
 
-# Skip build if already compiled
-./run_pharmcat_chinese.sh --skip-build -i your_file.vcf.gz
+# Quick run without updating image
+./run_pharmcat_chinese.sh --skip-pull -i your_file.vcf.gz
+
+# Build locally instead of pulling
+./run_pharmcat_chinese.sh --build-local -i your_file.vcf.gz
 ```
 
 ### Testing

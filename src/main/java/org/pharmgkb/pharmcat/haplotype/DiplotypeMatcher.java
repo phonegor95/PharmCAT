@@ -1,6 +1,7 @@
 package org.pharmgkb.pharmcat.haplotype;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import com.google.common.collect.Sets;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import org.pharmgkb.pharmcat.Env;
@@ -73,15 +75,20 @@ public class DiplotypeMatcher {
 
     if (!findCombinations) {
       for (DiplotypeMatch dm : pairs) {
-        BaseMatch m1 = dm.getHaplotype1();
-        BaseMatch m2 = dm.getHaplotype2();
-        int m2Score = 0;
-        if (m2 != null) {
-          m2Score = m2.getHaplotype().scoreForSample(m_dataset, m2.getSequences());
+        // score is based on the best scoring pair of sequences for this diplotype
+        int highestScore = 0;
+        for (String[] seqPair : dm.getSequences()) {
+          int score = scoreForSequencePair(dm, seqPair);
+          if (score > highestScore) {
+            highestScore = score;
+          }
         }
-        dm.setScore(m1.getHaplotype().scoreForSample(m_dataset, m1.getSequences()) + m2Score);
+        dm.setScore(highestScore);
       }
     }
+
+    // TODO(markwoon): if combinations, and phased, and we have more than one match, it's probably because of wobbles
+    // TODO(markwoon): if there are wobbles, should we use the top candidate only?
 
     // using Collections.sort() throws an exception, so use SortedSet instead
     SortedSet<DiplotypeMatch> sortedPairs = new TreeSet<>(pairs);
@@ -92,6 +99,38 @@ public class DiplotypeMatcher {
           .collect(Collectors.toCollection(TreeSet::new));
     }
     return sortedPairs;
+  }
+
+  private int scoreForSequencePair(DiplotypeMatch dm, String[] seqPair) {
+    BaseMatch m1 = dm.getHaplotype1();
+    BaseMatch m2 = dm.getHaplotype2();
+    boolean isHomozygous = false;
+    int m2Score = 0;
+    if (m2 != null) {
+      if (m1.getName().equals(m2.getName())) {
+        isHomozygous = true;
+        m2Score = m2.getHaplotype().scoreForSample(m_dataset, sequenceForBaseMatch(m2, new String[] { seqPair[1] }));
+      } else {
+        m2Score = m2.getHaplotype().scoreForSample(m_dataset, sequenceForBaseMatch(m2, seqPair));
+      }
+    }
+    if (isHomozygous) {
+      return m1.getHaplotype().scoreForSample(m_dataset, sequenceForBaseMatch(m1, new String[] {seqPair[0] })) + m2Score;
+    } else {
+      return m1.getHaplotype().scoreForSample(m_dataset, sequenceForBaseMatch(m1, seqPair)) + m2Score;
+    }
+  }
+
+  private Set<String> sequenceForBaseMatch(BaseMatch hapMatch, String[] seqPair) {
+    Set<String> seqs = hapMatch.getSequences();
+    if (seqs.size() == 1) {
+      return seqs;
+    }
+    seqs = Sets.intersection(seqs, new HashSet<>(Arrays.asList(seqPair)));
+    if (seqs.isEmpty()) {
+      throw new IllegalStateException("NamedAllele sequences do not match Diplotype sequence!");
+    }
+    return seqs;
   }
 
 
@@ -140,6 +179,7 @@ public class DiplotypeMatcher {
    */
   private List<DiplotypeMatch> determineHeterozygousPairs(SortedSet<BaseMatch> haplotypeMatches, boolean findCombinations) {
 
+    // map haplotype name to HaplotypeMatches (i.e., sequences)
     SortedSetMultimap<String, BaseMatch> hapMap = TreeMultimap.create();
     for (BaseMatch hm : haplotypeMatches) {
       hapMap.put(hm.getName(), hm);

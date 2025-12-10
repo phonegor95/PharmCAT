@@ -84,18 +84,11 @@ class PharmCATTest {
 
       ResultSerializer resultSerializer = new ResultSerializer();
       Result result = resultSerializer.fromJson(refMatcherOutput);
-      Optional<GeneCall> gcOpt = result.getGeneCalls().stream()
-          .filter(gc -> gc.getGene().equals("CYP2D6"))
-          .findFirst();
-      assertTrue(gcOpt.isEmpty());
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInMatcher(result, "CYP2D6", false);
 
-      Collection<GeneReport> reports = Phenotyper.read(refPhenotyperOutput).getGeneReports().get(DataSource.CPIC)
-          .values();
-      Optional<GeneReport> grOpt = reports.stream()
-          .filter(gr -> gr.getGene().equals("CYP2D6"))
-          .findFirst();
-      assertTrue(grOpt.isPresent());
-      assertFalse(grOpt.get().isCalled());
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInPhenotyper(refPhenotyperOutput, "CYP2D6", false);
 
       Document document = Jsoup.parse(refReporterOutput.toFile());
       assertNotNull(document.getElementById("section-i"));
@@ -132,6 +125,83 @@ class PharmCATTest {
     });
   }
 
+  @Test
+  void oneGeneOnly(TestInfo testInfo) throws Exception {
+    Path vcfFile = PathUtils.getPathToResource("org/pharmgkb/pharmcat/reference.vcf");
+    Path outputDir = TestUtils.getTestOutputDir(testInfo, true);
+
+    Path refMatcherOutput = outputDir.resolve("reference.match.json");
+    Path refPhenotyperOutput = outputDir.resolve("reference.phenotype.json");
+    Path refReporterOutput = outputDir.resolve("reference.report.html");
+
+    try {
+      String systemOut = tapSystemOut(() -> PharmCAT.main(new String[]{
+          "-vcf", vcfFile.toString(),
+          "-o", outputDir.toString(),
+          "-g", "vkorc1"
+      }));
+      System.out.println(systemOut);
+      assertTrue(systemOut.contains("Done."));
+      assertTrue(Files.exists(refMatcherOutput));
+      assertTrue(Files.exists(refPhenotyperOutput));
+      assertTrue(Files.exists(refReporterOutput));
+
+      ResultSerializer resultSerializer = new ResultSerializer();
+      Result result = resultSerializer.fromJson(refMatcherOutput);
+
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInMatcher(result, "CYP2D6", false);
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInMatcher(result, "CYP2B6", false);
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInMatcher(result, "VKORC1", true);
+
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInPhenotyper(refPhenotyperOutput, "CYP2D6", false);
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInPhenotyper(refPhenotyperOutput, "CYP2B6", false);
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInPhenotyper(refPhenotyperOutput, "VKORC1", true);
+
+      Document document = Jsoup.parse(refReporterOutput.toFile());
+      assertNotNull(document.getElementById("section-i"));
+      assertNull(document.getElementById("CYP2D6"));
+      assertNull(document.getElementById("CYP2B6"));
+      assertNotNull(document.getElementById("VKORC1"));
+
+    } finally {
+      TestUtils.deleteTestFiles(refMatcherOutput, refPhenotyperOutput, refReporterOutput);
+    }
+  }
+
+  public static @Nullable GeneCall isCalledInMatcher(Result result, String gene, boolean isCalled) {
+    Optional<GeneCall> gcOpt = result.getGeneCalls().stream()
+        .filter(gc -> gc.getGene().equals(gene))
+        .findFirst();
+    if (isCalled) {
+      assertTrue(gcOpt.isPresent());
+      return gcOpt.get();
+    } else {
+      assertTrue(gcOpt.isEmpty());
+      return null;
+    }
+  }
+
+  public static @Nullable GeneReport isCalledInPhenotyper(Path phenotyperOutput, String gene, boolean isCalled) throws IOException {
+    Collection<GeneReport> reports = Phenotyper.read(phenotyperOutput).getGeneReports().values();
+    Optional<GeneReport> grOpt = reports.stream()
+        .filter(gr -> gr.getGene().equals(gene))
+        .findFirst();
+    assertTrue(grOpt.isPresent());
+    if (isCalled) {
+      assertTrue(grOpt.get().isCalled());
+      return grOpt.get();
+    } else {
+      assertFalse(grOpt.get().isCalled());
+      return null;
+    }
+  }
+
   private void doReference(TestInfo testInfo, String[] args, Consumer<Document> docChecker) throws Exception{
     Path outputDir = TestUtils.getTestOutputDir(testInfo, true);
     Path refMatcherOutput = outputDir.resolve("reference.match.json");
@@ -148,18 +218,11 @@ class PharmCATTest {
 
       ResultSerializer resultSerializer = new ResultSerializer();
       Result result = resultSerializer.fromJson(refMatcherOutput);
-      Optional<GeneCall> gcOpt = result.getGeneCalls().stream()
-          .filter(gc -> gc.getGene().equals("CYP2D6"))
-          .findFirst();
-      assertTrue(gcOpt.isEmpty());
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInMatcher(result, "CYP2D6", false);
 
-      Collection<GeneReport> reports = Phenotyper.read(refPhenotyperOutput).getGeneReports().get(DataSource.CPIC)
-          .values();
-      Optional<GeneReport> grOpt = reports.stream()
-          .filter(gr -> gr.getGene().equals("CYP2D6"))
-          .findFirst();
-      assertTrue(grOpt.isPresent());
-      assertFalse(grOpt.get().isCalled());
+      //noinspection ResultOfMethodCallIgnored
+      isCalledInPhenotyper(refPhenotyperOutput, "CYP2D6", false);
 
       Document document = Jsoup.parse(refReporterOutput.toFile());
       assertNotNull(document.getElementById("section-i"));
@@ -272,14 +335,9 @@ class PharmCATTest {
       assertEquals(1, opt.get().getDiplotypes().size());
       assertEquals("*1/*1", opt.get().getDiplotypes().iterator().next().getName());
 
-      Collection<GeneReport> reports = Phenotyper.read(refPhenotyperOutput).getGeneReports().get(DataSource.CPIC)
-          .values();
-      Optional<GeneReport> grOpt = reports.stream()
-          .filter(gr -> gr.getGene().equals("CYP2D6"))
-          .findFirst();
-      assertTrue(grOpt.isPresent());
-      assertTrue(grOpt.get().isCalled());
-      assertFalse(grOpt.get().isOutsideCall());
+      GeneReport gr = isCalledInPhenotyper(refPhenotyperOutput, "CYP2D6", true);
+      assertTrue(gr.isCalled());
+      assertFalse(gr.isOutsideCall());
 
     } finally {
       TestUtils.deleteTestFiles(outputDir);
@@ -360,14 +418,13 @@ class PharmCATTest {
       assertTrue(Files.exists(phenotyperOutput));
       assertTrue(Files.exists(reporterOutput));
 
-      Collection<GeneReport> reports = Phenotyper.read(phenotyperOutput).getGeneReports().get(DataSource.CPIC)
-          .values();
-      Optional<GeneReport> grOpt = reports.stream()
-          .filter(gr -> gr.getGene().equals("IFNL3"))
-          .findFirst();
-      assertTrue(grOpt.isPresent());
-      assertTrue(grOpt.get().isCalled());
-      assertTrue(grOpt.get().isOutsideCall());
+      ResultSerializer resultSerializer = new ResultSerializer();
+      Result result = resultSerializer.fromJson(matcherOutput);
+      GeneCall gc = isCalledInMatcher(result, "IFNL3", true);
+      assertEquals("rs12979860 reference (C)/rs12979860 reference (C)", gc.getDiplotypes().iterator().next().getName());
+      assertEquals(DataSource.CLINPGX, gc.getSource());
+
+      validateOutsideCallOutput(phenotyperOutput, "IFNL3", "rs12979860 variant (T)/rs12979860 variant (T)");
 
       Document document = Jsoup.parse(reporterOutput.toFile());
       assertEquals(1,
@@ -444,11 +501,7 @@ class PharmCATTest {
 
       ResultSerializer resultSerializer = new ResultSerializer();
       Result result = resultSerializer.fromJson(matcherOutput);
-      Optional<GeneCall> gcOpt = result.getGeneCalls().stream()
-          .filter(gc -> gc.getGene().equals("CYP2C19"))
-          .findFirst();
-      assertTrue(gcOpt.isPresent());
-      GeneCall gc = gcOpt.get();
+      GeneCall gc = isCalledInMatcher(result, "CYP2C19", true);
       assertEquals(1, gc.getDiplotypes().size());
 
     } finally {
@@ -471,11 +524,7 @@ class PharmCATTest {
 
     ResultSerializer resultSerializer = new ResultSerializer();
     Result result = resultSerializer.fromJson(matcherOutput);
-    Optional<GeneCall> gcOpt = result.getGeneCalls().stream()
-        .filter(gc -> gc.getGene().equals("CYP2C19"))
-        .findFirst();
-    assertTrue(gcOpt.isPresent());
-    GeneCall gc = gcOpt.get();
+    GeneCall gc = isCalledInMatcher(result, "CYP2C19", true);
     assertTrue(gc.getDiplotypes().size() > 50, "Expecting more than 50, found " + gc.getDiplotypes().size());
   }
 
@@ -533,10 +582,8 @@ class PharmCATTest {
       StringBuilder doublePhenoJson = new StringBuilder();
       try (Stream<String> lines = Files.lines(doublePhenotyperOutput)) {
         lines.filter(l -> !l.contains("\"timestamp\":"))
-            .forEach(l -> {
-              doublePhenoJson.append(l)
-                  .append("\n");
-            });
+            .forEach(l -> doublePhenoJson.append(l)
+                .append("\n"));
       }
 
       assertEquals(singlePhenoJson.toString(), doublePhenoJson.toString());
@@ -609,11 +656,11 @@ class PharmCATTest {
     assertFalse(Files.exists(outputDir.resolve("PharmCATTest-outsideCallsNoRecs.report.html")));
 
     Phenotyper phenotyper = Phenotyper.read(outputDir.resolve("PharmCATTest-cyp2d6.phenotype.json"));
-    checkOutsideDiplotype(phenotyper.findGeneReport(DataSource.CPIC, "CYP2D6").orElse(null),
+    checkOutsideDiplotype(phenotyper.findGeneReport( "CYP2D6").orElse(null),
         "*3", "*4");
-    checkOutsideDiplotype(phenotyper.findGeneReport(DataSource.CPIC, "CYP4F2").orElse(null),
+    checkOutsideDiplotype(phenotyper.findGeneReport( "CYP4F2").orElse(null),
         "*1", "*3");
-    checkOutsideDiplotype(phenotyper.findGeneReport(DataSource.CPIC, "IFNL3").orElse(null),
+    checkOutsideDiplotype(phenotyper.findGeneReport( "IFNL3").orElse(null),
         "rs12979860 variant (T)", "rs12979860 variant (T)");
   }
 
@@ -636,8 +683,7 @@ class PharmCATTest {
 
   public static void validateOutsideCallOutput(Path phenotyperOutput, String gene, @Nullable String diplotype)
       throws IOException {
-    Collection<GeneReport> reports = Phenotyper.read(phenotyperOutput).getGeneReports().get(DataSource.CPIC)
-        .values();
+    Collection<GeneReport> reports = Phenotyper.read(phenotyperOutput).getGeneReports().values();
     Optional<GeneReport> grOpt = reports.stream()
         .filter(gr -> gr.getGene().equals(gene))
         .findFirst();

@@ -8,9 +8,10 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.google.common.base.Preconditions;
+import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.Env;
+import org.pharmgkb.pharmcat.reporter.DiplotypeFactory;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
-import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.reporter.model.result.Diplotype;
 import org.pharmgkb.pharmcat.reporter.model.result.GeneReport;
 import org.pharmgkb.pharmcat.reporter.model.result.Haplotype;
@@ -28,14 +29,11 @@ public class Cyp2d6CopyNumberCaller {
 
 
   public static void initialize(Env env) {
-    if (m_gteThree.size() > 0) {
+    if (!m_gteThree.isEmpty()) {
       return;
     }
 
-    SortedSet<String> alleles = new TreeSet<>();
-    alleles.addAll(Objects.requireNonNull(env.getPhenotype(Cyp2d6CopyNumberCaller.GENE, DataSource.CPIC))
-        .getHaplotypes().keySet());
-    alleles.addAll(Objects.requireNonNull(env.getPhenotype(Cyp2d6CopyNumberCaller.GENE, DataSource.DPWG))
+    SortedSet<String> alleles = new TreeSet<>(Objects.requireNonNull(env.getPhenotype(Cyp2d6CopyNumberCaller.GENE))
         .getHaplotypes().keySet());
 
     for (String allele : alleles) {
@@ -54,11 +52,12 @@ public class Cyp2d6CopyNumberCaller {
   }
 
 
-  public static Diplotype inferDiplotype(GeneReport report, Diplotype diplotype, Env env, DataSource source) {
-    Preconditions.checkArgument(diplotype.getGene().equals(GENE), "Can only be used on CYP2D6");
+  public static Diplotype inferDiplotype(GeneReport report, @Nullable Diplotype diplotype, Env env) {
+    Preconditions.checkArgument(report.getGene().equals(GENE), "Can only be used on CYP2D6");
+    Preconditions.checkArgument(report.isOutsideCall());
 
-    if (!report.isOutsideCall()) {
-      return diplotype;
+    if (diplotype == null) {
+      return DiplotypeFactory.makeUnknownDiplotype(report.getGene(), env);
     }
 
     if (diplotype.isPhenotypeOnly() || diplotype.isOutsideActivityScore()) {
@@ -74,16 +73,16 @@ public class Cyp2d6CopyNumberCaller {
       return diplotype;
     }
 
-    Haplotype hap1 = needsInfer1 ? env.makeHaplotype(GENE, (String)r1[1], source) : diplotype.getAllele1();
-    Haplotype hap2 = needsInfer2 ? env.makeHaplotype(GENE, (String)r2[1], source) : diplotype.getAllele2();
-    Diplotype inferredDiplotype = new Diplotype(GENE, hap1, hap2, env, source);
+    Haplotype hap1 = needsInfer1 ? env.makeHaplotype(GENE, (String)r1[1]) : diplotype.getAllele1();
+    Haplotype hap2 = needsInfer2 ? env.makeHaplotype(GENE, (String)r2[1]) : diplotype.getAllele2();
+    Diplotype inferredDiplotype = new Diplotype(GENE, hap1, hap2, env);
     inferredDiplotype.setInferred(true);
     inferredDiplotype.setInferredSourceDiplotype(diplotype);
     return inferredDiplotype;
   }
 
 
-  private static Object[] inferHaplotype(Haplotype haplotype) {
+  private static Object[] inferHaplotype(@Nullable Haplotype haplotype) {
     if (haplotype == null) {
       return new Object[] {false, null};
     }

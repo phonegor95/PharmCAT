@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import org.apache.commons.io.FileUtils;
@@ -157,20 +158,16 @@ public class GeneDrugSummary {
       tsvWriter.println("Gene\tNamed Alleles\tCPIC Phenotypes\tCPIC Activity Scores\tDPWG Phenotypes");
 
       SortedSet<String> allGenes = new TreeSet<>(m_definitionReader.getGenes());
-      m_phenotypeMap.getCpicGenes().stream().map(GenePhenotype::getGene).forEach(allGenes::add);
-      m_phenotypeMap.getDpwgGenes().stream().map(GenePhenotype::getGene).forEach(allGenes::add);
+      m_phenotypeMap.getGenePhenotypes().stream().map(GenePhenotype::getGene).forEach(allGenes::add);
+      m_phenotypeMap.getGenePhenotypes().stream().map(GenePhenotype::getGene).forEach(allGenes::add);
 
       for (String gene : allGenes) {
-        GenePhenotype cpicGp = m_phenotypeMap.getPhenotype(gene, DataSource.CPIC);
-        GenePhenotype dpwgGp = m_phenotypeMap.getPhenotype(gene, DataSource.DPWG);
+        GenePhenotype gp = m_phenotypeMap.getPhenotype(gene);
 
         SortedSet<String> haplotypes = new TreeSet<>(new HaplotypeNameComparator());
         if (Constants.PREFER_OUTSIDE_CALL.contains(gene)) {
-          if (cpicGp != null) {
-            haplotypes.addAll(cpicGp.getHaplotypes().keySet());
-          }
-          if (dpwgGp != null) {
-            haplotypes.addAll(dpwgGp.getHaplotypes().keySet());
+          if (gp != null) {
+            haplotypes.addAll(gp.getHaplotypes().keySet());
           }
 
         } else {
@@ -181,17 +178,18 @@ public class GeneDrugSummary {
 
         SortedSet<String> cpicPhenotypes = new TreeSet<>();
         SortedSet<String> cpicScores = new TreeSet<>();
-        collectDiplotypeMetadata(cpicGp, cpicPhenotypes, cpicScores);
-        SortedSet<String> dpwgPhenotypes = new TreeSet<>();
-        SortedSet<String> dpwgScores = new TreeSet<>();
-        collectDiplotypeMetadata(dpwgGp, dpwgPhenotypes, dpwgScores);
+        collectDiplotypeMetadata(gp, cpicPhenotypes, cpicScores);
 
         // we use semicolon as a separator so make sure it's not used in values
         if (haplotypes.stream().anyMatch(v -> v.contains(";"))) {
-          throw new IllegalStateException(gene + " haplotypes has comma");
+          throw new IllegalStateException(gene + " haplotypes has semicolon: " +
+              haplotypes.stream()
+                  .filter(v -> v.contains(";"))
+                  .map(v -> "\"" + v + "\"")
+                  .collect(Collectors.joining(", ")));
         }
         if (cpicPhenotypes.stream().anyMatch(v -> v.contains(";"))) {
-          throw new IllegalStateException(gene + " CPIC phenotypes has comma");
+          throw new IllegalStateException(gene + " CPIC phenotypes has semicolon");
         }
         if (cpicPhenotypes.stream().anyMatch(v -> v.contains("metabolizer"))) {
           throw new IllegalStateException(gene + " CPIC phenotypes has lower cased \"Metabolizer\"");
@@ -200,21 +198,7 @@ public class GeneDrugSummary {
           throw new IllegalStateException(gene + " CPIC phenotype uses metaboliSe");
         }
         if (cpicScores.stream().anyMatch(v -> v.contains(";"))) {
-          throw new IllegalStateException(gene + " CPIC scores has comma");
-        }
-        if (dpwgPhenotypes.stream().anyMatch(v -> v.contains(";"))) {
-          throw new IllegalStateException(gene + " DPWG phenotypes has comma");
-        }
-        if (dpwgPhenotypes.stream().anyMatch(v -> v.toLowerCase().contains("metabolise"))) {
-          throw new IllegalStateException(gene + " DPWG phenotype uses metaboliSe");
-        }
-
-        if (!cpicPhenotypes.isEmpty() && !dpwgPhenotypes.isEmpty()) {
-          if (!(cpicPhenotypes.containsAll(dpwgPhenotypes) || dpwgPhenotypes.containsAll(cpicPhenotypes))) {
-            System.out.println("WARNING: " + gene + " has CPIC/DPWG phenotype mismatch");
-            System.out.println("         CPIC: " + cpicPhenotypes);
-            System.out.println("         DPWG: " + dpwgPhenotypes);
-          }
+          throw new IllegalStateException(gene + " CPIC scores has semicolon");
         }
 
         String type = Constants.isVariantGene(gene) ? "Named Variants" : "Named Alleles";
@@ -230,12 +214,6 @@ public class GeneDrugSummary {
         }
         if (!cpicScores.isEmpty()) {
           mdWriter.println("<th style=\"text-align: left\">CPIC Activity Scores</th>");
-        }
-        if (!dpwgPhenotypes.isEmpty()) {
-          mdWriter.println("<th style=\"text-align: left\">DPWG Phenotypes</th>");
-        }
-        if (!dpwgScores.isEmpty()) {
-          mdWriter.println("<th style=\"text-align: left\">DPWG Activity Scores</th>");
         }
         mdWriter.println("</tr>");
         mdWriter.println("<tr>");
@@ -255,16 +233,6 @@ public class GeneDrugSummary {
           cpicScores.forEach(v -> mdWriter.println("<li>" + v + "</li>"));
           mdWriter.println("</ul></td>");
         }
-        if (!dpwgPhenotypes.isEmpty()) {
-          mdWriter.print("<td style=\"vertical-align: top\"><ul style=\"padding-left: 1rem\">");
-          dpwgPhenotypes.forEach(v -> mdWriter.println("<li>" + v + "</li>"));
-          mdWriter.println("</ul></td>");
-        }
-        if (!dpwgScores.isEmpty()) {
-          mdWriter.print("<td style=\"vertical-align: top\"><ul style=\"padding-left: 1rem\">");
-          dpwgScores.forEach(v -> mdWriter.println("<li>" + v + "</li>"));
-          mdWriter.println("</ul></td>");
-        }
         mdWriter.println("</tr>");
         mdWriter.println("</table>");
         mdWriter.println();
@@ -276,8 +244,6 @@ public class GeneDrugSummary {
         tsvWriter.print(String.join(";", cpicPhenotypes));
         tsvWriter.print("\t");
         tsvWriter.print(String.join(";", cpicScores));
-        tsvWriter.print("\t");
-        tsvWriter.print(String.join(";", dpwgPhenotypes));
         tsvWriter.println();
       }
 
