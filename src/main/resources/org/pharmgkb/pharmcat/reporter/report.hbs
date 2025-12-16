@@ -218,7 +218,7 @@
     {{else}}
       {{#each recommendations}}
         <section class="guideline {{{sanitizeCssSelector drug}}}">
-          <h3 id="{{{sanitizeCssSelector drug}}}">{{{getChineseDrugName drug this}}}</h3>
+          <h3 id="{{{sanitizeCssSelector drug}}}">{{drug}}</h3>
 
           {{#each messages}}
             <div class="alert alert-info {{messageClass this}}">{{{message}}}</div>
@@ -265,7 +265,7 @@
                         </ul>
                         {{#if (thereAre phenotypes)}}
                           <div class="hint">{{pluralize "Phenotype" phenotypes}}</div>
-                          {{{printRecMapWithChinese phenotypes "rx-phenotype" this}}}
+                          {{{printRecMap phenotypes "rx-phenotype"}}}
                         {{/if}}
                         {{#if (thereAre activityScores)}}
                           <div class="hint">{{pluralize "Activity Score" activityScores}}</div>

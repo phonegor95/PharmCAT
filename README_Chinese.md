@@ -111,6 +111,7 @@ sudo docker run --rm \
 ./gradlew clean shadowJar
 cp build/libs/pharmcat-*-all.jar build/pharmcat.jar
 sudo docker build --network=host -t phonegor95/pharmcat:chinese .
+sudo docker push phonegor95/pharmcat:chinese
 ```
 
 ## Configuration

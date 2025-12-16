@@ -1,7 +1,6 @@
 package org.pharmgkb.pharmcat.reporter.model.pgkb;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,9 +38,6 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
   @SerializedName("lookupKey")
   @Expose
   private List<Map<String,Object>> lookupKey = new ArrayList<>();
-  @SerializedName("lookupKey_cn")
-  @Expose
-  private Map<String,Object> lookupKeyCn = new HashMap<>();
   @SerializedName("dosingInformation")
   @Expose
   private boolean dosingInformation;
@@ -149,14 +145,6 @@ public class RecommendationAnnotation implements Comparable<RecommendationAnnota
 
   public void setLookupKey(List<Map<String,Object>> lookupKey) {
     this.lookupKey = lookupKey;
-  }
-
-  public Map<String,Object> getLookupKeyCn() {
-    return lookupKeyCn;
-  }
-
-  public void setLookupKeyCn(Map<String,Object> lookupKeyCn) {
-    this.lookupKeyCn = lookupKeyCn;
   }
 
   public Set<String> getLookupGenes() {
