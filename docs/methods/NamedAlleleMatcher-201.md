@@ -38,7 +38,8 @@ gene definition table is effectively identical to the one above, but `*2` has a 
 ## Exemptions
 
 `src/main/resources/org/pharmgkb/pharmcat/definition/alleles/exemptions.json` gives you a way to modify the behavior of
-the `Named Allele Matcher`.
+the `Named Allele Matcher`.  However, it is highly recommended that you do NOT modify this file unless you know what you
+are doing.  Many of the fields in this file are not applicable when running PharmCAT and only used when importing data.
 
 
 ### Ignoring Named Alleles
