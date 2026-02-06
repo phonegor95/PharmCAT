@@ -672,6 +672,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*46</li>
 <li>*47</li>
 <li>*48</li>
+<li>*49</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Intermediate Metabolizer</li>
 <li>Normal Metabolizer</li>
@@ -704,7 +705,6 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 </table>
 
 ### CYP4F2
-<p>No recommendations available for this gene.</p>
 <table>
 <tr>
 <th style="text-align: left">Named Alleles</th>
@@ -838,6 +838,30 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>1.0</li>
 <li>1.5</li>
 <li>2.0</li>
+</ul></td>
+</tr>
+</table>
+
+### F2
+<table>
+<tr>
+<th style="text-align: left">Named Alleles</th>
+</tr>
+<tr>
+<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs1799963 Prothrombin 20210A</li>
+<li>rs1799963 reference (G)</li>
+</ul></td>
+</tr>
+</table>
+
+### F5
+<table>
+<tr>
+<th style="text-align: left">Named Alleles</th>
+</tr>
+<tr>
+<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs6025 C</li>
+<li>rs6025 T (Factor V Leiden)</li>
 </ul></td>
 </tr>
 </table>
@@ -1180,7 +1204,6 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 </tr>
 <tr>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>*1</li>
-<li>*2</li>
 <li>*3</li>
 <li>*4</li>
 <li>*5</li>
@@ -1680,6 +1703,9 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*42</li>
 <li>*43</li>
 <li>*44</li>
+<li>*45</li>
+<li>*46</li>
+<li>*47</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>

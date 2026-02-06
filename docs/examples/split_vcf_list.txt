@@ -5,6 +5,7 @@ chr6.vcf
 chr7.vcf
 chr8.vcf
 chr10.vcf
+chr11.vcf
 chr12.vcf
 chr13.vcf
 chr16.vcf

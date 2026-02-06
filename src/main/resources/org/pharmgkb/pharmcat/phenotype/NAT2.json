@@ -53,7 +53,13 @@
     "*66": "Decreased function",
     "*67": "Decreased function",
     "*68": "Decreased function",
-    "*69": "Decreased function"
+    "*69": "Decreased function",
+    "*70": "Decreased function",
+    "*71": "Unknown function",
+    "*72": "Decreased function",
+    "*73": "Decreased function",
+    "*74": "Unknown function",
+    "*75": "Decreased function"
   },
   "activityValues": {},
   "diplotypes": [
@@ -693,6 +699,78 @@
       "phenotype": "Intermediate Metabolizer"
     },
     {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*1/*70",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*1": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*1/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*1": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*1/*72",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*1": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*1/*73",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*1": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*1/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*1": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*1/*75",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*1": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
       "generesult": "Rapid Metabolizer",
       "diplotype": "*4/*4",
       "description": null,
@@ -1316,6 +1394,78 @@
       "phenotype": "Intermediate Metabolizer"
     },
     {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*4/*70",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*4": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*4/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*4": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*4/*72",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*4": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*4/*73",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*4": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*4/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*4": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Intermediate Metabolizer",
+      "diplotype": "*4/*75",
+      "description": null,
+      "lookupkey": "Intermediate Metabolizer",
+      "diplotypekey": {
+        "*4": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Intermediate Metabolizer"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*5/*5",
       "description": null,
@@ -1928,6 +2078,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*5/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*5": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*5/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*5": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*5/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*5": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*5/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*5": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*5/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*5": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*5/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*5": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*6/*6",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -2527,6 +2749,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*6/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*6": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*6/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*6": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*6/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*6": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*6/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*6": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*6/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*6": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*6/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*6": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*7/*7",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -3113,6 +3407,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*7/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*7": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*7/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*7": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*7/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*7": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*7/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*7": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*7/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*7": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*7/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*7": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*10/*10",
       "description": null,
@@ -3688,6 +4054,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*10/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*10": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*14/*14",
       "description": null,
@@ -4252,6 +4690,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*14/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*14": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*14/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*14": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*14/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*14": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*14/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*14": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*14/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*14": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*14/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*14": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*15/*15",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -4803,6 +5313,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*15/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*15": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*15/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*15": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*15/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*15": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*15/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*15": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*15/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*15": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*15/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*15": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*16/*16",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -5342,6 +5924,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*16/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*16": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*16/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*16": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*16/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*16": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*16/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*16": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*16/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*16": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*16/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*16": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*19/*19",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -5868,6 +6522,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*19/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*19": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*19/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*19": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*19/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*19": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*19/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*19": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*19/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*19": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*19/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*19": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*21/*21",
       "description": null,
@@ -6384,6 +7110,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*21/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*21/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*21/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*21/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*21/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*21/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*21": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*27/*27",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -6886,6 +7684,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*27/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*27": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*29/*29",
       "description": null,
@@ -7378,6 +8248,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*29/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*29": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*29/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*29": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*29/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*29": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*29/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*29": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*29/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*29": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*29/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*29": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*30/*30",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -7857,6 +8799,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*30/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*30": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*30/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*30": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*30/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*30": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*30/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*30": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*30/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*30": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*30/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*30": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*31/*31",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -8324,6 +9338,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*31/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*31": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*31/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*31": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*31/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*31": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*31/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*31": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*31/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*31": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*31/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*31": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*32/*32",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -8779,6 +9865,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*32/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*32": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*32/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*32": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*32/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*32": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*32/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*32": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*32/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*32": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*32/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*32": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*33/*33",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -9222,6 +10380,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*33/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*33": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*33/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*33": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*33/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*33": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*33/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*33": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*33/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*33": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*33/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*33": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*34/*34",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -9653,6 +10883,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*34/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*34": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*34/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*34": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*34/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*34": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*34/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*34": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*34/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*34": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*34/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*34": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*35/*35",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -10072,6 +11374,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*35/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*35": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*35/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*35": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*35/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*35": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*35/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*35": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*35/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*35": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*35/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*35": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*36/*36",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -10479,6 +11853,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*36/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*36": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*36/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*36": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*36/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*36": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*36/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*36": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*36/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*36": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*36/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*36": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*37/*37",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -10874,6 +12320,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*37/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*37": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*37/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*37": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*37/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*37": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*37/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*37": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*37/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*37": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*37/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*37": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*38/*38",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -11257,6 +12775,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*38/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*38": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*38/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*38": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*38/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*38": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*38/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*38": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*38/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*38": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*38/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*38": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*39/*39",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -11628,6 +13218,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*39/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*39": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*39/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*39": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*39/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*39": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*39/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*39": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*39/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*39": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*39/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*39": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*40/*40",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -11986,6 +13648,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*40/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*40": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*40/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*40": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*40/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*40": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*40/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*40": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*40/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*40": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*40/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*40": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*41/*41",
       "description": null,
@@ -12334,6 +14068,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*41/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*41/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*41/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*41/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*41/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*41/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*41": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*42/*42",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -12669,6 +14475,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*42/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*42/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*42/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*42/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*42/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*42/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*42": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*43/*43",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -12992,6 +14870,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*43/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*43/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*43/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*43/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*43/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*43/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*43": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*44/*44",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -13303,6 +15253,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*44/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*44/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*44/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*44/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*44/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*44/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*44": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*45/*45",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -13601,6 +15623,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*45/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*45": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*46/*46",
       "description": null,
@@ -13889,6 +15983,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*46/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*46": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*46/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*46": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*46/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*46": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*46/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*46": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*46/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*46": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*46/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*46": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*47/*47",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -14164,6 +16330,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*47/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*47": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*47/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*47": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*47/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*47": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*47/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*47": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*47/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*47": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*47/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*47": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*48/*48",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -14427,6 +16665,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*48/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*48": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*48/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*48": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*48/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*48": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*48/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*48": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*48/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*48": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*48/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*48": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*49/*49",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -14678,6 +16988,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*49/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*49": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*49/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*49": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*49/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*49": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*49/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*49": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*49/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*49": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*49/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*49": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*50/*50",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -14916,6 +17298,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*50/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*50": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*50/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*50": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*50/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*50": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*50/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*50": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*50/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*50": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*50/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*50": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*51/*51",
       "description": null,
@@ -15143,6 +17597,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*51/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*51": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*52/*52",
       "description": null,
@@ -15359,6 +17885,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*52/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*52": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*52/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*52": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*52/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*52": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*52/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*52": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*52/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*52": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*52/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*52": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*53/*53",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -15561,6 +18159,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*53/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*53": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*53/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*53": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*53/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*53": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*53/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*53": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*53/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*53": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*53/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*53": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*54/*54",
       "description": null,
@@ -15753,6 +18423,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*54/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*54/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*54/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*54/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*54/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*54/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*54": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*55/*55",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -15931,6 +18673,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*55/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*55": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*56/*56",
       "description": null,
@@ -16098,6 +18912,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*56/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*56": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*56/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*56": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*56/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*56": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*56/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*56": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*56/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*56": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*56/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*56": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*57/*57",
       "description": null,
@@ -16253,6 +19139,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*57/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*57": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*58/*58",
       "description": null,
@@ -16397,6 +19355,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*58/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*58": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*58/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*58": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*58/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*58": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*58/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*58": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*58/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*58": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*58/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*58": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*59/*59",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -16527,6 +19557,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*59/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*59": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*59/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*59": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*59/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*59": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*59/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*59": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*59/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*59": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*59/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*59": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*60/*60",
       "description": null,
@@ -16647,6 +19749,78 @@
     },
     {
       "generesult": "Indeterminate",
+      "diplotype": "*60/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*60/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*60/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*60/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*60/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*60/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*60": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
       "diplotype": "*61/*61",
       "description": null,
       "lookupkey": "Indeterminate",
@@ -16753,6 +19927,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*61/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*61": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*62/*62",
       "description": null,
@@ -16849,6 +20095,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*62/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*62": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*62/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*62": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*62/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*62": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*62/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*62": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*62/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*62": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*62/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*62": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*63/*63",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -16932,6 +20250,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*63/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*63": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*63/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*63": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*63/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*63": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*63/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*63": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*63/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*63": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*63/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*63": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*64/*64",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -17002,6 +20392,78 @@
       "phenotype": "Poor Metabolizer"
     },
     {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*64/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*64": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*64/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*64": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*64/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*64": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*64/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*64": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*64/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*64": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*64/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*64": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
       "generesult": "Indeterminate",
       "diplotype": "*65/*65",
       "description": null,
@@ -17061,6 +20523,78 @@
       "phenotype": "Indeterminate"
     },
     {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*70",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*65/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*65": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
       "generesult": "Poor Metabolizer",
       "diplotype": "*66/*66",
       "description": null,
@@ -17109,6 +20643,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*66/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*66": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*66/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*66": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*66/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*66": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*66/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*66": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*66/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*66": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*66/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*66": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*67/*67",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -17144,6 +20750,78 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*67/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*67": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*67/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*67": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*67/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*67": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*67/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*67": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*67/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*67": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*67/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*67": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*68/*68",
       "description": null,
       "lookupkey": "Poor Metabolizer",
@@ -17167,11 +20845,401 @@
     },
     {
       "generesult": "Poor Metabolizer",
+      "diplotype": "*68/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*68": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*68/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*68": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*68/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*68": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*68/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*68": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*68/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*68": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*68/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*68": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
       "diplotype": "*69/*69",
       "description": null,
       "lookupkey": "Poor Metabolizer",
       "diplotypekey": {
         "*69": 2
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*69/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*69": 1,
+        "*70": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*69/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*69": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*69/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*69": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*69/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*69": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*69/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*69": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*69/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*69": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*70/*70",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*70": 2
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*70/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*70": 1,
+        "*71": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*70/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*70": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*70/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*70": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*70/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*70": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*70/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*70": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*71/*71",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*71": 2
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*71/*72",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*71": 1,
+        "*72": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*71/*73",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*71": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*71/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*71": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*71/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*71": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*72/*72",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*72": 2
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*72/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*72": 1,
+        "*73": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*72/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*72": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*72/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*72": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*73/*73",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*73": 2
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*73/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*73": 1,
+        "*74": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*73/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*73": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Poor Metabolizer"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*74/*74",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*74": 2
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Indeterminate",
+      "diplotype": "*74/*75",
+      "description": null,
+      "lookupkey": "Indeterminate",
+      "diplotypekey": {
+        "*74": 1,
+        "*75": 1
+      },
+      "activityScore": null,
+      "phenotype": "Indeterminate"
+    },
+    {
+      "generesult": "Poor Metabolizer",
+      "diplotype": "*75/*75",
+      "description": null,
+      "lookupkey": "Poor Metabolizer",
+      "diplotypekey": {
+        "*75": 2
       },
       "activityScore": null,
       "phenotype": "Poor Metabolizer"
@@ -17495,7 +21563,43 @@
       "activityValue": null,
       "functionValue": "Decreased function",
       "lookupKey": "Decreased function"
+    },
+    {
+      "name": "*70",
+      "activityValue": null,
+      "functionValue": "Decreased function",
+      "lookupKey": "Decreased function"
+    },
+    {
+      "name": "*71",
+      "activityValue": null,
+      "functionValue": "Unknown function",
+      "lookupKey": "Unknown function"
+    },
+    {
+      "name": "*72",
+      "activityValue": null,
+      "functionValue": "Decreased function",
+      "lookupKey": "Decreased function"
+    },
+    {
+      "name": "*73",
+      "activityValue": null,
+      "functionValue": "Decreased function",
+      "lookupKey": "Decreased function"
+    },
+    {
+      "name": "*74",
+      "activityValue": null,
+      "functionValue": "Unknown function",
+      "lookupKey": "Unknown function"
+    },
+    {
+      "name": "*75",
+      "activityValue": null,
+      "functionValue": "Decreased function",
+      "lookupKey": "Decreased function"
     }
   ],
-  "version": "2025-11-05-00-25"
+  "version": "2026-02-05-15-04"
 }

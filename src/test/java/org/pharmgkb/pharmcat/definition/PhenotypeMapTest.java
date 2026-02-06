@@ -47,6 +47,7 @@ class PhenotypeMapTest {
         "CYP3A4",
         "CYP3A5",
         "DPYD",
+        "F2",
         "G6PD",
         "IFNL3",
         "MT-RNR1",

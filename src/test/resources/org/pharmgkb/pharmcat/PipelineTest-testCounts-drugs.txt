@@ -57,10 +57,12 @@ dronabinol
 efavirenz
 elagolix
 eliglustat
+eltrombopag
 enflurane
 erdafitinib
 escitalopram
 esomeprazole
+ethinyl estradiol / norelgestromin
 fesoterodine
 flecainide
 flibanserin
@@ -101,6 +103,7 @@ lidocaine and tetracaine
 lofexidine
 lornoxicam
 lovastatin
+lusutrombopag
 mavacamten
 meclizine
 meloxicam
@@ -150,6 +153,7 @@ quetiapine
 rabeprazole
 raltegravir
 rasburicase
+relugolix / estradiol / norethindrone acetate
 ribavirin
 ribostamycin
 risperidone

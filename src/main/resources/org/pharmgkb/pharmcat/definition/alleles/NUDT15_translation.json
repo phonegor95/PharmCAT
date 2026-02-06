@@ -1,8 +1,8 @@
 {
   "formatVersion": "2",
   "source": "CLINPGX",
-  "version": "2025-11-05-00-25",
-  "modificationDate": "2025-11-03T18:30:01.150Z",
+  "version": "2026-02-05-15-04",
+  "modificationDate": "2026-02-03T21:39:59.304Z",
   "gene": "NUDT15",
   "orientation": null,
   "chromosome": "chr13",
@@ -56,6 +56,7 @@
       "cpicAlleles": [
         "GAGTCG(2)",
         "GAGTCG(3)",
+        "GAGTCG(3) or GAGTCG(4)",
         "GAGTCG(4)"
       ],
       "cpicToVcfAlleleMap": {
@@ -407,12 +408,12 @@
       "numPartials": 0
     },
     {
-      "name": "*2",
-      "id": "PA166131620",
+      "name": "*3",
+      "id": "PA166131621",
       "alleles": [
         null,
         null,
-        "AGGAGTCGGAGTC",
+        "AGGAGTC or AGGAGTCGGAGTC",
         null,
         null,
         null,
@@ -432,7 +433,7 @@
       "cpicAlleles": [
         null,
         null,
-        "GAGTCG(4)",
+        "GAGTCG(3) or GAGTCG(4)",
         null,
         null,
         null,
@@ -456,58 +457,6 @@
         48045719
       ],
       "score": 2,
-      "numCombinations": 0,
-      "numPartials": 0
-    },
-    {
-      "name": "*3",
-      "id": "PA166131621",
-      "alleles": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        "T",
-        null,
-        null
-      ],
-      "cpicAlleles": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        "T",
-        null,
-        null
-      ],
-      "reference": false,
-      "structuralVariant": false,
-      "corePositions": [
-        48045719
-      ],
-      "score": 1,
       "numCombinations": 0,
       "numPartials": 0
     },
@@ -1474,7 +1423,7 @@
       "*19"
     ],
     "48037782": [
-      "*2",
+      "*3",
       "*6",
       "*9"
     ],
@@ -1515,7 +1464,6 @@
       "*21"
     ],
     "48045719": [
-      "*2",
       "*3"
     ],
     "48045720": [

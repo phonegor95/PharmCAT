@@ -2,28 +2,28 @@
   "formatVersion": "2",
   "source": "CLINPGX",
   "version": "2026-02-05-15-04",
-  "modificationDate": "2023-02-03T16:20:52.044Z",
-  "gene": "ABCG2",
+  "modificationDate": "2023-05-04T00:06:53.312Z",
+  "gene": "F5",
   "orientation": null,
-  "chromosome": "chr4",
+  "chromosome": "chr1",
   "genomeBuild": "GRCh38.p14",
-  "refSeqChromosomeId": "NC_000004.12",
+  "refSeqChromosomeId": "NC_000001.11",
   "variants": [
     {
-      "chromosome": "chr4",
-      "position": 88131171,
-      "cpicPosition": 88131171,
-      "rsid": "rs2231142",
-      "chromosomeHgvsName": "g.88131171G>T",
+      "chromosome": "chr1",
+      "position": 169549811,
+      "cpicPosition": 169549811,
+      "rsid": "rs6025",
+      "chromosomeHgvsName": "g.169549811C>T",
       "cpicAlleles": [
-        "G",
+        "C",
         "T"
       ],
       "cpicToVcfAlleleMap": {
-        "T": "T",
-        "G": "G"
+        "C": "C",
+        "T": "T"
       },
-      "ref": "G",
+      "ref": "C",
       "alts": [
         "T"
       ]
@@ -31,13 +31,13 @@
   ],
   "namedAlleles": [
     {
-      "name": "rs2231142 reference (G)",
-      "id": "PA166287823",
+      "name": "rs6025 C",
+      "id": "PA166300382",
       "alleles": [
-        "G"
+        "C"
       ],
       "cpicAlleles": [
-        "G"
+        "C"
       ],
       "reference": true,
       "structuralVariant": false,
@@ -47,8 +47,8 @@
       "numPartials": 0
     },
     {
-      "name": "rs2231142 variant (T)",
-      "id": "PA166287824",
+      "name": "rs6025 T (Factor V Leiden)",
+      "id": "PA166300383",
       "alleles": [
         "T"
       ],
@@ -58,7 +58,7 @@
       "reference": false,
       "structuralVariant": false,
       "corePositions": [
-        88131171
+        169549811
       ],
       "score": 1,
       "numCombinations": 0,
@@ -66,15 +66,15 @@
     }
   ],
   "singularVariants": [
-    88131171
+    169549811
   ],
   "positionToAlleles": {
-    "88131171": [
-      "rs2231142 variant (T)"
+    "169549811": [
+      "rs6025 T (Factor V Leiden)"
     ]
   },
   "positionToLocus": {
-    "88131171": 0
+    "169549811": 0
   },
   "hiddenCoreAlleles": [],
   "suballelesMap": {}

@@ -2,37 +2,37 @@
   "formatVersion": "2",
   "source": "CLINPGX",
   "version": "2026-02-05-15-04",
-  "modificationDate": "2023-02-03T16:20:52.044Z",
-  "gene": "ABCG2",
+  "modificationDate": "2025-06-24T21:44:08.882Z",
+  "gene": "F2",
   "orientation": null,
-  "chromosome": "chr4",
+  "chromosome": "chr11",
   "genomeBuild": "GRCh38.p14",
-  "refSeqChromosomeId": "NC_000004.12",
+  "refSeqChromosomeId": "NC_000011.10",
   "variants": [
     {
-      "chromosome": "chr4",
-      "position": 88131171,
-      "cpicPosition": 88131171,
-      "rsid": "rs2231142",
-      "chromosomeHgvsName": "g.88131171G>T",
+      "chromosome": "chr11",
+      "position": 46739505,
+      "cpicPosition": 46739505,
+      "rsid": "rs1799963",
+      "chromosomeHgvsName": "g.46739505G>A",
       "cpicAlleles": [
-        "G",
-        "T"
+        "A",
+        "G"
       ],
       "cpicToVcfAlleleMap": {
-        "T": "T",
+        "A": "A",
         "G": "G"
       },
       "ref": "G",
       "alts": [
-        "T"
+        "A"
       ]
     }
   ],
   "namedAlleles": [
     {
-      "name": "rs2231142 reference (G)",
-      "id": "PA166287823",
+      "name": "rs1799963 reference (G)",
+      "id": "PA166411502",
       "alleles": [
         "G"
       ],
@@ -47,18 +47,18 @@
       "numPartials": 0
     },
     {
-      "name": "rs2231142 variant (T)",
-      "id": "PA166287824",
+      "name": "rs1799963 Prothrombin 20210A",
+      "id": "PA166411503",
       "alleles": [
-        "T"
+        "A"
       ],
       "cpicAlleles": [
-        "T"
+        "A"
       ],
       "reference": false,
       "structuralVariant": false,
       "corePositions": [
-        88131171
+        46739505
       ],
       "score": 1,
       "numCombinations": 0,
@@ -66,15 +66,15 @@
     }
   ],
   "singularVariants": [
-    88131171
+    46739505
   ],
   "positionToAlleles": {
-    "88131171": [
-      "rs2231142 variant (T)"
+    "46739505": [
+      "rs1799963 Prothrombin 20210A"
     ]
   },
   "positionToLocus": {
-    "88131171": 0
+    "46739505": 0
   },
   "hiddenCoreAlleles": [],
   "suballelesMap": {}
