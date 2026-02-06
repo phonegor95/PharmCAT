@@ -43,6 +43,7 @@ import static org.pharmgkb.pharmcat.Constants.isLowestFunctionGene;
 public class NamedAlleleMatcher {
   public static final String VERSION = "2.0.0";
   // CHANGES TO THIS LIST OF GENES SHOULD ALSO BE REFLECTED IN DOCUMENTATION IN NamedAlleleMatcher-101.md
+  /* Treat undocumented variations in these genes as reference due to drug toxicity. */
   public static final List<String> TREAT_UNDOCUMENTED_VARIATIONS_AS_REFERENCE = List.of(
       "CACNA1S",
       "DPYD",
