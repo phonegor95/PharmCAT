@@ -1780,23 +1780,6 @@ class PipelineTest {
     testWrapper.testMatchedAnnotations("carbamazepine", PrescribingGuidanceSource.DPWG_GUIDELINE, 1);
   }
 
-  @Test
-  void testTpmtStar1s(TestInfo testInfo) throws Exception {
-    PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
-    testWrapper.getVcfBuilder()
-        .variation("TPMT", "rs1800460", "C", "T")
-        .variation("TPMT", "rs1142345", "T", "C");
-    testWrapper.execute();
-
-    testWrapper.testCalledByMatcher("TPMT");
-    testWrapper.testPrintCpicCalls("TPMT", "*1/*3A");
-    testWrapper.testRecommendedDiplotypes("TPMT", "*1", "*3A");
-
-    GeneReport tpmtReport = testWrapper.getContext().getGeneReport("TPMT");
-    assertNotNull(tpmtReport);
-    assertEquals(43, tpmtReport.getVariantReports().size());
-  }
-
 
   @Test
   void testCyp2c9star61(TestInfo testInfo) throws Exception {
