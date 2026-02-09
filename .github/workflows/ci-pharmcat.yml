@@ -59,6 +59,16 @@ jobs:
           path: build/reports/tests/test/index.html
           if-no-files-found: ignore
 
+      - name: Run PharmCAT tests on Java 25
+        run: ./gradlew testOnJava25 --no-daemon --info --scan
+
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: ci-pharmcat-tests-jdk25
+          path: build/reports/tests/test/index.html
+          if-no-files-found: ignore
+
       - name: Codecov
         uses: codecov/codecov-action@v5
         with:

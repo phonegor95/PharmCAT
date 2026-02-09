@@ -137,6 +137,12 @@ tasks.register('testOnJava21', Test) {
   }
 }
 
+tasks.register('testOnJava25', Test) {
+  javaLauncher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(25)
+  }
+}
+
 jacocoTestReport {
   // tests must be run before generating the report
   dependsOn test
