@@ -1,7 +1,7 @@
 {
   "formatVersion": "2",
   "source": "CLINPGX",
-  "version": "2026-02-05-15-04",
+  "version": "2026-02-09-10-28",
   "modificationDate": "2023-05-04T00:06:53.312Z",
   "gene": "F5",
   "orientation": null,
@@ -31,7 +31,7 @@
   ],
   "namedAlleles": [
     {
-      "name": "rs6025 C",
+      "name": "rs6025 reference (C)",
       "id": "PA166300382",
       "alleles": [
         "C"
@@ -47,7 +47,7 @@
       "numPartials": 0
     },
     {
-      "name": "rs6025 T (Factor V Leiden)",
+      "name": "rs6025 Factor V Leiden (T)",
       "id": "PA166300383",
       "alleles": [
         "T"
@@ -70,7 +70,7 @@
   ],
   "positionToAlleles": {
     "169549811": [
-      "rs6025 T (Factor V Leiden)"
+      "rs6025 Factor V Leiden (T)"
     ]
   },
   "positionToLocus": {

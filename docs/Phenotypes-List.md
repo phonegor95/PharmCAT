@@ -860,8 +860,8 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <th style="text-align: left">Named Alleles</th>
 </tr>
 <tr>
-<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs6025 C</li>
-<li>rs6025 T (Factor V Leiden)</li>
+<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs6025 Factor V Leiden (T)</li>
+<li>rs6025 reference (C)</li>
 </ul></td>
 </tr>
 </table>

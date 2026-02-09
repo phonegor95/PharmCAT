@@ -3,7 +3,7 @@
     "namedAlleleMatcherVersion": "2.0.0",
     "genomeBuild": "GRCh38.p14",
     "inputFilename": "pharmcat.example2.vcf",
-    "timestamp": "2026-02-06T18:26:29.522Z",
+    "timestamp": "2026-02-09T21:20:37.922Z",
     "topCandidatesOnly": true,
     "findCombinations": false,
     "callCyp2d": false,
@@ -13,7 +13,7 @@
   "results": [
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr4",
       "gene": "ABCG2",
       "diplotypes": [
@@ -119,7 +119,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr1",
       "gene": "CACNA1S",
       "diplotypes": [
@@ -238,7 +238,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr7",
       "gene": "CFTR",
       "diplotypes": [
@@ -1540,7 +1540,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr19",
       "gene": "CYP2B6",
       "diplotypes": [
@@ -2471,7 +2471,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr10",
       "gene": "CYP2C19",
       "diplotypes": [
@@ -3127,7 +3127,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr10",
       "gene": "CYP2C9",
       "diplotypes": [
@@ -4307,7 +4307,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr7",
       "gene": "CYP3A4",
       "diplotypes": [
@@ -4959,7 +4959,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr7",
       "gene": "CYP3A5",
       "diplotypes": [
@@ -5117,7 +5117,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr19",
       "gene": "CYP4F2",
       "diplotypes": [
@@ -5470,7 +5470,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr1",
       "gene": "DPYD",
       "diplotypes": [
@@ -6642,7 +6642,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr11",
       "gene": "F2",
       "diplotypes": [
@@ -6748,16 +6748,16 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr1",
       "gene": "F5",
       "diplotypes": [
         {
-          "name": "rs6025 C/rs6025 C",
+          "name": "rs6025 reference (C)/rs6025 reference (C)",
           "haplotype1": {
-            "name": "rs6025 C",
+            "name": "rs6025 reference (C)",
             "haplotype": {
-              "name": "rs6025 C",
+              "name": "rs6025 reference (C)",
               "id": "PA166300382",
               "alleles": [
                 "C"
@@ -6777,9 +6777,9 @@
             ]
           },
           "haplotype2": {
-            "name": "rs6025 C",
+            "name": "rs6025 reference (C)",
             "haplotype": {
-              "name": "rs6025 C",
+              "name": "rs6025 reference (C)",
               "id": "PA166300382",
               "alleles": [
                 "C"
@@ -6803,9 +6803,9 @@
       ],
       "haplotypes": [
         {
-          "name": "rs6025 C",
+          "name": "rs6025 reference (C)",
           "haplotype": {
-            "name": "rs6025 C",
+            "name": "rs6025 reference (C)",
             "id": "PA166300382",
             "alleles": [
               "C"
@@ -6854,7 +6854,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chrX",
       "gene": "G6PD",
       "diplotypes": [
@@ -9170,7 +9170,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr19",
       "gene": "IFNL3",
       "diplotypes": [
@@ -9276,7 +9276,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr8",
       "gene": "NAT2",
       "diplotypes": [
@@ -9980,7 +9980,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr13",
       "gene": "NUDT15",
       "diplotypes": [
@@ -10307,7 +10307,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr19",
       "gene": "RYR1",
       "diplotypes": [
@@ -14469,7 +14469,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr12",
       "gene": "SLCO1B1",
       "diplotypes": [
@@ -15017,7 +15017,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr6",
       "gene": "TPMT",
       "diplotypes": [
@@ -15695,7 +15695,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr2",
       "gene": "UGT1A1",
       "diplotypes": [
@@ -15840,7 +15840,7 @@
     },
     {
       "source": "CLINPGX",
-      "version": "2026-02-05-15-04",
+      "version": "2026-02-09-10-28",
       "chromosome": "chr16",
       "gene": "VKORC1",
       "diplotypes": [

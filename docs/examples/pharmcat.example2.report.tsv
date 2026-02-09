@@ -1,4 +1,4 @@
-PharmCAT v3.1.1-4-g0b13ae5d
+PharmCAT v3.1.1-7-g1b371646
 Gene	Source Diplotype	Phenotype	Activity Score	Haplotype 1	Haplotype 1 Function	Haplotype 1 Activity Value	Haplotype 2	Haplotype 2 Function	Haplotype 2 Activity Value	Outside Call	Match Score	Missing positions	Recommendation Lookup Diplotype	Recommendation Lookup Phenotype	Recommendation Lookup Activity Score
 RYR1	Reference/Reference	Uncertain Susceptibility		Reference	Normal function		Reference	Normal function		no	626	no	Reference/Reference	Uncertain Susceptibility	
 VKORC1	rs9923231 reference (C)/rs9923231 reference (C)	-1639 GG		rs9923231 reference (C)	Normal coumarin sensitivity		rs9923231 reference (C)	Normal coumarin sensitivity		no	2	no	rs9923231 reference (C)/rs9923231 reference (C)	-1639 GG	
@@ -20,4 +20,4 @@ IFNL3	rs12979860 reference (C)/rs12979860 reference (C)	 		rs12979860 reference 
 CFTR	ivacaftor non-responsive CFTR sequence/ivacaftor non-responsive CFTR sequence	ivacaftor non-responsive in CF patients		ivacaftor non-responsive CFTR sequence	ivacaftor non-responsive		ivacaftor non-responsive CFTR sequence	ivacaftor non-responsive		no	186	no	ivacaftor non-responsive CFTR sequence/ivacaftor non-responsive CFTR sequence	ivacaftor non-responsive in CF patients	
 ABCG2	rs2231142 reference (G)/rs2231142 reference (G)	Normal Function		rs2231142 reference (G)	Normal function		rs2231142 reference (G)	Normal function		no	2	no	rs2231142 reference (G)/rs2231142 reference (G)	Normal Function	
 F2	rs1799963 reference (G)/rs1799963 reference (G)	 		rs1799963 reference (G)	Prothrombin 20210A negative		rs1799963 reference (G)	Prothrombin 20210A negative		no	2	no			
-F5	rs6025 C/rs6025 C			rs6025 C	null		rs6025 C	null		no	2	no			
+F5	rs6025 reference (C)/rs6025 reference (C)	 		rs6025 reference (C)	Factor V Leiden negative		rs6025 reference (C)	Factor V Leiden negative		no	2	no			
