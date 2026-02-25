@@ -1,3 +1,14 @@
+## [3.2.0](https://github.com/PharmGKB/PharmCAT/compare/v3.1.1...v3.2.0) (2026-02-25)
+
+### Features
+
+* **data:** update data from PharmVar and ClinPGx ([1b37164](https://github.com/PharmGKB/PharmCAT/commit/1b3716464dbcc09e96efa1392b1ed065b947374f))
+* **namedAlleleMatcher:** support handling repeat wobbles (NUDT15) ([4964ee7](https://github.com/PharmGKB/PharmCAT/commit/4964ee71b113345524caa5fe217a864fc6f7ac4e))
+
+### Bug Fixes
+
+* **data:** update data from ClinPGx ([b7a487a](https://github.com/PharmGKB/PharmCAT/commit/b7a487ac8c01dc71e62a0f4c597468c79800e08b))
+
 ## [3.1.1](https://github.com/PharmGKB/PharmCAT/compare/v3.1.0...v3.1.1) (2025-11-19)
 
 ### Bug Fixes
