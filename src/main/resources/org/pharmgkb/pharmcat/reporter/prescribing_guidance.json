@@ -6,7 +6,7 @@
         "name": "Annotation of CPIC Guideline for abacavir and HLA-B",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 51,
+        "version": 52,
         "url": null,
         "relatedChemicals": [
           {
@@ -119,7 +119,7 @@
         "name": "Annotation of CPIC Guideline for allopurinol and HLA-B",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 44,
+        "version": 45,
         "url": null,
         "relatedChemicals": [
           {
@@ -232,7 +232,7 @@
         "name": "Annotation of CPIC Guideline for amikacin, dibekacin, gentamicin, kanamycin, neomycin, netilmicin, paromomycin, plazomicin, ribostamycin, streptomycin, tobramycin and MT-RNR1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 10,
+        "version": 11,
         "url": null,
         "relatedChemicals": [
           {
@@ -1359,7 +1359,7 @@
         "name": "Annotation of CPIC Guideline for amitriptyline and CYP2C19, CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 60,
+        "version": 61,
         "url": null,
         "relatedChemicals": [
           {
@@ -8450,7 +8450,7 @@
         "name": "Annotation of CPIC Guideline for atazanavir and UGT1A1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 52,
+        "version": 55,
         "url": null,
         "relatedChemicals": [
           {
@@ -8466,43 +8466,7 @@
             "symbol": "UGT1A1"
           }
         ],
-        "relatedAlleles": [
-          {
-            "id": "PA166115841",
-            "name": "*1",
-            "symbol": "UGT1A1*1"
-          },
-          {
-            "id": "PA166115842",
-            "name": "*28",
-            "symbol": "UGT1A1*28"
-          },
-          {
-            "id": "PA166115843",
-            "name": "*36",
-            "symbol": "UGT1A1*36"
-          },
-          {
-            "id": "PA166115844",
-            "name": "*37",
-            "symbol": "UGT1A1*37"
-          },
-          {
-            "id": "PA166115858",
-            "name": "*6",
-            "symbol": "UGT1A1*6"
-          },
-          {
-            "id": "PA166115850",
-            "name": "*80",
-            "symbol": "UGT1A1*80"
-          },
-          {
-            "id": "PA166220483",
-            "name": "*80+*28",
-            "symbol": "UGT1A1*80+*28"
-          }
-        ],
+        "relatedAlleles": [],
         "recommendation": true
       },
       "recommendations": [
@@ -8648,7 +8612,7 @@
         "name": "Annotation of CPIC Guideline for atomoxetine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 15,
+        "version": 17,
         "url": null,
         "relatedChemicals": [
           {
@@ -10076,7 +10040,7 @@
         "name": "Annotation of CPIC Guideline for atorvastatin and SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 7,
+        "version": 8,
         "url": null,
         "relatedChemicals": [
           {
@@ -10097,16 +10061,6 @@
             "id": "PA166154579",
             "name": "rs4149056",
             "symbol": "rs4149056"
-          },
-          {
-            "id": "PA165819265",
-            "name": "*15",
-            "symbol": "SLCO1B1*15"
-          },
-          {
-            "id": "PA165819255",
-            "name": "*5",
-            "symbol": "SLCO1B1*5"
           }
         ],
         "recommendation": true
@@ -10316,7 +10270,7 @@
         "name": "Annotation of CPIC Guideline for azathioprine and NUDT15, TPMT",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 57,
+        "version": 59,
         "url": null,
         "relatedChemicals": [
           {
@@ -11515,7 +11469,7 @@
         "name": "Annotation of CPIC Guideline for capecitabine and DPYD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 60,
+        "version": 62,
         "url": null,
         "relatedChemicals": [
           {
@@ -11532,11 +11486,6 @@
           }
         ],
         "relatedAlleles": [
-          {
-            "id": "PA166171120",
-            "name": "c.1129-5923C>G, c.1236G>A (HapB3)",
-            "symbol": "DPYD c.1129-5923C>G, c.1236G>A (HapB3)"
-          },
           {
             "id": "PA166153916",
             "name": "rs111858276",
@@ -12126,7 +12075,7 @@
         "name": "Annotation of CPIC Guideline for carbamazepine and HLA-A, HLA-B",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 54,
+        "version": 55,
         "url": null,
         "relatedChemicals": [
           {
@@ -12979,7 +12928,7 @@
         "name": "Annotation of CPIC Guideline for celecoxib, flurbiprofen, ibuprofen, lornoxicam and CYP2C9",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 11,
+        "version": 12,
         "url": null,
         "relatedChemicals": [
           {
@@ -13776,7 +13725,7 @@
         "name": "Annotation of CPIC Guideline for citalopram, escitalopram and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 50,
+        "version": 51,
         "url": null,
         "relatedChemicals": [
           {
@@ -14322,7 +14271,7 @@
         "name": "Annotation of CPIC Guideline for clomipramine and CYP2C19, CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 47,
+        "version": 48,
         "url": null,
         "relatedChemicals": [
           {
@@ -21413,7 +21362,7 @@
         "name": "Annotation of CPIC Guideline for clopidogrel and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 48,
+        "version": 49,
         "url": null,
         "relatedChemicals": [
           {
@@ -22209,7 +22158,7 @@
         "name": "Annotation of CPIC Guideline for codeine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 67,
+        "version": 69,
         "url": null,
         "relatedChemicals": [
           {
@@ -22969,7 +22918,7 @@
         "name": "Annotation of CPIC Guideline for dapsone, methylene blue, pegloticase, rasburicase, tafenoquine, toluidine blue and G6PD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 48,
+        "version": 50,
         "url": null,
         "relatedChemicals": [
           {
@@ -23969,7 +23918,7 @@
         "name": "Annotation of CPIC Guideline for desflurane, enflurane, halothane, isoflurane, methoxyflurane, sevoflurane, succinylcholine and CACNA1S, RYR1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 4,
+        "version": 5,
         "url": null,
         "relatedChemicals": [
           {
@@ -26065,7 +26014,7 @@
         "name": "Annotation of CPIC Guideline for desipramine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 46,
+        "version": 47,
         "url": null,
         "relatedChemicals": [
           {
@@ -26818,7 +26767,7 @@
         "name": "Annotation of CPIC Guideline for dexlansoprazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 9,
+        "version": 10,
         "url": null,
         "relatedChemicals": [
           {
@@ -27104,7 +27053,7 @@
         "name": "Annotation of CPIC Guideline for doxepin and CYP2C19, CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 49,
+        "version": 50,
         "url": null,
         "relatedChemicals": [
           {
@@ -34195,7 +34144,7 @@
         "name": "Annotation of CPIC Guideline for efavirenz and CYP2B6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 11,
+        "version": 14,
         "url": null,
         "relatedChemicals": [
           {
@@ -34419,7 +34368,7 @@
         "name": "Annotation of CPIC Guideline for fluorouracil and DPYD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 51,
+        "version": 52,
         "url": null,
         "relatedChemicals": [
           {
@@ -34619,7 +34568,7 @@
         "name": "Annotation of CPIC Guideline for fluvastatin and CYP2C9, SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 9,
+        "version": 10,
         "url": null,
         "relatedChemicals": [
           {
@@ -36252,7 +36201,7 @@
         "name": "Annotation of CPIC Guideline for fluvoxamine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 51,
+        "version": 52,
         "url": null,
         "relatedChemicals": [
           {
@@ -37005,7 +36954,7 @@
         "name": "Annotation of CPIC Guideline for fosphenytoin, phenytoin and CYP2C9, HLA-B",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 53,
+        "version": 55,
         "url": null,
         "relatedChemicals": [
           {
@@ -39706,7 +39655,7 @@
         "name": "Annotation of CPIC Guideline for hydralazine and NAT2",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 4,
+        "version": 5,
         "url": null,
         "relatedChemicals": [
           {
@@ -39868,7 +39817,7 @@
         "name": "Annotation of CPIC Guideline for hydrocodone and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 7,
+        "version": 9,
         "url": null,
         "relatedChemicals": [
           {
@@ -40614,7 +40563,7 @@
         "name": "Annotation of CPIC Guideline for imipramine and CYP2C19, CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 50,
+        "version": 51,
         "url": null,
         "relatedChemicals": [
           {
@@ -47705,7 +47654,7 @@
         "name": "Annotation of CPIC Guideline for ivacaftor and CFTR",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 65,
+        "version": 67,
         "url": null,
         "relatedChemicals": [
           {
@@ -48261,7 +48210,7 @@
         "name": "Annotation of CPIC Guideline for lansoprazole, omeprazole, pantoprazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 9,
+        "version": 11,
         "url": null,
         "relatedChemicals": [
           {
@@ -48471,6 +48420,37 @@
           "lookupKey": [
             {
               "CYP2C19": "Likely Poor Metabolizer"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166298287",
+          "name": "Recommendation PA166298287",
+          "population": "general",
+          "classification": {
+            "term": "Moderate",
+            "termId": "guidelineStrength:981501931"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA450774",
+              "name": "pantoprazole",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1452060889,
+            "html": "<p>Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses.\nMonitor for efficacy.</p>\n"
+          },
+          "implications": [
+            "CYP2C19: Normal PPI metabolism; may be at increased risk of therapeutic failure compared to CYP2C19 IMs and PMs"
+          ],
+          "lookupKey": [
+            {
+              "CYP2C19": "Normal Metabolizer"
             }
           ],
           "dosingInformation": true,
@@ -48850,37 +48830,6 @@
           "otherPrescribingGuidance": false
         },
         {
-          "id": "PA166298287",
-          "name": "Recommendation PA166298287",
-          "population": "general",
-          "classification": {
-            "term": "Moderate",
-            "termId": "guidelineStrength:981501931"
-          },
-          "relatedChemicals": [
-            {
-              "id": "PA450774",
-              "name": "pantoprazole",
-              "symbol": null
-            }
-          ],
-          "text": {
-            "id": 1452060889,
-            "html": "<p>Initiate standard starting daily dose. Consider increasing dose by 50-100% for the treatment of H. pylori infection and erosive esophagitis. Daily dose may be given in divided doses.\nMonitor for efficacy.</p>\n"
-          },
-          "implications": [
-            "CYP2C19: Normal PPI metabolism; may be at increased risk of therapeutic failure compared to CYP2C19 IMs and PMs"
-          ],
-          "lookupKey": [
-            {
-              "CYP2C19": "Normal Metabolizer"
-            }
-          ],
-          "dosingInformation": true,
-          "alternateDrugAvailable": false,
-          "otherPrescribingGuidance": false
-        },
-        {
           "id": "PA166298271",
           "name": "Recommendation PA166298271",
           "population": "general",
@@ -49053,7 +49002,7 @@
         "name": "Annotation of CPIC Guideline for lovastatin and SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 6,
+        "version": 7,
         "url": null,
         "relatedChemicals": [
           {
@@ -49074,16 +49023,6 @@
             "id": "PA166154579",
             "name": "rs4149056",
             "symbol": "rs4149056"
-          },
-          {
-            "id": "PA165819265",
-            "name": "*15",
-            "symbol": "SLCO1B1*15"
-          },
-          {
-            "id": "PA165819255",
-            "name": "*5",
-            "symbol": "SLCO1B1*5"
           }
         ],
         "recommendation": true
@@ -49293,7 +49232,7 @@
         "name": "Annotation of CPIC Guideline for meloxicam and CYP2C9",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 10,
+        "version": 11,
         "url": null,
         "relatedChemicals": [
           {
@@ -49517,7 +49456,7 @@
         "name": "Annotation of CPIC Guideline for mercaptopurine and NUDT15, TPMT",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 51,
+        "version": 53,
         "url": null,
         "relatedChemicals": [
           {
@@ -50715,7 +50654,7 @@
         "name": "Annotation of CPIC Guideline for metoprolol and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 1,
+        "version": 2,
         "url": null,
         "relatedChemicals": [
           {
@@ -51435,7 +51374,7 @@
         "name": "Annotation of CPIC Guideline for nitrofurantoin and G6PD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 4,
+        "version": 5,
         "url": null,
         "relatedChemicals": [
           {
@@ -51620,7 +51559,7 @@
         "name": "Annotation of CPIC Guideline for nortriptyline and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 56,
+        "version": 57,
         "url": null,
         "relatedChemicals": [
           {
@@ -52373,7 +52312,7 @@
         "name": "Annotation of CPIC Guideline for ondansetron and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 36,
+        "version": 38,
         "url": null,
         "relatedChemicals": [
           {
@@ -52409,11 +52348,11 @@
             }
           ],
           "text": {
-            "id": 1454566958,
+            "id": 1456334310,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52440,11 +52379,11 @@
             }
           ],
           "text": {
-            "id": 1454566960,
+            "id": 1456334311,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52471,11 +52410,11 @@
             }
           ],
           "text": {
-            "id": 1454567010,
+            "id": 1456334313,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52502,11 +52441,11 @@
             }
           ],
           "text": {
-            "id": 1454566962,
+            "id": 1456334312,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52533,11 +52472,11 @@
             }
           ],
           "text": {
-            "id": 1454566964,
+            "id": 1456334314,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52564,11 +52503,11 @@
             }
           ],
           "text": {
-            "id": 1454566966,
+            "id": 1456334315,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52595,11 +52534,11 @@
             }
           ],
           "text": {
-            "id": 1454566968,
+            "id": 1456334316,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52626,11 +52565,11 @@
             }
           ],
           "text": {
-            "id": 1454566970,
+            "id": 1456334317,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52657,11 +52596,11 @@
             }
           ],
           "text": {
-            "id": 1454567012,
+            "id": 1456334319,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52688,11 +52627,11 @@
             }
           ],
           "text": {
-            "id": 1454566972,
+            "id": 1456334318,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52719,11 +52658,11 @@
             }
           ],
           "text": {
-            "id": 1454566974,
+            "id": 1456334320,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -52750,11 +52689,11 @@
             }
           ],
           "text": {
-            "id": 1454567000,
+            "id": 1456334321,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -52781,11 +52720,11 @@
             }
           ],
           "text": {
-            "id": 1454566528,
+            "id": 1456334322,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -52812,11 +52751,11 @@
             }
           ],
           "text": {
-            "id": 1454565146,
+            "id": 1456334323,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -52843,11 +52782,11 @@
             }
           ],
           "text": {
-            "id": 1454566890,
+            "id": 1456334325,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -52874,11 +52813,11 @@
             }
           ],
           "text": {
-            "id": 1454567036,
+            "id": 1456334324,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -52905,11 +52844,11 @@
             }
           ],
           "text": {
-            "id": 1454567038,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334326,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -52936,11 +52875,11 @@
             }
           ],
           "text": {
-            "id": 1454567040,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334302,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -52967,11 +52906,11 @@
             }
           ],
           "text": {
-            "id": 1454567042,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334303,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -52998,11 +52937,11 @@
             }
           ],
           "text": {
-            "id": 1454567044,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334304,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -53029,11 +52968,11 @@
             }
           ],
           "text": {
-            "id": 1454567046,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334305,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 poor metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -53060,11 +52999,11 @@
             }
           ],
           "text": {
-            "id": 1452060915,
+            "id": 1456334345,
             "html": "<p>No recommendation</p>\n"
           },
           "implications": [
-            "CYP2D6: n/a"
+            "n/a"
           ],
           "lookupKey": [
             {
@@ -53088,7 +53027,7 @@
             }
           ],
           "text": {
-            "id": 1452095645,
+            "id": 1456334342,
             "html": "<p>xN is not a valid input for CYP2D6 copy number alleles. Please select a copy number representation as outlined below.</p>\n<table class=\"table\">\n<thead>\n<tr>\n<th>xN Allele</th>\n<th>Possible selection</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>*1xN</td>\n<td>*1x2 or *1x≥3</td>\n</tr>\n<tr>\n<td>*2xN</td>\n<td>*2x2 or *2x≥3</td>\n</tr>\n<tr>\n<td>*3xN</td>\n<td>*3x2</td>\n</tr>\n<tr>\n<td>*4xN</td>\n<td>*4x2 or *4x≥3</td>\n</tr>\n<tr>\n<td>*6xN</td>\n<td>*6x2</td>\n</tr>\n<tr>\n<td>*35xN</td>\n<td>*35x2</td>\n</tr>\n<tr>\n<td>*36xN</td>\n<td>*36x2</td>\n</tr>\n<tr>\n<td>*43xN</td>\n<td>*43x2</td>\n</tr>\n<tr>\n<td>*45xN</td>\n<td>*45x2</td>\n</tr>\n</tbody>\n</table>\n<ul>\n<li>For normal function alleles (*1 and *2) selecting <strong>*1x2 versus *1x≥3</strong> or <strong>*2x2 versus *2x≥3</strong> will affect the resulting CYP2D6 phenotype.</li>\n<li>CPIC CYP2D6 ultrarapid metabolizer phenotype is assigned an activity score (AS) of &gt;2.25.</li>\n<li>DPWG CYP2D6 ultrarapid metabolizer phenotype is assigned an AS of &gt;2.5.</li>\n</ul>\n<table class=\"table\">\n<thead>\n<tr>\n<th>Guideline</th>\n<th>CNV Allele</th>\n<th>Function</th>\n<th>Activity<br/>value</th>\n<th>Other Allele<br/>Function</th>\n<th>Activity<br/>value</th>\n<th>CYP2D6 AS</th>\n<th>Phenotype</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>No function</td>\n<td>0</td>\n<td>2</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.25</td>\n<td>2.25</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.5</td>\n<td>2.5</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n<tr>\n<td>DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.5</td>\n<td>2.5</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Normal function</td>\n<td>1.0</td>\n<td>3.0</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x≥3</td>\n<td>Increased</td>\n<td>≥3</td>\n<td></td>\n<td></td>\n<td>≥3</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n</tbody>\n</table>\n"
           },
           "implications": [],
@@ -53103,6 +53042,13 @@
         }
       ],
       "citations": [
+        {
+          "pmid": "41979467",
+          "title": "Clinical Pharmacogenetics Implementation Consortium (CPIC) Guideline for CYP2D6 Genotype and Use of 5-HT 3 Receptor Antagonists: 2026 Update.",
+          "journal": "Clinical pharmacology and therapeutics",
+          "year": 2026,
+          "_sameAs": "https://www.ncbi.nlm.nih.gov/pubmed/41979467"
+        },
         {
           "pmid": "28002639",
           "title": "Clinical Pharmacogenetics Implementation Consortium (CPIC) guideline for CYP2D6 genotype and use of ondansetron and tropisetron.",
@@ -53119,7 +53065,7 @@
         "name": "Annotation of CPIC Guideline for oxcarbazepine and HLA-B",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 21,
+        "version": 22,
         "url": null,
         "relatedChemicals": [
           {
@@ -53287,7 +53233,7 @@
         "name": "Annotation of CPIC Guideline for paroxetine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 52,
+        "version": 53,
         "url": null,
         "relatedChemicals": [
           {
@@ -54040,7 +53986,7 @@
         "name": "Annotation of CPIC Guideline for peginterferon alfa-2a, peginterferon alfa-2b, ribavirin and IFNL3",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 47,
+        "version": 51,
         "url": null,
         "relatedChemicals": [
           {
@@ -54093,7 +54039,7 @@
         "name": "Annotation of CPIC Guideline for piroxicam and CYP2C9",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 10,
+        "version": 11,
         "url": null,
         "relatedChemicals": [
           {
@@ -54317,7 +54263,7 @@
         "name": "Annotation of CPIC Guideline for pitavastatin and SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 7,
+        "version": 8,
         "url": null,
         "relatedChemicals": [
           {
@@ -54338,16 +54284,6 @@
             "id": "PA166154579",
             "name": "rs4149056",
             "symbol": "rs4149056"
-          },
-          {
-            "id": "PA165819265",
-            "name": "*15",
-            "symbol": "SLCO1B1*15"
-          },
-          {
-            "id": "PA165819255",
-            "name": "*5",
-            "symbol": "SLCO1B1*5"
           }
         ],
         "recommendation": true
@@ -54557,7 +54493,7 @@
         "name": "Annotation of CPIC Guideline for pravastatin and SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 7,
+        "version": 8,
         "url": null,
         "relatedChemicals": [
           {
@@ -54787,7 +54723,7 @@
         "name": "Annotation of CPIC Guideline for primaquine and G6PD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 4,
+        "version": 5,
         "url": null,
         "relatedChemicals": [
           {
@@ -54980,7 +54916,7 @@
         "name": "Annotation of CPIC Guideline for rosuvastatin and ABCG2, SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 8,
+        "version": 9,
         "url": null,
         "relatedChemicals": [
           {
@@ -55925,7 +55861,7 @@
         "name": "Annotation of CPIC Guideline for sertraline and CYP2B6, CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 50,
+        "version": 51,
         "url": null,
         "relatedChemicals": [
           {
@@ -58021,7 +57957,7 @@
         "name": "Annotation of CPIC Guideline for simvastatin and SLCO1B1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 56,
+        "version": 57,
         "url": null,
         "relatedChemicals": [
           {
@@ -58265,7 +58201,7 @@
         "name": "Annotation of CPIC Guideline for tacrolimus and CYP3A5",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 40,
+        "version": 41,
         "url": null,
         "relatedChemicals": [
           {
@@ -58458,7 +58394,7 @@
         "name": "Annotation of CPIC Guideline for tamoxifen and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 14,
+        "version": 15,
         "url": null,
         "relatedChemicals": [
           {
@@ -59204,7 +59140,7 @@
         "name": "Annotation of CPIC Guideline for tenoxicam and CYP2C9",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 10,
+        "version": 11,
         "url": null,
         "relatedChemicals": [
           {
@@ -59428,7 +59364,7 @@
         "name": "Annotation of CPIC Guideline for thioguanine and NUDT15, TPMT",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 50,
+        "version": 52,
         "url": null,
         "relatedChemicals": [
           {
@@ -60624,7 +60560,7 @@
         "name": "Annotation of CPIC Guideline for tramadol and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 8,
+        "version": 9,
         "url": null,
         "relatedChemicals": [
           {
@@ -61370,7 +61306,7 @@
         "name": "Annotation of CPIC Guideline for trimipramine and CYP2C19, CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 53,
+        "version": 54,
         "url": null,
         "relatedChemicals": [
           {
@@ -68461,7 +68397,7 @@
         "name": "Annotation of CPIC Guideline for tropisetron and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 37,
+        "version": 39,
         "url": null,
         "relatedChemicals": [
           {
@@ -68497,11 +68433,11 @@
             }
           ],
           "text": {
-            "id": 1454567014,
+            "id": 1456334306,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68528,11 +68464,11 @@
             }
           ],
           "text": {
-            "id": 1454567016,
+            "id": 1456334307,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68559,11 +68495,11 @@
             }
           ],
           "text": {
-            "id": 1454567084,
+            "id": 1456334309,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68590,11 +68526,11 @@
             }
           ],
           "text": {
-            "id": 1454567018,
+            "id": 1456334308,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68621,11 +68557,11 @@
             }
           ],
           "text": {
-            "id": 1454567020,
+            "id": 1456334330,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68652,11 +68588,11 @@
             }
           ],
           "text": {
-            "id": 1454567022,
+            "id": 1456334331,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68683,11 +68619,11 @@
             }
           ],
           "text": {
-            "id": 1454567024,
+            "id": 1456334332,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68714,11 +68650,11 @@
             }
           ],
           "text": {
-            "id": 1454567026,
+            "id": 1456334333,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68745,11 +68681,11 @@
             }
           ],
           "text": {
-            "id": 1454567086,
+            "id": 1456334335,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68776,11 +68712,11 @@
             }
           ],
           "text": {
-            "id": 1454567028,
+            "id": 1456334334,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68807,11 +68743,11 @@
             }
           ],
           "text": {
-            "id": 1454567030,
+            "id": 1456334336,
             "html": "<p>Select alternative drug not predominantly metabolized by CYP2D6 (i.e., granisetron).</p>\n"
           },
           "implications": [
-            "CYP2D6: Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
+            "Increased metabolism to less active compounds when compared to normal metabolizers and is associated with decreased response to ondansetron and tropisetron (i.e. vomiting)."
           ],
           "lookupKey": [
             {
@@ -68838,11 +68774,11 @@
             }
           ],
           "text": {
-            "id": 1454567048,
+            "id": 1456334337,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -68869,11 +68805,11 @@
             }
           ],
           "text": {
-            "id": 1454567050,
+            "id": 1456334338,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -68900,11 +68836,11 @@
             }
           ],
           "text": {
-            "id": 1454567052,
+            "id": 1456334339,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -68931,11 +68867,11 @@
             }
           ],
           "text": {
-            "id": 1454567054,
+            "id": 1456334340,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -68962,11 +68898,11 @@
             }
           ],
           "text": {
-            "id": 1454567056,
+            "id": 1456334341,
             "html": "<p>Initiate therapy with recommended starting dose.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolism"
+            "Normal metabolism"
           ],
           "lookupKey": [
             {
@@ -68993,11 +68929,11 @@
             }
           ],
           "text": {
-            "id": 1454567058,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334300,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -69024,11 +68960,11 @@
             }
           ],
           "text": {
-            "id": 1454567060,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334329,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -69055,11 +68991,11 @@
             }
           ],
           "text": {
-            "id": 1454567062,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334328,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -69086,11 +69022,11 @@
             }
           ],
           "text": {
-            "id": 1454567064,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334301,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 intermediate metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -69117,11 +69053,11 @@
             }
           ],
           "text": {
-            "id": 1454567066,
-            "html": "<p>Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype. Initiate therapy with recommended starting dose.</p>\n"
+            "id": 1456334327,
+            "html": "<p>No recommendation based on insufficient evidence.</p>\n"
           },
           "implications": [
-            "CYP2D6: Very limited data available for CYP2D6 poor metabolizers"
+            "Insufficient evidence demonstrating clinical impact based on CYP2D6 genotype."
           ],
           "lookupKey": [
             {
@@ -69148,11 +69084,11 @@
             }
           ],
           "text": {
-            "id": 1452060938,
+            "id": 1456334344,
             "html": "<p>No recommendation</p>\n"
           },
           "implications": [
-            "CYP2D6: n/a"
+            "n/a"
           ],
           "lookupKey": [
             {
@@ -69176,7 +69112,7 @@
             }
           ],
           "text": {
-            "id": 1452095649,
+            "id": 1456334343,
             "html": "<p>xN is not a valid input for CYP2D6 copy number alleles. Please select a copy number representation as outlined below.</p>\n<table class=\"table\">\n<thead>\n<tr>\n<th>xN Allele</th>\n<th>Possible selection</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>*1xN</td>\n<td>*1x2 or *1x≥3</td>\n</tr>\n<tr>\n<td>*2xN</td>\n<td>*2x2 or *2x≥3</td>\n</tr>\n<tr>\n<td>*3xN</td>\n<td>*3x2</td>\n</tr>\n<tr>\n<td>*4xN</td>\n<td>*4x2 or *4x≥3</td>\n</tr>\n<tr>\n<td>*6xN</td>\n<td>*6x2</td>\n</tr>\n<tr>\n<td>*35xN</td>\n<td>*35x2</td>\n</tr>\n<tr>\n<td>*36xN</td>\n<td>*36x2</td>\n</tr>\n<tr>\n<td>*43xN</td>\n<td>*43x2</td>\n</tr>\n<tr>\n<td>*45xN</td>\n<td>*45x2</td>\n</tr>\n</tbody>\n</table>\n<ul>\n<li>For normal function alleles (*1 and *2) selecting <strong>*1x2 versus *1x≥3</strong> or <strong>*2x2 versus *2x≥3</strong> will affect the resulting CYP2D6 phenotype.</li>\n<li>CPIC CYP2D6 ultrarapid metabolizer phenotype is assigned an activity score (AS) of &gt;2.25.</li>\n<li>DPWG CYP2D6 ultrarapid metabolizer phenotype is assigned an AS of &gt;2.5.</li>\n</ul>\n<table class=\"table\">\n<thead>\n<tr>\n<th>Guideline</th>\n<th>CNV Allele</th>\n<th>Function</th>\n<th>Activity<br/>value</th>\n<th>Other Allele<br/>Function</th>\n<th>Activity<br/>value</th>\n<th>CYP2D6 AS</th>\n<th>Phenotype</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>No function</td>\n<td>0</td>\n<td>2</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.25</td>\n<td>2.25</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.5</td>\n<td>2.5</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n<tr>\n<td>DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Decreased function</td>\n<td>0.5</td>\n<td>2.5</td>\n<td>Normal metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x2</td>\n<td>Increased</td>\n<td>2</td>\n<td>Normal function</td>\n<td>1.0</td>\n<td>3.0</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n<tr>\n<td>CPIC or DPWG</td>\n<td>*1x≥3</td>\n<td>Increased</td>\n<td>≥3</td>\n<td></td>\n<td></td>\n<td>≥3</td>\n<td>Ultrarapid metabolizer</td>\n</tr>\n</tbody>\n</table>\n"
           },
           "implications": [],
@@ -69191,6 +69127,13 @@
         }
       ],
       "citations": [
+        {
+          "pmid": "41979467",
+          "title": "Clinical Pharmacogenetics Implementation Consortium (CPIC) Guideline for CYP2D6 Genotype and Use of 5-HT 3 Receptor Antagonists: 2026 Update.",
+          "journal": "Clinical pharmacology and therapeutics",
+          "year": 2026,
+          "_sameAs": "https://www.ncbi.nlm.nih.gov/pubmed/41979467"
+        },
         {
           "pmid": "28002639",
           "title": "Clinical Pharmacogenetics Implementation Consortium (CPIC) guideline for CYP2D6 genotype and use of ondansetron and tropisetron.",
@@ -69207,7 +69150,7 @@
         "name": "Annotation of CPIC Guideline for venlafaxine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 5,
+        "version": 6,
         "url": null,
         "relatedChemicals": [
           {
@@ -69953,7 +69896,7 @@
         "name": "Annotation of CPIC Guideline for voriconazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 40,
+        "version": 41,
         "url": null,
         "relatedChemicals": [
           {
@@ -70487,7 +70430,7 @@
         "name": "Annotation of CPIC Guideline for vortioxetine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 3,
+        "version": 4,
         "url": null,
         "relatedChemicals": [
           {
@@ -71233,7 +71176,7 @@
         "name": "Annotation of CPIC Guideline for warfarin and CYP2C9, CYP4F2, VKORC1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 46,
+        "version": 48,
         "url": null,
         "relatedChemicals": [
           {
@@ -72810,7 +72753,7 @@
         "name": "Annotation of DPWG Guideline for aripiprazole and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 45,
+        "version": 46,
         "url": null,
         "relatedChemicals": [
           {
@@ -72948,6 +72891,37 @@
           "lookupKey": [
             {
               "CYP2D6": "n/a"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166422241",
+          "name": "Recommendation Annotation PA166422241",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA10026",
+              "name": "aripiprazole",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454392600,
+            "html": "<p>The guideline does not provide a recommendation for aripiprazole in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on aripiprazole."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.75"
             }
           ],
           "dosingInformation": false,
@@ -73405,7 +73379,7 @@
           ],
           "text": {
             "id": 1452103488,
-            "html": "<p>Administer no more than 10 mg/day or 300 mg/month (68-75% of the normal maximum dose of aripiprazole).</p>\n"
+            "html": "<p>Administer no more than 10 mg/day, 300 mg/month or 720 mg/2 month (68-75% of the standard maximum dose of aripiprazole).</p>\n"
           },
           "implications": [
             "The risk of side effects is increased. The genetic variation leads to an increase in the sum of the plasma concentrations of aripiprazole and the active metabolite."
@@ -81747,6 +81721,687 @@
     },
     {
       "guideline": {
+        "id": "PA166182809",
+        "name": "Annotation of DPWG Guideline for gefitinib and CYP2D6",
+        "objCls": "Guideline Annotation",
+        "source": "DPWG",
+        "version": 10,
+        "url": null,
+        "relatedChemicals": [
+          {
+            "id": "PA131301952",
+            "name": "gefitinib",
+            "symbol": null
+          }
+        ],
+        "relatedGenes": [
+          {
+            "id": "PA128",
+            "name": "cytochrome P450 family 2 subfamily D member 6",
+            "symbol": "CYP2D6"
+          }
+        ],
+        "relatedAlleles": [],
+        "recommendation": true
+      },
+      "recommendations": [
+        {
+          "id": "PA166436744",
+          "name": "Recommendation Annotation PA166436744",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748383,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥3.75"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436790",
+          "name": "Recommendation Annotation PA166436790",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748449,
+            "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "Side effects can occur more frequently, as the gene variation increases the gefitinib plasma concentration. However, the side effects are reversible and manageable, to an extent that adjustment of the therapy in advance is not necessary. Furthermore, there is insufficient evidence to suggest that effectiveness is diminished."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.0"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436788",
+          "name": "Recommendation Annotation PA166436788",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748447,
+            "html": "<p>The guideline does not provide a recommendation for gefitinib in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on gefitinib."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.5"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436789",
+          "name": "Recommendation Annotation PA166436789",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748448,
+            "html": "<p>The guideline does not provide a recommendation for gefitinib in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on gefitinib."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.25"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436784",
+          "name": "Recommendation Annotation PA166436784",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748443,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "2.5"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436761",
+          "name": "Recommendation Annotation PA166436761",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748400,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥3.5"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436785",
+          "name": "Recommendation Annotation PA166436785",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748444,
+            "html": "<p>The guideline does not provide a recommendation for gefitinib in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on gefitinib."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "2.25"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436786",
+          "name": "Recommendation Annotation PA166436786",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748445,
+            "html": "<p>The guideline does not provide a recommendation for gefitinib in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on gefitinib."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "2.0"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436787",
+          "name": "Recommendation Annotation PA166436787",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748446,
+            "html": "<p>The guideline does not provide a recommendation for gefitinib in normal metabolizers.</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on gefitinib."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.75"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436743",
+          "name": "Recommendation Annotation PA166436743",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748382,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥4.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436791",
+          "name": "Recommendation Annotation PA166436791",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748450,
+            "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "Side effects can occur more frequently, as the gene variation increases the gefitinib plasma concentration. However, the side effects are reversible and manageable, to an extent that adjustment of the therapy in advance is not necessary. Furthermore, there is insufficient evidence to suggest that effectiveness is diminished."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "0.75"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436742",
+          "name": "Recommendation Annotation PA166436742",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748381,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥5.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436781",
+          "name": "Recommendation Annotation PA166436781",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748440,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "4.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436792",
+          "name": "Recommendation Annotation PA166436792",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748451,
+            "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "Side effects can occur more frequently, as the gene variation increases the gefitinib plasma concentration. However, the side effects are reversible and manageable, to an extent that adjustment of the therapy in advance is not necessary. Furthermore, there is insufficient evidence to suggest that effectiveness is diminished."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "0.5"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436741",
+          "name": "Recommendation Annotation PA166436741",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748380,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥6.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436782",
+          "name": "Recommendation Annotation PA166436782",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748441,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "3.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436763",
+          "name": "Recommendation Annotation PA166436763",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748402,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥3.0"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436793",
+          "name": "Recommendation Annotation PA166436793",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748452,
+            "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "Side effects can occur more frequently, as the gene variation increases the gefitinib plasma concentration. However, the side effects are reversible and manageable, to an extent that adjustment of the therapy in advance is not necessary. Furthermore, there is insufficient evidence to suggest that effectiveness is diminished."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "0.25"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436783",
+          "name": "Recommendation Annotation PA166436783",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748442,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "2.75"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436762",
+          "name": "Recommendation Annotation PA166436762",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748401,
+            "html": "<p>Determine the trough concentration of gefitinib and increase the dose or choose an alternative if the trough\nconcentration is below 200 µg/l. Erlotinib is not metabolised by CYP2D6.</p>\n"
+          },
+          "implications": [
+            "On theoretical grounds, there is an increased risk of the drug being ineffective. Genetic variation increases the activity of CYP2D6, one of the enzymes that converts gefitinib into a much less active metabolite."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "≥3.25"
+            }
+          ],
+          "dosingInformation": true,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436794",
+          "name": "Recommendation Annotation PA166436794",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA131301952",
+              "name": "gefitinib",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748453,
+            "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "The gefitinib plasma concentration may increase due to reduced CYP2D6 activity. However, there is no evidence to suggest that side effects increase to an extent that adjustment of therapy is needed."
+          ],
+          "lookupKey": [
+            {
+              "CYP2D6": "0.0"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        }
+      ],
+      "citations": [],
+      "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182809"
+    },
+    {
+      "guideline": {
         "id": "PA166104988",
         "name": "Annotation of DPWG Guideline for haloperidol and CYP2D6",
         "objCls": "Guideline Annotation",
@@ -83509,6 +84164,37 @@
       },
       "recommendations": [
         {
+          "id": "PA166299188",
+          "name": "Recommendation PA166299188",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA450085",
+              "name": "irinotecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1452061551,
+            "html": "<p>The guideline does not provide a recommendation for irinotecan in normal metabolizers</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on irinotecan."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": "Normal Metabolizer"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
           "id": "PA166424208",
           "name": "Recommendation Annotation PA166424208",
           "population": null,
@@ -83631,37 +84317,6 @@
                 "*1": 1.0,
                 "*28": 1.0
               }
-            }
-          ],
-          "dosingInformation": false,
-          "alternateDrugAvailable": false,
-          "otherPrescribingGuidance": false
-        },
-        {
-          "id": "PA166299188",
-          "name": "Recommendation PA166299188",
-          "population": null,
-          "classification": {
-            "term": "No recommendation",
-            "termId": "guidelineStrength:1448526251"
-          },
-          "relatedChemicals": [
-            {
-              "id": "PA450085",
-              "name": "irinotecan",
-              "symbol": null
-            }
-          ],
-          "text": {
-            "id": 1452061551,
-            "html": "<p>The guideline does not provide a recommendation for irinotecan in normal metabolizers</p>\n"
-          },
-          "implications": [
-            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on irinotecan."
-          ],
-          "lookupKey": [
-            {
-              "UGT1A1": "Normal Metabolizer"
             }
           ],
           "dosingInformation": false,
@@ -83891,7 +84546,7 @@
         "name": "Annotation of DPWG Guideline for lansoprazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 33,
+        "version": 34,
         "url": null,
         "relatedChemicals": [
           {
@@ -83993,7 +84648,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "The higher plasma concentration of lansoprazole results in an increase in the therapeutic effectiveness, without an increase in the incidence of side effects."
+            "The higher plasma concentration of lansoprazole results in an increase in the therapeutic effectiveness, while convincing evidence for an increase in the incidence of side effects is lacking."
           ],
           "lookupKey": [
             {
@@ -84117,7 +84772,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "The higher plasma concentration of lansoprazole results in an increase in the therapeutic effectiveness, without an increase in the incidence of side effects."
+            "The higher plasma concentration of lansoprazole results in an increase in the therapeutic effectiveness, while convincing evidence for an increase in the incidence of side effects is lacking."
           ],
           "lookupKey": [
             {
@@ -84145,7 +84800,7 @@
           ],
           "text": {
             "id": 1452061426,
-            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. Use a 4-fold higher dose. 2. Advise the patient to contact their doctor if symptoms of dyspepsia persist.\nOTHER INDICATIONS: 1. Be alert to reduced effectiveness. 2. If necessary, use a 4-fold higher dose. 3. Advise the patient to report persisting symptoms of dyspepsia.</p>\n"
+            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. Use a 4-fold higher dose. 2. Advise the patient to report persisting symptoms of dyspepsia.\nOTHER INDICATIONS: 1. Be alert to reduced effectiveness. 2. If necessary, use a 4-fold higher dose. 3. Advise the patient to report persisting symptoms of dyspepsia.</p>\n"
           },
           "implications": [
             "The genetic variation may reduce lansoprazole plasma concentrations and therefore lansoprazole effectiveness."
@@ -86288,7 +86943,7 @@
         "name": "Annotation of DPWG Guideline for omeprazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 36,
+        "version": 37,
         "url": null,
         "relatedChemicals": [
           {
@@ -86542,7 +87197,7 @@
           ],
           "text": {
             "id": 1452061558,
-            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. Use a 3-fold higher dose. 2. Advise the patient to contact their doctor if symptoms of dyspepsia persist.\nOTHER INDICATIONS: 1. Be alert to reduced effectiveness. 2. If necessary, use a 3-fold higher dose. 3. Advise the patient to report persisting symptoms of dyspepsia.</p>\n"
+            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. Use a 3-fold higher dose. 2. Advise the patient to report persisting symptoms of dyspepsia.\nOTHER INDICATIONS: 1. Be alert to reduced effectiveness. 2. If necessary, use a 3-fold higher dose. 3. Advise the patient to report persisting symptoms of dyspepsia.</p>\n"
           },
           "implications": [
             "The genetic variation may lead to a reduced omeprazole plasma concentration and therefore reduced effectiveness."
@@ -86574,7 +87229,7 @@
         "name": "Annotation of DPWG Guideline for oxcarbazepine and HLA-B",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 12,
+        "version": 13,
         "url": null,
         "relatedChemicals": [
           {
@@ -86649,7 +87304,7 @@
         "name": "Annotation of DPWG Guideline for pantoprazole and CYP2C19",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 36,
+        "version": 37,
         "url": null,
         "relatedChemicals": [
           {
@@ -86903,7 +87558,7 @@
           ],
           "text": {
             "id": 1452061577,
-            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. use a 5-fold higher dose. 2. advise the patient to contact their doctor if symptoms of dyspepsia persist.\nOTHER INDICATIONS: 1. be alert to reduced effectiveness. 2. if necessary, use a 5-fold higher dose. 3. advise the patient to report persisting symptoms of dyspepsia.</p>\n"
+            "html": "<p>For Helicobacter pylori ERADICATION THERAPY: 1. use a 5-fold higher dose or choose another PPI. Other PPIs are metabolized to a lesser extent by CYP2C19 2. advise the patient to report persisting symptoms of dyspepsia.\nOTHER INDICATIONS: 1. be alert to reduced effectiveness. 2. if necessary, use a 5-fold higher dose or choose another PPI. Other PPIs are metabolised to a lesser extent by CYP2C19. 3. advise the patient to report persisting symptoms of dyspepsia.</p>\n"
           },
           "implications": [
             "The genetic variation may lead to a reduced pantoprazole plasma concentration and therefore reduced pantoprazole effectiveness."
@@ -91026,6 +91681,294 @@
     },
     {
       "guideline": {
+        "id": "PA166436801",
+        "name": "Annotation of DPWG Guideline for sacituzumab govitecan and UGT1A1",
+        "objCls": "Guideline Annotation",
+        "source": "DPWG",
+        "version": 1,
+        "url": null,
+        "relatedChemicals": [
+          {
+            "id": "PA166225061",
+            "name": "sacituzumab govitecan",
+            "symbol": null
+          }
+        ],
+        "relatedGenes": [
+          {
+            "id": "PA420",
+            "name": "UDP glucuronosyltransferase 1 family, polypeptide A1",
+            "symbol": "UGT1A1"
+          }
+        ],
+        "relatedAlleles": [],
+        "recommendation": true
+      },
+      "recommendations": [
+        {
+          "id": "PA166436823",
+          "name": "Recommendation Annotation PA166436823",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748482,
+            "html": "<p>Be particularly vigilant for the occurrence of side effects.</p>\n"
+          },
+          "implications": [
+            "There are indications that serious side adverse events (particularly haematological adverse events and, to a lesser extent, diarrhoea) occur more frequently and at an earlier stage in patients with a gene variant that has a similar effect on the UGT1A1 enzyme. This gene variant reduces the inactivation of the active metabolite SN-38."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": "Poor Metabolizer"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436824",
+          "name": "Recommendation Annotation PA166436824",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748483,
+            "html": "<p>NO action is required for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "This genetic variant (*1/*28) is more common in Western populations than the so-called wild type (*1/*1). This means that the treatment is largely tailored to patients with this genetic variant. Adjusting the treatment is therefore not useful."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": {
+                "*1": 1.0,
+                "*28": 1.0
+              }
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436821",
+          "name": "Recommendation Annotation PA166436821",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748480,
+            "html": "<p>Be particularly vigilant for the occurrence of side effects.</p>\n"
+          },
+          "implications": [
+            "There are indications that serious adverse events (particularly haematological adverse events and, to a lesser extent, diarrhoea) occur more frequently and at an earlier stage in patients with this gene variant. The gene variant reduces the inactivation of the active metabolite SN-38."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": {
+                "*28": 2.0
+              }
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436822",
+          "name": "Recommendation Annotation PA166436822",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748481,
+            "html": "<p>Be particularly vigilant for the occurrence of side effects.</p>\n"
+          },
+          "implications": [
+            "There are indications that serious adverse events (particularly haematological adverse events and, to a lesser extent, diarrhoea) occur more frequently and at an earlier stage in patients with this gene variant. The gene variant reduces the inactivation of the active metabolite SN-38."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": {
+                "*80+*28": 2.0
+              }
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": true
+        },
+        {
+          "id": "PA166436841",
+          "name": "Recommendation Annotation PA166436841",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748500,
+            "html": "<p>The guideline does not provide a recommendation for sacutuzumab govitecan in normal metabolizers</p>\n"
+          },
+          "implications": [
+            "The guideline does not provide a description of the impact of a normal metabolizer phenotype on sacutuzumab govitecan."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": "Normal Metabolizer"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436842",
+          "name": "Recommendation Annotation PA166436842",
+          "population": null,
+          "classification": {
+            "term": "No recommendation",
+            "termId": "guidelineStrength:1448526251"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748501,
+            "html": "<p>No recommendation</p>\n"
+          },
+          "implications": [
+            "n/a"
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": "Indeterminate"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436825",
+          "name": "Recommendation Annotation PA166436825",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748484,
+            "html": "<p>NO action is required for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "This genetic variant (*1/*28) is more common in Western populations than the so-called wild type (*1/*1). This means that the treatment is largely tailored to patients with this genetic variant. Adjusting the treatment is therefore not useful."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": {
+                "*1": 1.0,
+                "*80+*28": 1.0
+              }
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        },
+        {
+          "id": "PA166436826",
+          "name": "Recommendation Annotation PA166436826",
+          "population": null,
+          "classification": {
+            "term": "N/A",
+            "termId": "guidelineStrength:981501929"
+          },
+          "relatedChemicals": [
+            {
+              "id": "PA166225061",
+              "name": "sacituzumab govitecan",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454748485,
+            "html": "<p>NO action is required for this gene-drug interaction.</p>\n"
+          },
+          "implications": [
+            "This gene variant (IM) is more common in Western populations than the so-called wild type (*1/*1). This means that the choice of treatment is largely tailored to patients with this gene variant. It is therefore not useful to adjust the choice of treatment."
+          ],
+          "lookupKey": [
+            {
+              "UGT1A1": "Intermediate Metabolizer"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": false
+        }
+      ],
+      "citations": [],
+      "url": "https://www.clinpgx.org/guidelineAnnotation/PA166436801"
+    },
+    {
+      "guideline": {
         "id": "PA166104980",
         "name": "Annotation of DPWG Guideline for sertraline and CYP2C19",
         "objCls": "Guideline Annotation",
@@ -92167,7 +93110,7 @@
         "name": "Annotation of DPWG Guideline for tamoxifen and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "DPWG",
-        "version": 33,
+        "version": 34,
         "url": null,
         "relatedChemicals": [
           {
@@ -92207,7 +93150,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92269,7 +93212,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92362,7 +93305,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92393,7 +93336,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92421,7 +93364,7 @@
           ],
           "text": {
             "id": 1452104343,
-            "html": "<ul>\n<li>Select an alternative or measure the endoxifen concentration and increase the dose if necessary, by a factor of 1.5-2. Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>If TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine.</li>\n</ul>\n"
+            "html": "<ul>\n<li>Choose an alternative or measure the endoxifen concentration and, if necessary, administer a dose 1.5 to 2\ntimes higher.  Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>if TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine</li>\n</ul>\n"
           },
           "implications": [
             "This gene variation reduces the conversion of tamoxifen to the active metabolite endoxifen. This can result in reduced effectiveness."
@@ -92517,7 +93460,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92548,7 +93491,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92579,7 +93522,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92607,7 +93550,7 @@
           ],
           "text": {
             "id": 1452104342,
-            "html": "<ul>\n<li>Select an alternative or measure the endoxifen concentration and increase the dose if necessary, by a factor of 1.5-2. Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>If TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine.</li>\n</ul>\n"
+            "html": "<ul>\n<li>Choose an alternative or measure the endoxifen concentration and, if necessary, administer a dose 1.5 to 2\ntimes higher.  Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>if TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine</li>\n</ul>\n"
           },
           "implications": [
             "This gene variation reduces the conversion of tamoxifen to the active metabolite endoxifen. This can result in reduced effectiveness."
@@ -92669,7 +93612,7 @@
           ],
           "text": {
             "id": 1452104341,
-            "html": "<ul>\n<li>Select an alternative or measure the endoxifen concentration and increase the dose if necessary, by a factor of 1.5-2. Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>If TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine.</li>\n</ul>\n"
+            "html": "<ul>\n<li>Choose an alternative or measure the endoxifen concentration and, if necessary, administer a dose 1.5 to 2\ntimes higher.  Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>if TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine</li>\n</ul>\n"
           },
           "implications": [
             "This gene variation reduces the conversion of tamoxifen to the active metabolite endoxifen. This can result in reduced effectiveness."
@@ -92703,7 +93646,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92734,7 +93677,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92793,7 +93736,7 @@
           ],
           "text": {
             "id": 1452104340,
-            "html": "<ul>\n<li>Select an alternative or measure the endoxifen concentration and increase the dose if necessary, by a factor of 1.5-2. Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>If TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine.</li>\n</ul>\n"
+            "html": "<ul>\n<li>Choose an alternative or measure the endoxifen concentration and, if necessary, administer a dose 1.5 to 2\ntimes higher.  Aromatase inhibitors are a possible alternative for post-menopausal women.</li>\n<li>if TAMOXIFEN is selected: avoid co-medication with CYP2D6 inhibitors such as paroxetine and fluoxetine</li>\n</ul>\n"
           },
           "implications": [
             "This gene variation reduces the conversion of tamoxifen to the active metabolite endoxifen. This can result in reduced effectiveness."
@@ -92827,7 +93770,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -92858,7 +93801,7 @@
             "html": "<p>NO action is needed for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "As a result of the genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen can increase. However, there is no evidence that this results in an increase in the side effects."
+            "Due to genetic variation, the plasma concentration of the active metabolites 4-hydroxytamoxifen and endoxifen may increase. However, there is insufficient evidence to suggest that this leads to an increase in side effects and/or reduced efficacy due to an increase in the number of patients discontinuing tamoxifen."
           ],
           "lookupKey": [
             {
@@ -99314,7 +100257,7 @@
         "name": "Annotation of FDA Label for brexpiprazole and CYP2D6",
         "objCls": "Label Annotation",
         "source": "FDA",
-        "version": 33,
+        "version": 35,
         "url": null,
         "relatedChemicals": [
           {
@@ -99348,7 +100291,7 @@
           ],
           "text": {
             "id": 1452216483,
-            "html": "<p>&quot;Known CYP2D6 Poor Metabolizers: Reduce the usual dosage by half. Known CYP2D6 Poor Metabolizers taking strong/moderate CYP3A4 inhibitors: Administer a quarter of usual dose.&quot; See label for more information.</p>\n"
+            "html": "<p>&quot;CYP2D6 Poor Metabolizers: Administer half of the recommended dosage. Known CYP2D6 Poor Metabolizers taking strong/moderate CYP3A4 inhibitors: Administer a quarter of the recommended dosage.&quot; See label for more information.</p>\n"
           },
           "implications": [],
           "lookupKey": [
@@ -101572,7 +102515,7 @@
         "name": "Annotation of FDA Label for deuruxolitinib and CYP2C9",
         "objCls": "Label Annotation",
         "source": "FDA",
-        "version": 0,
+        "version": 2,
         "url": null,
         "relatedChemicals": [
           {
@@ -102964,7 +103907,7 @@
         "name": "Annotation of FDA Label for fluorouracil and DPYD",
         "objCls": "Label Annotation",
         "source": "FDA",
-        "version": 36,
+        "version": 37,
         "url": null,
         "relatedChemicals": [
           {
@@ -102980,7 +103923,33 @@
             "symbol": "DPYD"
           }
         ],
-        "relatedAlleles": [],
+        "relatedAlleles": [
+          {
+            "id": "PA166325141",
+            "name": "c.1129-5923C>G",
+            "symbol": "DPYD c.1129-5923C>G"
+          },
+          {
+            "id": "PA166171118",
+            "name": "c.1679T>G (*13)",
+            "symbol": "DPYD c.1679T>G (*13)"
+          },
+          {
+            "id": "PA166171117",
+            "name": "c.1905+1G>A (*2A)",
+            "symbol": "DPYD c.1905+1G>A (*2A)"
+          },
+          {
+            "id": "PA166171119",
+            "name": "c.2846A>T",
+            "symbol": "DPYD c.2846A>T"
+          },
+          {
+            "id": "PA166171126",
+            "name": "c.557A>G",
+            "symbol": "DPYD c.557A>G"
+          }
+        ],
         "recommendation": false
       },
       "recommendations": [
@@ -103038,6 +104007,13 @@
         }
       ],
       "citations": [
+        {
+          "pmid": null,
+          "title": "Drugs@FDA: Drug Product NDA220201/ORIG-1, 02/20/2026",
+          "journal": null,
+          "year": 2026,
+          "_sameAs": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo=220201"
+        },
         {
           "pmid": null,
           "title": "Drugs@FDA: Drug Product FLUOROURACIL (FLUOROURACIL), Eugia US LLC - ANDA202669/SUPPL-9, 03/21/2024",
@@ -110241,7 +111217,7 @@
         "name": "Annotation of FDA Label for seladelpar and CYP2C9",
         "objCls": "Label Annotation",
         "source": "FDA",
-        "version": 0,
+        "version": 1,
         "url": null,
         "relatedChemicals": [
           {
@@ -110257,7 +111233,28 @@
             "symbol": "CYP2C9"
           }
         ],
-        "relatedAlleles": [],
+        "relatedAlleles": [
+          {
+            "id": "PA165816542",
+            "name": "*1",
+            "symbol": "CYP2C9*1"
+          },
+          {
+            "id": "PA165816543",
+            "name": "*2",
+            "symbol": "CYP2C9*2"
+          },
+          {
+            "id": "PA165816544",
+            "name": "*3",
+            "symbol": "CYP2C9*3"
+          },
+          {
+            "id": "PA165816549",
+            "name": "*8",
+            "symbol": "CYP2C9*8"
+          }
+        ],
         "recommendation": false
       },
       "recommendations": [
@@ -110315,6 +111312,13 @@
         }
       ],
       "citations": [
+        {
+          "pmid": null,
+          "title": "Drugs@FDA: Drug Product Livdelzi (SELADELPAR LYSINE), Gilead Sciences, Inc - NDA217899/SUPPL-2, 01/30/2026",
+          "journal": null,
+          "year": 2026,
+          "_sameAs": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo=217899"
+        },
         {
           "pmid": null,
           "title": "Drugs@FDA: Drug Product Livdelzi (SELADELPAR LYSINE), Gilead Sciences, Inc - NDA217899/ORIG-1, 08/14/2024",
@@ -111001,7 +112005,7 @@
         "name": "Annotation of FDA Label for succinylcholine and BCHE, CACNA1S, RYR1",
         "objCls": "Label Annotation",
         "source": "FDA",
-        "version": 41,
+        "version": 42,
         "url": null,
         "relatedChemicals": [
           {
@@ -111027,7 +112031,13 @@
             "symbol": "RYR1"
           }
         ],
-        "relatedAlleles": [],
+        "relatedAlleles": [
+          {
+            "id": "PA166156327",
+            "name": "rs1799807",
+            "symbol": "rs1799807"
+          }
+        ],
         "recommendation": false
       },
       "recommendations": [
@@ -125830,7 +126840,7 @@
           "implications": [],
           "lookupKey": [
             {
-              "CYP2D6": "0.25"
+              "CYP2D6": "0.0"
             }
           ],
           "dosingInformation": true,
