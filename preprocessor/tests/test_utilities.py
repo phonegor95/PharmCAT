@@ -63,6 +63,11 @@ def test_validate_bgzip():
     assert '99 or higher' in context.value.msg
 
 
+def test_get_java_version():
+    assert utils.get_java_version('openjdk 25.0.1-internal 2025-10-21') == '25.0.1'
+    assert utils.get_java_version('openjdk version "21.0.3" 2024-04-16 LTS') == '21.0.3'
+
+
 def test_validate_java():
     utils.validate_java()
     assert 'java' == pcat.JAVA_PATH
@@ -401,10 +406,10 @@ def test_download_pharmcat_positions():
         assert ('%s.csi' % common.PHARMCAT_POSITIONS_FILENAME) in files
 
 
-def test_prep_pharmcat_positions():
+def test_prep_pharmcat_positions(monkeypatch):
     with tempfile.TemporaryDirectory() as td:
         tmp_dir: Path = Path(td)
-        os.chdir(tmp_dir)
+        monkeypatch.chdir(tmp_dir)
 
         # no pharmcat_positions - should fail
         with pytest.raises(ReportableException) as context:

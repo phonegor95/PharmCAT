@@ -179,11 +179,11 @@ def validate_bcftools(tool_path: Optional[str] = None, min_version: Optional[str
 
 def validate_bgzip(tool_path: Optional[str] = None, min_version: Optional[str] = None):
     """
-    Validates that bgzip is available and meets minimum version requirement.
+    Validates that bgzip is available and meets the minimum version requirement.
 
     :param tool_path: path to bgzip
     :param min_version: minimum required bgzip version
-    :raises ReportableException: if bgzip cannot be found or does not meet version requirement
+    :raises ReportableException: if bgzip cannot be found or does not meet the version requirement
     """
     bgzip_path = 'bgzip'
     if tool_path:
@@ -194,6 +194,17 @@ def validate_bgzip(tool_path: Optional[str] = None, min_version: Optional[str] =
     validate_tool('bgzip', bgzip_path, bgzip_version)
     common.BGZIP_PATH = bgzip_path
 
+
+def get_java_version(version_string: str) -> Optional[str]:
+    """
+    Extracts the Java version from the output of `java -version`.
+    Supports both standard Java version strings and Bioconda's Java version string (#230).
+    """
+    # group 1 is for standard java version string, group 2 is for Bioconda's java version string
+    rez = re.search(r'version "(\d+[\d.]*).*?"|openjdk (\d+[\d.]*)', str(version_string), re.MULTILINE)
+    if rez is not None:
+        return rez.group(1) or rez.group(2)
+    return None
 
 def validate_java(min_version: Optional[str] = None):
     java_path: str = 'java'
@@ -215,9 +226,8 @@ def validate_java(min_version: Optional[str] = None):
 
     if java_version is not None:
         # check that the minimum version requirement is met
-        rez = re.search(r'(?:version "(\d+[\d.]*)[\d.\-\w]*"|openjdk (\d+[\d.]*)[\d.\-\w]*)', str(version_message), re.MULTILINE)
-        if rez is not None:
-            tool_version = rez.group(1) or rez.group(2)
+        tool_version = get_java_version(version_message)
+        if tool_version is not None:
             if version.parse(tool_version) < version.parse(java_version):
                 raise ReportableException("Error: Please use Java %s or higher." % java_version)
         else:
@@ -226,7 +236,6 @@ def validate_java(min_version: Optional[str] = None):
             Please use Java %s or higher.
             """ % min_version))
     common.JAVA_PATH = java_path
-
 
 def validate_dir(directory: Union[Path, str], create_if_not_exist: bool = False) -> Path:
     """
