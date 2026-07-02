@@ -9,14 +9,14 @@
   "engines": {
     "node": "> 18.0.0"
   },
-  "packageManager": "yarn@4.9.2",
+  "packageManager": "yarn@4.17.0",
   "devDependencies": {
     "@google/semantic-release-replace-plugin": "1.2.7",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "conventional-changelog-conventionalcommits": "8.0.0",
-    "netlify-cli": "23.0.0",
-    "semantic-release": "24.2.7",
+    "conventional-changelog-conventionalcommits": "10.2.0",
+    "netlify-cli": "26.1.0",
+    "semantic-release": "25.0.5",
     "showdown": "2.1.0"
   },
   "release": {
