@@ -145,3 +145,26 @@ def test_preprocess_multi_vcf_concurrent():
 
         assert len(results) == 1
         helpers.compare_vcf_files(preprocessed_file, tmp_dir, basename, results=results)
+
+
+def test_preprocess_vcf_key_error():
+    reference_fasta: Path = helpers.get_reference_fasta(helpers.pharmcat_positions_file)
+    pgx_regions = get_pgx_regions(helpers.pharmcat_positions_file)
+    # the 2 entries in this VCF file are getting mapped to the same position
+    # this triggers a KeyError after the first one is removed if we don't provide a default value (.pop(xxx, None))
+    # TODO(markwoon): check if the fact that the 2 entries are getting mapped to the same position is correct
+    vcf_file= helpers.test_dir / 'keyError.vcf'
+    preprocessed_file = helpers.test_dir / 'keyError.preprocessed.vcf'
+
+    with tempfile.TemporaryDirectory() as td:
+        tmp_dir = Path(td)
+        tmp_vcf = tmp_dir / vcf_file.name
+        shutil.copyfile(vcf_file, tmp_vcf)
+
+        basename = 'preprocess'
+        results = preprocess(helpers.pharmcat_positions_file, reference_fasta, pgx_regions, False,
+                             [tmp_vcf], None, basename, tmp_dir, basename, verbose=1)
+        print(tmp_dir)
+        files = os.listdir(tmp_dir)
+        print(files)
+        helpers.compare_vcf_files(preprocessed_file, tmp_dir, basename, results=results)

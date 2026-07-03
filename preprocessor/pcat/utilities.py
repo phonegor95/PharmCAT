@@ -977,7 +977,7 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
                 line = line.rstrip('\n')
                 fields = line.split('\t')
                 # ref_pos_dynamic: a nested dictionary
-                # ref_pos_dynamic[(chr,pos)][(ref, alt)] = all fields except GT
+                # ref_pos_dynamic[(chr, pos)][(ref, alt)] = all fields except GT
                 # initiate the dictionary if the first key pair doesn't exist yet
                 if (fields[0], fields[1]) not in ref_pos_dynamic.keys():
                     ref_pos_dynamic[(fields[0], fields[1])] = {}
