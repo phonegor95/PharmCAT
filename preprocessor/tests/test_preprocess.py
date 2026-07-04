@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 import helpers
-from pcat import get_pgx_regions, preprocess, ReportableException
+from pcat import get_pgx_regions, preprocess, ReportableException, run, common
 
 
 def test_preprocess_vcf():
@@ -161,10 +161,61 @@ def test_preprocess_vcf_key_error():
         tmp_vcf = tmp_dir / vcf_file.name
         shutil.copyfile(vcf_file, tmp_vcf)
 
-        basename = 'preprocess'
+        basename = 'keyError'
         results = preprocess(helpers.pharmcat_positions_file, reference_fasta, pgx_regions, False,
                              [tmp_vcf], None, basename, tmp_dir, basename, verbose=1)
         print(tmp_dir)
         files = os.listdir(tmp_dir)
         print(files)
         helpers.compare_vcf_files(preprocessed_file, tmp_dir, basename, results=results)
+
+
+def test_preprocess_structural_variations():
+    """
+    The name of this test is not quite accurate.
+    The test VCF only has structural variations, but only one is a position of interest.
+    What it's really testing is that the preprocessor can handle the unsorted SV's.
+    """
+    reference_fasta: Path = helpers.get_reference_fasta(helpers.pharmcat_positions_file)
+    pgx_regions = get_pgx_regions(helpers.pharmcat_positions_file)
+    vcf_file= helpers.test_dir / 'structuralVariations.vcf'
+    preprocessed_file = helpers.test_dir / 'structuralVariations.preprocessed.vcf'
+
+    with tempfile.TemporaryDirectory() as td:
+        tmp_dir = Path(td)
+        tmp_vcf = tmp_dir / vcf_file.name
+        shutil.copyfile(vcf_file, tmp_vcf)
+
+        basename = 'sv'
+        try:
+            results = preprocess(helpers.pharmcat_positions_file, reference_fasta, pgx_regions, False,
+                                 [tmp_vcf], None, basename, tmp_dir, basename, verbose=1, keep_intermediate_files=True)
+        except ReportableException as e:
+            #print(e)
+            raise
+
+        print(tmp_dir)
+        files = os.listdir(tmp_dir)
+        print(files)
+
+        # copy_vcf(files, 'sv.normalized.vcf.bgz', tmp_dir, 'sv.normalized.vcf')
+        # copy_vcf(files, 'sv.normalized.sorted.bcf.bgzf', tmp_dir, 'sv.normalized.sorted.vcf')
+        # copy_vcf(files, 'sv.presort.bcf.bgzf', tmp_dir, 'sv.presort.vcf')
+
+        helpers.compare_vcf_files(preprocessed_file, tmp_dir, basename, results=results)
+
+
+def copy_vcf(files, filename: str, tmp_dir: Path, out_filename):
+    """
+    Helper method to help to debug.
+    Copies a VCF file generated during preprocess() in tmp_dir to test_dir and makes it available as uncompressed VCF.
+    """
+    if not filename in files:
+        return
+    src = tmp_dir/filename
+    out_file = helpers.test_dir/filename
+    shutil.copyfile(src, out_file)
+
+    vcf_file = helpers.test_dir/out_filename
+    run([common.BCFTOOLS_PATH, 'convert', '-Ov', '-o', str(vcf_file), str(out_file)])
+    os.remove(helpers.test_dir/filename)

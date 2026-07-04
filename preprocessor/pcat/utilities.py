@@ -1,4 +1,4 @@
-__author__ = 'BinglanLi'
+__author__ = ['Binglan Li', 'Mark Woon']
 
 import concurrent.futures
 import copy
@@ -237,6 +237,7 @@ def validate_java(min_version: Optional[str] = None):
             """ % min_version))
     common.JAVA_PATH = java_path
 
+
 def validate_dir(directory: Union[Path, str], create_if_not_exist: bool = False) -> Path:
     """
     Checks that the specified directory exists.
@@ -256,7 +257,6 @@ def validate_dir(directory: Union[Path, str], create_if_not_exist: bool = False)
         else:
             raise ReportableException('%s does not exist' % str(directory))
     return directory
-
 
 def validate_file(file: Union[Path, str]) -> Path:
     """
@@ -511,8 +511,7 @@ def bgzip_file(file: Path, verbose: int = 0):
 def bgzip_vcf(file: Path, verbose: int = 0) -> Path:
     """
     Make sure the file is bgzipped.
-    Will overwrite the existing .gz/.bgz file.
-    Will delete pre-existing .bgz indices.
+    If not, this will overwrite any existing .gz/.bgz file and delete any pre-existing .bgz indices.
     """
     if is_gz_file(file):
         return file
@@ -829,12 +828,32 @@ def _extract_pgx_regions(vcf_file: Path, sample_file: Path, output_dir: Path, ou
     "bcftools annotate <options> <vcf_file>".
     "--rename-chrs" renames chromosomes according to the map in chr_rename_map.tsv.
     """
-    print('Processing', vcf_file, '...')
+    if output_basename is None:
+        output_basename = get_vcf_or_bcf_basename(vcf_file)
+
+    print('Processing %s...' % vcf_file)
     # make sure vcf is bgzipped and indexed
     bgz_file = bgzip_vcf(vcf_file, verbose)
     idx_file = find_index_file(bgz_file)
     if idx_file is None:
-        index_vcf(bgz_file, verbose)
+        try:
+            index_vcf(bgz_file, verbose)
+        except ReportableException as e:
+            if e.msg.startswith('[E::hts_idx_push] Unsorted positions on sequence'):
+                print(Fore.RED +
+                      '  * WARNING: Input VCF is not sorted by position!')
+                print('             This is usually an indication of an underlying problem.' +
+                      Style.RESET_ALL)
+                if verbose:
+                    print('  * Presorting %s' % bgz_file)
+                sorted_bgzf: Path = bgz_file.parent / (output_basename + '.presort.bcf.bgzf')
+                try:
+                    run([common.BCFTOOLS_PATH, 'sort', '-Ob', '-W', '-o', str(sorted_bgzf), str(bgz_file)])
+                    bgz_file = sorted_bgzf
+                except ReportableException as e:
+                    raise ReportableException('bcftools cannot process the input VCF file:\n' + str(e))
+            else:
+                raise
 
     # validate chromosome formats
     if _is_valid_chr(bgz_file):
@@ -846,17 +865,12 @@ def _extract_pgx_regions(vcf_file: Path, sample_file: Path, output_dir: Path, ou
                                .replace({'chr': ''}, regex=True))
 
     # extract pgx regions and modify chromosome names if necessary
-    if output_basename is None:
-        output_basename = get_vcf_or_bcf_basename(vcf_file)
-    pgx_regions_vcf = output_dir / (output_basename + '.pgx_regions.bcf.bgzf')
-    bcftools_command = [common.BCFTOOLS_PATH, 'annotate', '--no-version', '-S', str(sample_file),
-                        '--rename-chrs', str(common.CHR_RENAME_FILE), '-r', pgx_regions, '-i', 'ALT="."', '-k',
-                        '-Ob', '-W', '-o', str(pgx_regions_vcf), str(bgz_file)]
     if verbose:
-        print('* Extracting PGx regions and normalizing chromosome names')
-    run(bcftools_command)
-    # index the PGx VCF file (handle with the -W flag to bcftools)
-    # index_vcf(pgx_regions_vcf, verbose)
+        print('  * Extracting PGx regions and normalizing chromosome names')
+    pgx_regions_vcf = output_dir / (output_basename + '.pgx_regions.bcf.bgzf')
+    run([common.BCFTOOLS_PATH, 'annotate', '--no-version', '-S', str(sample_file),
+         '--rename-chrs', str(common.CHR_RENAME_FILE), '-r', pgx_regions, '-i', 'ALT="."', '-k',
+         '-Ob', '-W', '-o', str(pgx_regions_vcf), str(bgz_file)])
     return pgx_regions_vcf
 
 
@@ -876,12 +890,11 @@ def normalize_vcf(reference_genome: Path, vcf_file: Path, output_dir: Path, outp
         output_basename = get_vcf_or_bcf_basename(vcf_file)
     normalized_vcf = output_dir / (output_basename + '.normalized.vcf.bgz')
     bcftools_command = [common.BCFTOOLS_PATH, 'norm', '--no-version', '-m-', '-c', 'ws',
-                        '-Oz', '-o', str(normalized_vcf),
+                        '-Oz', '-W', '-o', str(normalized_vcf),
                         '-f', str(reference_genome), str(vcf_file)]
     if verbose:
-        print('* Normalizing VCF')
+        print('  * Normalizing VCF')
     run(bcftools_command)
-    index_vcf(normalized_vcf, verbose)
     return normalized_vcf
 
 
@@ -895,6 +908,20 @@ def _is_phased(gt_field) -> bool | None:
         return None
     for x in gt_field:
         if '/' in x:
+            return False
+    return True
+
+
+def _is_homozygous_ref(gt_field) -> bool | None:
+    """
+    Determines if all calls are homozygous reference.
+    Returns False if any sample is not '1', '1/1', or '1|1',
+    None if gt_field is empty, True otherwise.
+    """
+    if not gt_field:
+        return None
+    for x in gt_field:
+        if x in ['1', '1/1', '1|1']:
             return False
     return True
 
@@ -991,7 +1018,7 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
         # this dictionary saves genetic variants concurrent at PGx positions
         dict_non_pgx_records = {}
         if verbose:
-            print('* Updating VCF header and PGx position annotations')
+            print('  * Updating VCF header and PGx position annotations')
         updated_pgx_pos_vcf: Path = tmp_dir / (output_basename + '.updated_pgx_positions.vcf')
         with open(updated_pgx_pos_vcf, 'w') as out_f:
             # get header of samples from merged vcf, add in new contig info
@@ -1052,10 +1079,12 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
                             '''
 
                             # check whether the position has unspecified alt '<*>' or is homozygous reference
+                            is_all_samples_homozygous_ref = None
                             if fields[4] in ['.', '<*>']:
                                 is_nonspecific_alt: bool = True
                             else:
                                 is_nonspecific_alt: bool = False
+                                #is_all_samples_homozygous_ref = _is_homozygous_ref(fields[9:])
 
                             # list out REF alleles at a position
                             ref_alleles = [x[0] for x in ref_pos_static[input_chr_pos].keys()]
@@ -1144,9 +1173,11 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
                                 out_f.write('\t'.join(fields) + '\n')
                             # INDELs with an unspecified allele, ALT="<*>"
                             elif not is_snp and is_nonspecific_alt:
-                                print('  * WARNING: ignore \"%s:%s REF=%s ALT=%s\" which is not a valid GT format '
+                                print(Fore.RED +
+                                      '  * WARNING: ignore \"%s:%s REF=%s ALT=%s\" which is not a valid GT format '
                                       'for INDELs'
-                                      % (fields[0], fields[1], fields[3], fields[4]))
+                                      % (fields[0], fields[1], fields[3], fields[4]) +
+                                      Style.RESET_ALL)
                                 # update filter
                                 fields[6] = 'PCATxINDEL'
                                 # save the line in the dictionary for non-PGx variants
@@ -1154,10 +1185,12 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
                             # flag if the variant doesn't match PharmCAT ALT
                             elif fields[3] in ref_alleles:
                                 for i in range(len(ref_alleles)):
-                                    print('  * WARNING: \"%s:%s REF=%s ALT=%s\" does not match PharmCAT expectation '
+                                    print(Fore.RED +
+                                          '  * WARNING: \"%s:%s REF=%s ALT=%s\" does not match PharmCAT expectation '
                                           'of ALT at "%s:%s REF=%s ALT=%s"'
                                           % (fields[0], fields[1], fields[3], fields[4],
-                                             fields[0], fields[1], ref_alleles[i], alt_alleles[i]))
+                                             fields[0], fields[1], ref_alleles[i], alt_alleles[i]) +
+                                          Style.RESET_ALL)
                                 # update filter
                                 fields[6] = 'PCATxALT'
                                 # save the line in the dictionary for non-PGx variants
@@ -1165,10 +1198,12 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
                             # flag if the variant doesn't match PharmCAT REF
                             else:
                                 for i in range(len(ref_alleles)):
-                                    print('  * WARNING: \"%s:%s REF=%s ALT=%s\" does not match PharmCAT expectation '
+                                    print(Fore.RED +
+                                          '  * WARNING: \"%s:%s REF=%s ALT=%s\" does not match PharmCAT expectation '
                                           'of REF at "%s:%s REF=%s ALT=%s"'
                                           % (fields[0], fields[1], fields[3], fields[4],
-                                             fields[0], fields[1], ref_alleles[i], alt_alleles[i]))
+                                             fields[0], fields[1], ref_alleles[i], alt_alleles[i]) +
+                                          Style.RESET_ALL)
                                 # update filter
                                 fields[6] = 'PCATxREF'
                                 # save the line in the dictionary for non-PGx variants
@@ -1196,7 +1231,7 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
 
         # sort vcf
         if verbose:
-            print('* Sorting by chromosomal location...')
+            print('  * Sorting by chromosomal location...')
         sorted_bgz: Path = tmp_dir / (output_basename + '.sorted.bcf.bgzf')
         bcftools_command = [common.BCFTOOLS_PATH, 'sort', '-Ob', '-W', '-o', str(sorted_bgz), str(updated_pgx_pos_vcf)]
         run(bcftools_command)
@@ -1205,7 +1240,7 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
 
         # make sure the output complies with the multi-allelic format
         if verbose:
-            print('* Enforcing multi-allelic variant representation...')
+            print('  * Enforcing multi-allelic variant representation...')
         # must be in VCF format
         normed_bgz: Path = tmp_dir / (output_basename + '.normed.vcf.bgz')
         run([common.BCFTOOLS_PATH, 'norm', '--no-version', '-m+', '-c', 'ws', '-f', str(reference_fasta), '-Oz',
@@ -1221,7 +1256,8 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
             # insert lines of concurrent non-PGx variants after the PGx positions
             filtered_vcf: Path = output_dir / (output_basename + '.multiallelic.vcf')
             with open(filtered_vcf, 'w') as out_f:
-                print('Adding back non-PGx variants at PGx positions...')
+                if verbose:
+                    print('  * Adding back non-PGx variants at PGx positions...')
                 chrs = list(_chr_lengths.keys())
                 with gzip.open(normed_bgz, mode='rt', encoding='utf-8') as in_f:
                     for line in in_f:
@@ -1270,7 +1306,8 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
 def _print_missing_positions(pharmcat_positions: Path, ref_pos_dynamic, output_dir: Path, output_basename: str) -> Path:
     # report missing positions or positions with all unspecified genotypes in the input VCF
     missing_pos_file: Path = output_dir / (output_basename + _missing_pgx_var_suffix + '.vcf')
-    print(Fore.RED + "* Cataloging %d missing positions in %s" % (len(ref_pos_dynamic), missing_pos_file) +
+    print(Fore.RED +
+          "  * Cataloging %d missing positions in %s" % (len(ref_pos_dynamic), missing_pos_file) +
           Style.RESET_ALL)
     with open(missing_pos_file, 'w') as out_f:
         # get VCF header from pharmcat_positions

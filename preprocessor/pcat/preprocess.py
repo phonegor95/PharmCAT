@@ -46,7 +46,7 @@ in PharmCAT.
 
 
 def preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_retain, custom_regions: bool,
-               vcf_files: List[Path], samples: Optional[List[str]], input_basename: str,
+               vcf_files: List[Path], samples: List[str], input_basename: str,
                output_dir: Path, output_basename: Optional[str] = '', split_samples: bool = False,
                keep_intermediate_files: bool = False,
                absent_to_ref: bool = False, unspecified_to_ref: bool = False,
@@ -90,7 +90,7 @@ def preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_
 
 def preprocess_multiple_files(pharmcat_positions_vcf: Path, reference_genome: Path,
                               regions_to_retain, custom_regions: bool,
-                              vcf_files: List[Path], samples: Optional[List[str]],
+                              vcf_files: List[Path], samples: List[str],
                               output_dir: Path, output_basename: Optional[str] = '',
                               keep_intermediate_files: bool = False,
                               absent_to_ref: bool = False, unspecified_to_ref: bool = False,
@@ -129,7 +129,7 @@ def preprocess_multiple_files(pharmcat_positions_vcf: Path, reference_genome: Pa
 
 
 def _preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_retain,  custom_regions: bool,
-                vcf_files: List[Path], samples: Optional[List[str]],
+                vcf_files: List[Path], samples: List[str],
                 output_dir: Path, output_basename: Optional[str] = '',
                 keep_intermediate_files: bool = False,
                 absent_to_ref: bool = False, unspecified_to_ref: bool = False,
