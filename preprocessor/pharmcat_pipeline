@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import shutil
 import sys
 from pathlib import Path
 from typing import Optional, List
@@ -258,33 +259,42 @@ if __name__ == '__main__':
             run_individual_pharmcat_modules = True
 
         if not run_matcher:
-            jargs = ['-i']
+            # not running matcher, so no need to preprocess
+            java_args = ['-i']
             if vcf_path.is_dir():
-                jargs.append(str(vcf_path.absolute()))
+                java_args.append(str(vcf_path.absolute()))
             else:
-                jargs.append(str(vcf_path.parent.absolute()))
+                java_args.append(str(vcf_path.parent.absolute()))
             if len(m_samples) > 0:
-                add_sample_java_args(jargs, args)
+                add_sample_java_args(java_args, args)
             if run_phenotyper:
-                jargs.append('-phenotyper')
+                java_args.append('-phenotyper')
             if run_reporter:
-                add_reporter_java_args(jargs, args)
-            add_output_java_args(jargs, args, m_output_dir)
+                add_reporter_java_args(java_args, args)
+            add_output_java_args(java_args, args, m_output_dir)
             print('\nRunning PharmCAT without NamedAlleleMatcher...')
-            pcat.run_pharmcat(m_pharmcat_jar, jargs, m_max_processes, verbose=args.verbose)
+            pcat.run_pharmcat(m_pharmcat_jar, java_args, m_max_processes, verbose=args.verbose)
             sys.exit(0)
 
         # get pgx_regions we care about
-        custom_regions: bool = bool(m_regions_bed)
+        custom_regions: bool = m_regions_bed is not None
         pgx_regions = pcat.get_pgx_regions(m_regions_bed or m_pharmcat_positions_vcf)
 
+        if m_output_dir is not None:
+            # copy any .outside files to output dir
+            for f in vcf_path.glob("*.outside.tsv"):
+                if f.is_file():
+                    shutil.copy2(f, m_output_dir/f.name)
+
         if vcf_path.is_dir():
+            # input vcf_path is a directory
+            # find all VCF files in the directory and process them
             vcf_files: List[Path] = pcat.find_vcf_or_bcf_files(vcf_path, args.verbose)
-            if len(vcf_files) == 0:
-                raise ReportableException('Error: no VCF input')
+            if not vcf_files:
+                raise ReportableException('Error: no VCF/BCF files found in ' + str(vcf_path))
             if m_output_dir is None:
                 m_output_dir = vcf_path
-            preprocessed_vcf = pcat.preprocess_multiple_files(
+            preprocessed_vcf: List[Path] = pcat.preprocess_multiple_files(
                 pharmcat_positions_vcf=m_pharmcat_positions_vcf,
                 reference_genome=m_reference_genome,
                 regions_to_retain=pgx_regions,
@@ -300,23 +310,24 @@ if __name__ == '__main__':
                 max_processes=m_max_processes,
                 verbose=args.verbose,
             )
-            if len(preprocessed_vcf) == 0:
+            if not preprocessed_vcf:
                 raise ReportableException('Error: no preprocessed VCFs')
 
-            jargs = ['-i', str(vcf_path.absolute())]
+            java_args = ['-i', str(m_output_dir.absolute())]
             if len(m_samples) > 0:
-                add_sample_java_args(jargs, args)
-            add_matcher_java_args(jargs, args)
-            jargs.append('-mp')
+                add_sample_java_args(java_args, args)
+            add_matcher_java_args(java_args, args)
+            java_args.append('-mp')
             if run_phenotyper:
-                jargs.append('-phenotyper')
+                java_args.append('-phenotyper')
             if run_reporter:
-                add_reporter_java_args(jargs, args)
-            add_output_java_args(jargs, args, m_output_dir)
+                add_reporter_java_args(java_args, args)
+            add_output_java_args(java_args, args, m_output_dir)
             print('\nRunning PharmCAT...')
-            pcat.run_pharmcat(m_pharmcat_jar, jargs, m_max_processes, verbose=args.verbose)
+            pcat.run_pharmcat(m_pharmcat_jar, java_args, m_max_processes, verbose=args.verbose)
             sys.exit(0)
 
+        # input vcf_path is a file
         preprocessed_vcf: List[Path] = []
         vcf_files: List[Path] = []
         input_basename: str
@@ -325,16 +336,20 @@ if __name__ == '__main__':
             vcf_files.append(vcf_path)
             input_basename = pcat.get_vcf_or_bcf_basename(vcf_path)
         else:
+            # find all VCF files listed in the vcf_path file
             if args.verbose:
                 print("Looking up VCF files listed in", vcf_path)
             with open(vcf_path, 'r') as in_f:
                 for line in in_f:
                     line = line.strip()
+                    file: Path = pcat.validate_file(line)
+                    if not pcat.is_vcf_or_bcf_file(file):
+                        raise ReportableException('Error: %s is not a VCF/BCF file' % str(file))
                     vcf_files.append(pcat.validate_file(line))
             input_basename = vcf_path.stem
             concat_vcf_files = True
 
-        if len(vcf_files) == 0:
+        if not vcf_files:
             raise ReportableException('Error: no VCF input')
 
         if args.no_gvcf_check:
@@ -346,7 +361,7 @@ if __name__ == '__main__':
                                               'See https://github.com/PharmGKB/PharmCAT/issues/79 for details.\n'
                                               'If this is not a gVCF file, use -G to bypass.' % str(file))
 
-        if len(m_samples) == 0:
+        if not m_samples:
             m_samples = pcat.read_vcf_samples(vcf_files[0], verbose=args.verbose)
 
         # define working directory, defaulting to the directory of the input VCF
@@ -373,21 +388,21 @@ if __name__ == '__main__':
             verbose=args.verbose,
         )
 
-        if len(preprocessed_vcf) == 0:
+        if not preprocessed_vcf:
             raise ReportableException('Error: no preprocessed VCFs')
 
         print('\nRunning PharmCAT...')
         for vcf in preprocessed_vcf:
-            jargs = ['-vcf', str(vcf.absolute())]
+            java_args = ['-vcf', str(vcf.absolute())]
             if len(m_samples) > 0:
-                add_sample_java_args(jargs, args)
-            add_matcher_java_args(jargs, args)
+                add_sample_java_args(java_args, args)
+            add_matcher_java_args(java_args, args)
             if run_phenotyper:
-                jargs.append('-phenotyper')
+                java_args.append('-phenotyper')
             if run_reporter:
-                add_reporter_java_args(jargs, args)
-            add_output_java_args(jargs, args, m_output_dir)
-            pcat.run_pharmcat(m_pharmcat_jar, jargs, m_max_processes, max_memory=m_max_memory,
+                add_reporter_java_args(java_args, args)
+            add_output_java_args(java_args, args, m_output_dir)
+            pcat.run_pharmcat(m_pharmcat_jar, java_args, m_max_processes, max_memory=m_max_memory,
                               verbose=args.verbose)
 
     except ReportableException as e:
