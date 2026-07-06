@@ -133,7 +133,7 @@ public class MessageHelper {
     boolean passAmbiguityCriteria = true;
     if (message.getExceptionType().equals(MessageAnnotation.TYPE_AMBIGUITY)) {
       // ambiguity messages with diplotypes only apply if the gene is unphased
-      if (!match.getDips().isEmpty() && gene.isPhased()) {
+      if (!match.getDips().isEmpty() && gene.isEffectivelyPhased()) {
         passAmbiguityCriteria = false;
       }
       // ambiguity messages with a variant only apply when that variant is het
