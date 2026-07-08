@@ -2,13 +2,13 @@
 #
 # Base Dockerfile for PharmCAT
 #
-FROM python:3.12
+FROM python:3.14
 
 # apt-utils needed due to https://github.com/phusion/baseimage-docker/issues/319
 RUN apt-get update && \
     apt-get install -y --no-install-recommends apt-utils apt-transport-https gpg vim && \
     apt-get -y upgrade && \
-    apt-get -y install bzip2 build-essential wget
+    apt-get -y install bzip2 build-essential wget less
 
 
 # install java (https://blog.adoptium.net/2021/12/eclipse-temurin-linux-installers-available/)
@@ -16,7 +16,7 @@ RUN curl https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --de
     echo "deb [signed-by=/etc/apt/keyrings/adoptium.gpg] https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" \
       | tee /etc/apt/sources.list.d/adoptium.list && \
     apt-get update && \
-    apt-get -y install --no-install-recommends temurin-17-jdk
+    apt-get -y install --no-install-recommends temurin-25-jdk
 
 # install google cloud utils
 RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /etc/apt/keyrings/cloud.google.gpg && \
@@ -31,9 +31,9 @@ RUN pip3 install dxpy
 
 WORKDIR /usr/local/bin/
 
-ENV BCFTOOLS_VERSION=1.22
-ENV HTSLIB_VERSION=1.22
-ENV SAMTOOLS_VERSION=1.22
+ENV BCFTOOLS_VERSION=1.23.1
+ENV HTSLIB_VERSION=1.23.1
+ENV SAMTOOLS_VERSION=1.23.1
 # download the suite of tools
 RUN wget https://github.com/samtools/htslib/releases/download/${HTSLIB_VERSION}/htslib-${HTSLIB_VERSION}.tar.bz2 && \
     wget https://github.com/samtools/bcftools/releases/download/${BCFTOOLS_VERSION}/bcftools-${BCFTOOLS_VERSION}.tar.bz2 && \

@@ -17,11 +17,11 @@ Before installing PharmCAT, you will need to install the following dependencies:
 
 
 1. [Java 17](https://adoptium.net/index.html?variant=openjdk17&jvmVariant=hotspot) or newer.
-    _We currently recommend Java 17._
+    _We currently recommend Java 25._
 2. [Python 3.10.14](https://www.python.org/downloads/) or newer.
 3. The following bioinformatic tools:
-    * [bcftools >= v1.18](http://www.htslib.org/download/)
-    * [htslib >= v1.18](http://www.htslib.org/download/) (for bgzip)
+    * [bcftools >= v1.18](http://www.htslib.org/download/) (1.23.1 recommended)
+    * [htslib >= v1.18](http://www.htslib.org/download/) (for bgzip, 1.23.1 recommended)
    You will need to have the binaries from these packages available in your PATH.
 
 {: .info}
