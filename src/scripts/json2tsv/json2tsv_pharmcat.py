@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
         # read allele definition json files
         if args.allele_definition_files is None:
-            script_dir: Path = Path(globals().get("__file__", "./_")).absolute().parent
+            script_dir: Path = Path(globals().get("__file__", "./_")).resolve().parent
             allele_definition_dir: Path = script_dir.parent.parent / ('main/resources/org/pharmgkb/pharmcat/definition'
                                                                       '/alleles')
             allele_definition_pattern: str = str(allele_definition_dir) + '/*_translation.json'
@@ -174,7 +174,7 @@ if __name__ == "__main__":
             'haplotype_1': [], 'haplotype_2': [],
             'haplotype_1_functions': [], 'haplotype_2_functions': [],
             'haplotype_1_variants': [], 'haplotype_2_variants': [],
-            'missing_positions': [], 'uncallable_haplotypes': [], 
+            'missing_positions': [], 'uncallable_haplotypes': [],
             'non_ref_genotypes': []
         }
         if args.concurrent_mode:
@@ -228,7 +228,7 @@ if __name__ == "__main__":
                            'Haplotype_1_Functions', 'Haplotype_2_Functions',
                            'Haplotype_1_Variants', 'Haplotype_2_Variants',
                            'Missing_Positions', 'Uncallable_Haplotypes', 'NonRefGenotypes']
-        rez.to_csv(m_output_file.absolute(), mode='w', sep="\t", header=cols, index=False)
+        rez.to_csv(m_output_file.resolve(), mode='w', sep="\t", header=cols, index=False)
 
         end = timer()
         print("Done.")

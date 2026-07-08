@@ -23,14 +23,14 @@ except:
 if os.environ.get('PHARMCAT_TEST_DOWNLOAD'):
     TEST_DOWNLOAD = True
 
-test_dir: Path = Path(globals().get("__file__", "./_")).absolute().parent
+test_dir: Path = Path(globals().get("__file__", "./_")).resolve().parent
 src_dir: Path = test_dir / '../pcat'
 pharmcat_positions_file: Path = test_dir / '../../pharmcat_positions.vcf.bgz'
 uniallelic_pharmcat_positions_file: Path = test_dir / '../../pharmcat_positions.uniallelic.vcf.bgz'
 
 
 def get_reference_fasta(pharmcat_positions: Path) -> Path:
-    reference_fasta: Path = pharmcat_positions.parent / pcat.REFERENCE_FASTA_FILENAME
+    reference_fasta: Path = pharmcat_positions.resolve().parent / pcat.REFERENCE_FASTA_FILENAME
     if not reference_fasta.is_file():
         if TEST_DOWNLOAD:
             download_reference_fasta_and_index(pharmcat_positions.parent, True)
@@ -78,8 +78,8 @@ def _read_vcf(in_f, skip_comments: bool = True):
     return '\n'.join(lines)
 
 
-def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str = None, split_sample: bool = False,
-                      copy_to_test_dir: bool = False, results: Optional[List[Path]] = None):
+def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str | None = None,
+                      split_sample: bool = False, copy_to_test_dir: bool = False, results: List[Path] | None = None):
     key: str = basename
     orig_actual_vcf: Path
     if sample:
@@ -104,7 +104,7 @@ def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str 
     if copy_to_test_dir:
         shutil.copyfile(actual, actual.parent / actual.name)
 
-    # compare vcfs line by line
+    # compare VCFs line by line
     expected_lines = read_vcf(expected).split('\n')
     actual_lines = read_vcf(actual).split('\n')
 

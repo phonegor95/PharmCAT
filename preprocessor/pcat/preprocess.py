@@ -1,6 +1,5 @@
 import shutil
 from pathlib import Path
-from typing import Optional, List
 
 from . import utilities as util
 from .exceptions import ReportableException
@@ -46,11 +45,11 @@ in PharmCAT.
 
 
 def preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_retain, custom_regions: bool,
-               vcf_files: List[Path], samples: List[str], input_basename: str,
-               output_dir: Path, output_basename: Optional[str] = '', split_samples: bool = False,
+               vcf_files: list[Path], samples: list[str], input_basename: str,
+               output_dir: Path, output_basename: str = '', split_samples: bool = False,
                keep_intermediate_files: bool = False,
                absent_to_ref: bool = False, unspecified_to_ref: bool = False,
-               concurrent_mode: bool = False, max_processes: int = 1, verbose: int = 0) -> List[Path]:
+               concurrent_mode: bool = False, max_processes: int = 1, verbose: int = 0) -> list[Path]:
     """
     Normalize and prepare the input VCF for PharmCAT.
     """
@@ -90,21 +89,21 @@ def preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_
 
 def preprocess_multiple_files(pharmcat_positions_vcf: Path, reference_genome: Path,
                               regions_to_retain, custom_regions: bool,
-                              vcf_files: List[Path], samples: List[str],
-                              output_dir: Path, output_basename: Optional[str] = '',
+                              vcf_files: list[Path], samples: list[str],
+                              output_dir: Path, output_basename: str = '',
                               keep_intermediate_files: bool = False,
                               absent_to_ref: bool = False, unspecified_to_ref: bool = False,
-                              concurrent_mode: bool = False, max_processes: int = 1, verbose: int = 0) -> List[Path]:
+                              concurrent_mode: bool = False, max_processes: int = 1, verbose: int = 0) -> list[Path]:
     """
     Normalize and prepare the input VCF for PharmCAT.
     """
     if len(vcf_files) == 0:
         return []
 
-    results: List[Path] = []
+    results: list[Path] = []
     for file in vcf_files:
         # make sure we have samples
-        file_samples: List[str] = []
+        file_samples: list[str] = []
         if samples is None or len(samples) == 0:
             file_samples = util.read_vcf_samples(file, verbose=verbose)
         else:
@@ -129,8 +128,8 @@ def preprocess_multiple_files(pharmcat_positions_vcf: Path, reference_genome: Pa
 
 
 def _preprocess(pharmcat_positions_vcf: Path, reference_genome: Path, regions_to_retain,  custom_regions: bool,
-                vcf_files: List[Path], samples: List[str],
-                output_dir: Path, output_basename: Optional[str] = '',
+                vcf_files: list[Path], samples: list[str],
+                output_dir: Path, output_basename: str = '',
                 keep_intermediate_files: bool = False,
                 absent_to_ref: bool = False, unspecified_to_ref: bool = False,
                 concurrent_mode=False, max_processes=1, verbose: int = 0) -> Path:

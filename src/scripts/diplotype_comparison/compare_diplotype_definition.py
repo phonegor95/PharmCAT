@@ -87,10 +87,10 @@ if __name__ == "__main__":
         # define input
         m_input: Path
         if args.input:
-            m_input = Path(args.input).absolute()
+            m_input = Path(args.input).resolve()
         else:
-            script_dir: Path = Path(globals().get("__file__", "./_")).absolute().parent
-            is_repo: bool = script_dir.absolute().as_posix().endswith("scripts/diplotype_comparison")
+            script_dir: Path = Path(globals().get("__file__", "./_")).resolve().parent
+            is_repo: bool = script_dir.resolve().as_posix().endswith("scripts/diplotype_comparison")
             if is_repo:
                 m_input = script_dir.parent.parent / 'main/resources/org/pharmgkb/pharmcat/definition/alleles'
                 print(f'Running in repo.')
@@ -253,7 +253,7 @@ if __name__ == "__main__":
                 else:
                     mode = 'w'
                     header = True
-                rows.to_csv(m_output_file.absolute(), mode=mode, sep="\t", columns=cols, header=header, index=False)
+                rows.to_csv(m_output_file.resolve(), mode=mode, sep="\t", columns=cols, header=header, index=False)
             else:
                 print(f'\tNo alternative calls')
 
