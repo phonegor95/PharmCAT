@@ -80,12 +80,12 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: ${{JAVA_VERSION}}
+          java-version: "${{JAVA_VERSION}}"
 
       - name: Set up python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{PYTHON_VERSION}}
+          python-version: "${{PYTHON_VERSION}}"
           cache: 'pip'
 
       - name: Install python dependencies
