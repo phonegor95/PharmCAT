@@ -13,7 +13,7 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 If applicable:
 - Provide the command line you used.
-- Attach input VCF file.  Make sure data has been anonymized.  Only include relevant portion if possible.
+- Attach your input VCF file.  Make sure data has been anonymized.  Only include the relevant portion if possible.
 
 **Environment:**
 - PharmCAT version:
