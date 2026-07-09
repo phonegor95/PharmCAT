@@ -692,11 +692,9 @@ def create_uniallelic_vcf(uniallelic_positions_vcf: Path, pharmcat_positions_vcf
     # convert PharmCAT PGx variants to the uniallelic format needed for extracting exact PGx positions
     # and generating an accurate missing report
     bcftools_command = [common.BCFTOOLS_PATH, 'norm', '--no-version', '-m-', '-c', 'ws', '-f',
-                        str(reference_genome_fasta), '-Ob', '-W', '-o', str(uniallelic_positions_vcf),
+                        str(reference_genome_fasta), '-Ob', '--write-index', '-o', str(uniallelic_positions_vcf),
                         str(pharmcat_positions_vcf)]
     run(bcftools_command)
-    # handle with the -W flag to bcftools
-    #index_vcf(uniallelic_positions_vcf, verbose)
 
 
 def create_regions_file(regions_file: Path, pharmcat_positions_vcf: Path, verbose: int = 0):
@@ -810,10 +808,8 @@ def extract_pgx_regions(vcf_files: list[Path], samples: list[str],
             if verbose:
                 print('Concatenating PGx VCFs')
             bcftools_command = [common.BCFTOOLS_PATH, 'concat', '--no-version', '-a', '-f', str(tmp_file_list), '-Ob',
-                                '-W', '-o', str(pgx_region_vcf_file)]
+                                '--write-index', '-o', str(pgx_region_vcf_file)]
             run(bcftools_command)
-            # index the VCF file (handle with the -W flag to bcftools)
-            #index_vcf(pgx_region_vcf_file, verbose)
 
         return pgx_region_vcf_file
 
@@ -847,7 +843,7 @@ def _extract_pgx_regions(vcf_file: Path, sample_file: Path, output_dir: Path, ou
                     print('  * Presorting %s' % bgz_file)
                 sorted_bgzf: Path = bgz_file.parent / (output_basename + '.presort.bcf.bgzf')
                 try:
-                    run([common.BCFTOOLS_PATH, 'sort', '-Ob', '-W', '-o', str(sorted_bgzf), str(bgz_file)])
+                    run([common.BCFTOOLS_PATH, 'sort', '-Ob', '--write-index', '-o', str(sorted_bgzf), str(bgz_file)])
                     bgz_file = sorted_bgzf
                 except ReportableException as e:
                     raise ReportableException('bcftools cannot process the input VCF file:\n' + str(e))
@@ -869,7 +865,7 @@ def _extract_pgx_regions(vcf_file: Path, sample_file: Path, output_dir: Path, ou
     pgx_regions_vcf = output_dir / (output_basename + '.pgx_regions.bcf.bgzf')
     run([common.BCFTOOLS_PATH, 'annotate', '--no-version', '-S', str(sample_file),
          '--rename-chrs', str(common.CHR_RENAME_FILE), '-r', pgx_regions, '-i', 'ALT="."', '-k',
-         '-Ob', '-W', '-o', str(pgx_regions_vcf), str(bgz_file)])
+         '-Ob', '--write-index', '-o', str(pgx_regions_vcf), str(bgz_file)])
     return pgx_regions_vcf
 
 
@@ -889,7 +885,7 @@ def normalize_vcf(reference_genome: Path, vcf_file: Path, output_dir: Path, outp
         output_basename = get_vcf_or_bcf_basename(vcf_file)
     normalized_vcf = output_dir / (output_basename + '.normalized.vcf.bgz')
     bcftools_command = [common.BCFTOOLS_PATH, 'norm', '--no-version', '-m-', '-c', 'ws',
-                        '-Oz', '-W', '-o', str(normalized_vcf),
+                        '-Oz', '--write-index', '-o', str(normalized_vcf),
                         '-f', str(reference_genome), str(vcf_file)]
     if verbose:
         print('  * Normalizing VCF')
@@ -982,10 +978,8 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
         else:
             # extracting PGx positions from input using "bcftools view" - must be in VCF format
             selected_positions_only_bgz: Path = tmp_dir / (output_basename + '.selected_positions_or_regions.vcf.bgz')
-            run([common.BCFTOOLS_PATH, 'view', '--no-version', '-T', str(uniallelic_positions_vcf), '-Oz', '-W',
-                 '-o', str(selected_positions_only_bgz), str(vcf_file)])
-            # handle with the -W flag to bcftools
-            #index_vcf(selected_positions_only_bgz, verbose)
+            run([common.BCFTOOLS_PATH, 'view', '--no-version', '-T', str(uniallelic_positions_vcf), '-Oz',
+                 '--write-index', '-o', str(selected_positions_only_bgz), str(vcf_file)])
 
         # add in missing multi-allelic variants as '0|0'
         # bcftools will take care of the rest (sorting, normalization, etc.)
@@ -1232,10 +1226,8 @@ def extract_pgx_variants(pharmcat_positions: Path, reference_fasta: Path, vcf_fi
         if verbose:
             print('  * Sorting by chromosomal location...')
         sorted_bgz: Path = tmp_dir / (output_basename + '.sorted.bcf.bgzf')
-        bcftools_command = [common.BCFTOOLS_PATH, 'sort', '-Ob', '-W', '-o', str(sorted_bgz), str(updated_pgx_pos_vcf)]
-        run(bcftools_command)
-        # handle with the -W flag to bcftools
-        #index_vcf(sorted_bgz, verbose)
+        run([common.BCFTOOLS_PATH, 'sort', '-Ob', '--write-index', '-o', str(sorted_bgz),
+             str(updated_pgx_pos_vcf)])
 
         # make sure the output complies with the multi-allelic format
         if verbose:
