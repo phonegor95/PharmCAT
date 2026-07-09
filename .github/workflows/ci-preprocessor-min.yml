@@ -1,14 +1,12 @@
 name: Preprocessor CI (min. versions)
 
 on:
-  workflow_dispatch:
-    branches:
-      - '*'
+  workflow_dispatch: {}
   push:
     branches:
       - '*'
     paths:
-      - '.github/workflows/ci-preprocessor.yml'
+      - '.github/workflows/ci-preprocessor-min.yml'
       - 'preprocessor/**'
 
 # cancel the current build on push from the same PR, branch or tag (https://stackoverflow.com/a/72408109/1063501)
@@ -80,12 +78,12 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: "${{JAVA_VERSION}}"
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Set up python
         uses: actions/setup-python@v5
         with:
-          python-version: "${{PYTHON_VERSION}}"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
 
       - name: Install python dependencies
