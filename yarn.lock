@@ -287,10 +287,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@conventional-changelog/template@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@conventional-changelog/template@npm:1.2.0"
-  checksum: 10/f1be23af9cad17c96fb625557256cd8cae43b46f62d7b6a8c78dcc040b0ada054910e2ec1ed8b6f37367d913e9e6d298549a38f2240cdb5decaaa27501ba30fa
+"@conventional-changelog/template@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@conventional-changelog/template@npm:1.2.1"
+  checksum: 10/be65738f81cb232a794fc0ab2bbe9af2e32896e0c731fe8bdf8a2ab8dabdcc2645937d1025d6f7ad8878c6a51be1da9cab71e287ac476b8e07fb0b8cb7811425
   languageName: node
   linkType: hard
 
@@ -1005,7 +1005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/blobs@npm:10.7.9, @netlify/blobs@npm:^10.4.4, @netlify/blobs@npm:^10.7.7, @netlify/blobs@npm:^10.7.9":
+"@netlify/blobs@npm:10.7.9, @netlify/blobs@npm:^10.4.4, @netlify/blobs@npm:^10.7.9":
   version: 10.7.9
   resolution: "@netlify/blobs@npm:10.7.9"
   dependencies:
@@ -1035,7 +1035,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/build@npm:^35.13.9":
+"@netlify/build@npm:^35.15.0":
   version: 35.15.0
   resolution: "@netlify/build@npm:35.15.0"
   dependencies:
@@ -1171,7 +1171,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/dev-utils@npm:4.4.6, @netlify/dev-utils@npm:^4.4.3":
+"@netlify/dev-utils@npm:4.4.6, @netlify/dev-utils@npm:^4.4.6":
   version: 4.4.6
   resolution: "@netlify/dev-utils@npm:4.4.6"
   dependencies:
@@ -1193,7 +1193,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/dev@npm:^4.18.4":
+"@netlify/dev@npm:^4.18.7":
   version: 4.18.9
   resolution: "@netlify/dev@npm:4.18.9"
   dependencies:
@@ -1271,7 +1271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/edge-functions@npm:3.0.8, @netlify/edge-functions@npm:^3.0.6":
+"@netlify/edge-functions@npm:3.0.8, @netlify/edge-functions@npm:^3.0.8":
   version: 3.0.8
   resolution: "@netlify/edge-functions@npm:3.0.8"
   dependencies:
@@ -1356,7 +1356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/images@npm:1.3.10, @netlify/images@npm:^1.3.7":
+"@netlify/images@npm:1.3.10, @netlify/images@npm:^1.3.10":
   version: 1.3.10
   resolution: "@netlify/images@npm:1.3.10"
   dependencies:
@@ -1632,7 +1632,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@netlify/zip-it-and-ship-it@npm:14.7.1, @netlify/zip-it-and-ship-it@npm:^14.7.0, @netlify/zip-it-and-ship-it@npm:^14.7.1":
+"@netlify/zip-it-and-ship-it@npm:14.7.1, @netlify/zip-it-and-ship-it@npm:^14.7.1":
   version: 14.7.1
   resolution: "@netlify/zip-it-and-ship-it@npm:14.7.1"
   dependencies:
@@ -4267,12 +4267,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conventional-changelog-conventionalcommits@npm:10.2.0":
-  version: 10.2.0
-  resolution: "conventional-changelog-conventionalcommits@npm:10.2.0"
+"conventional-changelog-conventionalcommits@npm:10.2.1":
+  version: 10.2.1
+  resolution: "conventional-changelog-conventionalcommits@npm:10.2.1"
   dependencies:
-    "@conventional-changelog/template": "npm:^1.2.0"
-  checksum: 10/37031cccbbb34f4c4956bcc4191e80f44c503028428948b82307e9d42057e72556949491f8aad67b263763c0e3af2e0df60f4fbc8468e9641601a27f82a772c5
+    "@conventional-changelog/template": "npm:^1.2.1"
+  checksum: 10/670efe9ba741a1b8daae4cb456961e00e1325b54c5d1af7bed7b2b7f0ab2c034668a0f18b5c8a309773f062795d813d14d64b91fa025790557c9b27d8531e5a0
   languageName: node
   linkType: hard
 
@@ -7842,13 +7842,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.18.1":
-  version: 4.18.1
-  resolution: "lodash@npm:4.18.1"
-  checksum: 10/306fea53dfd39dad1f03d45ba654a2405aebd35797b673077f401edb7df2543623dc44b9effbb98f69b32152295fff725a4cec99c684098947430600c6af0c3f
-  languageName: node
-  linkType: hard
-
 "log-process-errors@npm:^11.0.0":
   version: 11.0.1
   resolution: "log-process-errors@npm:11.0.1"
@@ -8582,27 +8575,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"netlify-cli@npm:26.1.0":
-  version: 26.1.0
-  resolution: "netlify-cli@npm:26.1.0"
+"netlify-cli@npm:26.2.0":
+  version: 26.2.0
+  resolution: "netlify-cli@npm:26.2.0"
   dependencies:
     "@fastify/static": "npm:^9.1.1"
     "@netlify/ai": "npm:^0.4.1"
     "@netlify/api": "npm:^14.0.19"
-    "@netlify/blobs": "npm:^10.7.7"
-    "@netlify/build": "npm:^35.13.9"
+    "@netlify/blobs": "npm:^10.7.9"
+    "@netlify/build": "npm:^35.15.0"
     "@netlify/build-info": "npm:^10.5.1"
     "@netlify/config": "npm:^24.6.0"
-    "@netlify/dev": "npm:^4.18.4"
-    "@netlify/dev-utils": "npm:^4.4.3"
+    "@netlify/dev": "npm:^4.18.7"
+    "@netlify/dev-utils": "npm:^4.4.6"
     "@netlify/edge-bundler": "npm:^14.10.3"
-    "@netlify/edge-functions": "npm:^3.0.6"
+    "@netlify/edge-functions": "npm:^3.0.8"
     "@netlify/edge-functions-bootstrap": "npm:^2.17.1"
     "@netlify/headers-parser": "npm:^9.0.3"
-    "@netlify/images": "npm:^1.3.7"
+    "@netlify/images": "npm:^1.3.10"
     "@netlify/local-functions-proxy": "npm:^2.0.3"
     "@netlify/redirect-parser": "npm:^15.0.4"
-    "@netlify/zip-it-and-ship-it": "npm:^14.7.0"
+    "@netlify/zip-it-and-ship-it": "npm:^14.7.1"
     "@octokit/rest": "npm:^22.0.0"
     "@opentelemetry/api": "npm:^1.8.0"
     "@pnpm/tabtab": "npm:^0.5.4"
@@ -8651,7 +8644,6 @@ __metadata:
     jwt-decode: "npm:^4.0.0"
     lambda-local: "npm:^2.2.0"
     locate-path: "npm:^8.0.0"
-    lodash: "npm:^4.18.1"
     log-update: "npm:^7.2.0"
     maxstache: "npm:^1.0.7"
     maxstache-stream: "npm:^1.0.4"
@@ -8686,7 +8678,7 @@ __metadata:
   bin:
     netlify: bin/run.js
     ntl: bin/run.js
-  checksum: 10/1f389b83f323f0a4a1ea8f046aa53d52b7abb4d294af1960f6961c06621f9cbbac7581b218183233acefb70af75b72c20d547653149d7f6ad046116fad509d1d
+  checksum: 10/8c3d297b6ba36e52a3d526eb223f8b4a53b0a035b09cfebc31aedafdffa7f047ee1565120562047eed7cb1126245879833cfae528bb2e6e72e1e2d1b1b9f16b0
   languageName: node
   linkType: hard
 
@@ -9866,8 +9858,8 @@ __metadata:
     "@google/semantic-release-replace-plugin": "npm:1.2.7"
     "@semantic-release/changelog": "npm:6.0.3"
     "@semantic-release/git": "npm:10.0.1"
-    conventional-changelog-conventionalcommits: "npm:10.2.0"
-    netlify-cli: "npm:26.1.0"
+    conventional-changelog-conventionalcommits: "npm:10.2.1"
+    netlify-cli: "npm:26.2.0"
     semantic-release: "npm:25.0.5"
     showdown: "npm:2.1.0"
   languageName: unknown
