@@ -259,6 +259,15 @@ public class Diplotype implements Comparable<Diplotype> {
     return m_phenotypes;
   }
 
+  public String printPhenotype() {
+    if (hasActivityScore()) {
+      return String.format("%s (AS:%s)", String.join(TextConstants.GENOTYPE_DELIMITER, m_phenotypes), getActivityScore());
+    }
+    else {
+      return String.join(TextConstants.GENOTYPE_DELIMITER, m_phenotypes);
+    }
+  }
+
   /**
    * Gets whether the phenotypes are from an outside call.
    */

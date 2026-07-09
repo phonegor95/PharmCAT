@@ -240,7 +240,7 @@ public class ReportHelpers {
     if (diplotype.getPhenotypes().isEmpty()) {
       return TextConstants.NA.toUpperCase();
     }
-    return String.join("; ", diplotype.getPhenotypes());
+    return String.join("; ", diplotype.printPhenotype());
   }
 
 
@@ -456,6 +456,15 @@ public class ReportHelpers {
         }
       }
       builder.append("</span>");
+
+      if (!diplotype.getPhenotypes().isEmpty()) {
+        builder.append("<br /><span class=\"noWrap\">");
+        builder.append(String.join("; ", diplotype.getPhenotypes()));
+        if (diplotype.hasActivityScore()) {
+          builder.append(String.format(" (AS:%s)", diplotype.getActivityScore()));
+        }
+        builder.append("</span>");
+      }
     }
     return builder.toString();
   }
