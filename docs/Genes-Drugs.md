@@ -148,7 +148,7 @@ The following table lists the 197 drugs for which PharmCAT has recommendations f
 | fluvoxamine | :heavy_check_mark: |  | :heavy_check_mark: | :heavy_check_mark: |
 | fosphenytoin | :heavy_check_mark: |  | :heavy_check_mark: | :heavy_check_mark: |
 | galantamine |  |  |  | :heavy_check_mark: |
-| gefitinib |  |  | :heavy_check_mark: | :heavy_check_mark: |
+| gefitinib |  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | gentamicin | :heavy_check_mark: |  | :heavy_check_mark: |  |
 | glimepiride |  |  | :heavy_check_mark: |  |
 | glipizide |  |  | :heavy_check_mark: |  |
@@ -166,7 +166,7 @@ The following table lists the 197 drugs for which PharmCAT has recommendations f
 | isoniazid |  |  |  | :heavy_check_mark: |
 | ivacaftor | :heavy_check_mark: |  | :heavy_check_mark: |  |
 | kanamycin | :heavy_check_mark: |  |  |  |
-| lamotrigine |  | :heavy_check_mark: |  |  |
+| lamotrigine |  | :heavy_check_mark: | :heavy_check_mark: |  |
 | lansoprazole | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
 | lesinurad |  |  | :heavy_check_mark: |  |
 | lidocaine / prilocaine |  |  | :heavy_check_mark: |  |
@@ -230,7 +230,7 @@ The following table lists the 197 drugs for which PharmCAT has recommendations f
 | risperidone |  | :heavy_check_mark: |  | :heavy_check_mark: |
 | ropivacaine |  |  | :heavy_check_mark: |  |
 | rosuvastatin | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
-| sacituzumab govitecan |  |  | :heavy_check_mark: | :heavy_check_mark: |
+| sacituzumab govitecan |  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | seladelpar |  |  | :heavy_check_mark: |  |
 | sertraline | :heavy_check_mark: | :heavy_check_mark: |  |  |
 | sevoflurane | :heavy_check_mark: |  | :heavy_check_mark: |  |

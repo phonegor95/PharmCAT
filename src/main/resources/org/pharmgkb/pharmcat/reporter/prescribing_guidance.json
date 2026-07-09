@@ -23918,7 +23918,7 @@
         "name": "Annotation of CPIC Guideline for desflurane, enflurane, halothane, isoflurane, methoxyflurane, sevoflurane, succinylcholine and CACNA1S, RYR1",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 5,
+        "version": 6,
         "url": null,
         "relatedChemicals": [
           {
@@ -106771,6 +106771,76 @@
     },
     {
       "guideline": {
+        "id": "PA166432021",
+        "name": "Annotation of FDA Label for lamotrigine and HLA-B",
+        "objCls": "Label Annotation",
+        "source": "FDA",
+        "version": 1,
+        "url": null,
+        "relatedChemicals": [
+          {
+            "id": "PA450164",
+            "name": "lamotrigine",
+            "symbol": null
+          }
+        ],
+        "relatedGenes": [
+          {
+            "id": "PA35056",
+            "name": "major histocompatibility complex, class I, B",
+            "symbol": "HLA-B"
+          }
+        ],
+        "relatedAlleles": [
+          {
+            "id": "PA165954769",
+            "name": "*15:02",
+            "symbol": "HLA-B*15:02"
+          }
+        ],
+        "recommendation": false
+      },
+      "recommendations": [
+        {
+          "id": "PA166435121",
+          "name": "Recommendation Annotation PA166435121",
+          "population": null,
+          "classification": null,
+          "relatedChemicals": [
+            {
+              "id": "PA450164",
+              "name": "lamotrigine",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454731380,
+            "html": "<p>&quot;The risks and benefits of therapy should be weighed when considering use of LAMICTAL (lamotrigine) in patients known to be positive for HLA-B*1502&quot;. Patients should tell their provider if they &quot;are of Asian origin, have had HLA testing before, and know are carrying the genetic variant, HLA-B*1502&quot;. See label for more information.</p>\n"
+          },
+          "implications": [],
+          "lookupKey": [
+            {
+              "HLA-B": "*15:02 positive"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": false,
+          "otherPrescribingGuidance": true
+        }
+      ],
+      "citations": [
+        {
+          "pmid": null,
+          "title": "Drugs@FDA: Drug Product LAMICTAL (lamotrigine), GlaxoSmithKline LLC - NDA020241/SUPPL-69, 10/10/2025",
+          "journal": null,
+          "year": 2025,
+          "_sameAs": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo=020241"
+        }
+      ],
+      "url": "https://www.clinpgx.org/labelAnnotation/PA166432021"
+    },
+    {
+      "guideline": {
         "id": "PA166160007",
         "name": "Annotation of FDA Label for lesinurad and CYP2C9",
         "objCls": "Label Annotation",
@@ -110634,6 +110704,82 @@
         }
       ],
       "url": "https://www.clinpgx.org/labelAnnotation/PA166316301"
+    },
+    {
+      "guideline": {
+        "id": "PA166438022",
+        "name": "Annotation of FDA Label for primaquine and CYP2D6",
+        "objCls": "Label Annotation",
+        "source": "FDA",
+        "version": 1,
+        "url": null,
+        "relatedChemicals": [
+          {
+            "id": "PA451103",
+            "name": "primaquine",
+            "symbol": null
+          }
+        ],
+        "relatedGenes": [
+          {
+            "id": "PA128",
+            "name": "cytochrome P450 family 2 subfamily D member 6",
+            "symbol": "CYP2D6"
+          }
+        ],
+        "relatedAlleles": [],
+        "recommendation": false
+      },
+      "recommendations": [
+        {
+          "id": "PA166438101",
+          "name": "Recommendation Annotation PA166438101",
+          "population": null,
+          "classification": null,
+          "relatedChemicals": [
+            {
+              "id": "PA451103",
+              "name": "primaquine",
+              "symbol": null
+            }
+          ],
+          "text": {
+            "id": 1454803080,
+            "html": "<p>&quot;For patients who are CYP2D6 poor or intermediate metabolizers, alternative treatments should be considered...Increase monitoring for possible relapse in patients with concurrent strong CYP2D6 inhibitor usage or in patients who are CYP2D6 poor or intermediate metabolizers.&quot; See label for more information.</p>\n"
+          },
+          "implications": [],
+          "lookupKey": [
+            {
+              "CYP2D6": "1.0"
+            },
+            {
+              "CYP2D6": "0.75"
+            },
+            {
+              "CYP2D6": "0.5"
+            },
+            {
+              "CYP2D6": "0.25"
+            },
+            {
+              "CYP2D6": "0.0"
+            }
+          ],
+          "dosingInformation": false,
+          "alternateDrugAvailable": true,
+          "otherPrescribingGuidance": true
+        }
+      ],
+      "citations": [
+        {
+          "pmid": null,
+          "title": "Drugs@FDA: Drug Product Primaquine Phosphate (Primaquine Phosphate), NDA008316, PD-Rx Pharmaceuticals, Inc.",
+          "journal": null,
+          "year": -1,
+          "_sameAs": "https://www.accessdata.fda.gov/scripts/cder/daf/index.cfm?event=overview.process&varApplNo=008316"
+        }
+      ],
+      "url": "https://www.clinpgx.org/labelAnnotation/PA166438022"
     },
     {
       "guideline": {

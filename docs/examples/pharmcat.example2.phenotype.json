@@ -3,7 +3,7 @@
     "namedAlleleMatcherVersion": "2.0.0",
     "genomeBuild": "GRCh38.p14",
     "inputFilename": "pharmcat.example2.vcf",
-    "timestamp": "2026-02-09T21:20:37.922Z",
+    "timestamp": "2026-07-09T04:25:38.850Z",
     "topCandidatesOnly": true,
     "findCombinations": false,
     "callCyp2d": false,
@@ -12,9 +12,9 @@
   },
   "geneReports": {
     "ABCG2": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "ABCG2",
       "chr": "chr4",
       "phased": false,
@@ -125,9 +125,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CACNA1S": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CACNA1S",
       "chr": "chr1",
       "phased": false,
@@ -261,9 +261,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CFTR": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CFTR",
       "chr": "chr7",
       "phased": false,
@@ -1765,9 +1765,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP2B6": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP2B6",
       "chr": "chr19",
       "phased": false,
@@ -2634,9 +2634,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP2C19": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP2C19",
       "chr": "chr10",
       "phased": false,
@@ -3330,9 +3330,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP2C9": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP2C9",
       "chr": "chr10",
       "phased": false,
@@ -4707,7 +4707,7 @@
     "CYP2D6": {
       "alleleDefinitionVersion": null,
       "alleleDefinitionSource": "UNKNOWN",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP2D6",
       "chr": null,
       "phased": false,
@@ -4802,9 +4802,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP3A4": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP3A4",
       "chr": "chr7",
       "phased": false,
@@ -4838,7 +4838,7 @@
             "activityValue": "n/a"
           },
           "gene": "CYP3A4",
-          "matchScore": 86,
+          "matchScore": 92,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -4879,7 +4879,7 @@
             "activityValue": "n/a"
           },
           "gene": "CYP3A4",
-          "matchScore": 86,
+          "matchScore": 92,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -5062,7 +5062,8 @@
           "call": "G/G",
           "alleles": [
             "*11",
-            "*38"
+            "*38",
+            "*50"
           ],
           "phased": false,
           "phaseSet": null,
@@ -5208,6 +5209,36 @@
         {
           "gene": "CYP3A4",
           "chromosome": "chr7",
+          "position": 99767151,
+          "dbSnpId": "rs750301316",
+          "call": "G/G",
+          "alleles": [
+            "*52"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "G",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "CYP3A4",
+          "chromosome": "chr7",
+          "position": 99767156,
+          "dbSnpId": "rs1266009547",
+          "call": "T/T",
+          "alleles": [
+            "*53"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "T",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "CYP3A4",
+          "chromosome": "chr7",
           "position": 99768360,
           "dbSnpId": "rs55785340",
           "call": "A/A",
@@ -5292,6 +5323,21 @@
           "phased": false,
           "phaseSet": null,
           "referenceAllele": "G",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "CYP3A4",
+          "chromosome": "chr7",
+          "position": 99768498,
+          "dbSnpId": "rs780747370",
+          "call": "A/A",
+          "alleles": [
+            "*51"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "A",
           "hasUndocumentedVariations": false,
           "warnings": []
         },
@@ -5557,9 +5603,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP3A5": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "CYP3A5",
       "chr": "chr7",
       "phased": false,
@@ -5593,7 +5639,7 @@
             "activityValue": "n/a"
           },
           "gene": "CYP3A5",
-          "matchScore": 10,
+          "matchScore": 14,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -5634,7 +5680,7 @@
             "activityValue": "n/a"
           },
           "gene": "CYP3A5",
-          "matchScore": 10,
+          "matchScore": 14,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -5669,6 +5715,21 @@
           "phased": false,
           "phaseSet": null,
           "referenceAllele": "T",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "CYP3A5",
+          "chromosome": "chr7",
+          "position": 99652773,
+          "dbSnpId": "rs762725013",
+          "call": "G/G",
+          "alleles": [
+            "*11"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "G",
           "hasUndocumentedVariations": false,
           "warnings": []
         },
@@ -5720,6 +5781,21 @@
         {
           "gene": "CYP3A5",
           "chromosome": "chr7",
+          "position": 99676142,
+          "dbSnpId": "rs150999943",
+          "call": "C/C",
+          "alleles": [
+            "*10"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "CYP3A5",
+          "chromosome": "chr7",
           "position": 99676198,
           "dbSnpId": "rs55817950",
           "call": "G/G",
@@ -5738,7 +5814,7 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "CYP4F2": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
       "phenotypeVersion": null,
       "geneSymbol": "CYP4F2",
@@ -6140,9 +6216,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "DPYD": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "DPYD",
       "chr": "chr1",
       "phased": false,
@@ -7562,9 +7638,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "G6PD": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "G6PD",
       "chr": "chrX",
       "phased": false,
@@ -10452,9 +10528,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "IFNL3": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": null,
       "geneSymbol": "IFNL3",
       "chr": "chr19",
       "phased": false,
@@ -10468,31 +10544,27 @@
           "allele1": {
             "gene": "IFNL3",
             "name": "rs12979860 reference (C)",
-            "function": "Favorable response allele",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "allele2": {
             "gene": "IFNL3",
             "name": "rs12979860 reference (C)",
-            "function": "Favorable response allele",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "gene": "IFNL3",
           "matchScore": 2,
-          "phenotypes": [
-            "n/a"
-          ],
+          "phenotypes": [],
           "outsidePhenotype": false,
           "outsidePhenotypeMismatch": null,
           "activityScore": null,
           "outsideActivityScore": false,
           "outsideActivityScoreMismatch": null,
           "variant": null,
-          "lookupKey": [
-            "n/a"
-          ],
+          "lookupKey": [],
           "label": "rs12979860 reference (C)/rs12979860 reference (C)",
           "inferred": false,
           "inferredSourceDiplotypes": null,
@@ -10509,31 +10581,27 @@
           "allele1": {
             "gene": "IFNL3",
             "name": "rs12979860 reference (C)",
-            "function": "Favorable response allele",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "allele2": {
             "gene": "IFNL3",
             "name": "rs12979860 reference (C)",
-            "function": "Favorable response allele",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "gene": "IFNL3",
           "matchScore": 2,
-          "phenotypes": [
-            "n/a"
-          ],
+          "phenotypes": [],
           "outsidePhenotype": false,
           "outsidePhenotypeMismatch": null,
           "activityScore": null,
           "outsideActivityScore": false,
           "outsideActivityScoreMismatch": null,
           "variant": null,
-          "lookupKey": [
-            "n/a"
-          ],
+          "lookupKey": [],
           "label": "rs12979860 reference (C)/rs12979860 reference (C)",
           "inferred": false,
           "inferredSourceDiplotypes": null,
@@ -10567,7 +10635,7 @@
     "MT-RNR1": {
       "alleleDefinitionVersion": null,
       "alleleDefinitionSource": "UNKNOWN",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "MT-RNR1",
       "chr": null,
       "phased": false,
@@ -10650,9 +10718,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "NAT2": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "NAT2",
       "chr": "chr8",
       "phased": false,
@@ -11537,9 +11605,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "NUDT15": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "NUDT15",
       "chr": "chr13",
       "phased": false,
@@ -11573,7 +11641,7 @@
             "activityValue": "n/a"
           },
           "gene": "NUDT15",
-          "matchScore": 36,
+          "matchScore": 40,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -11614,7 +11682,7 @@
             "activityValue": "n/a"
           },
           "gene": "NUDT15",
-          "matchScore": 36,
+          "matchScore": 40,
           "phenotypes": [
             "Normal Metabolizer"
           ],
@@ -11732,6 +11800,21 @@
         {
           "gene": "NUDT15",
           "chromosome": "chr13",
+          "position": 48037845,
+          "dbSnpId": "rs150241065",
+          "call": "G/G",
+          "alleles": [
+            "*22"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "G",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "NUDT15",
+          "chromosome": "chr13",
           "position": 48037847,
           "dbSnpId": "rs766023281",
           "call": "G/G",
@@ -11756,6 +11839,21 @@
           "phased": false,
           "phaseSet": null,
           "referenceAllele": "A",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "NUDT15",
+          "chromosome": "chr13",
+          "position": 48037852,
+          "dbSnpId": "rs753319151",
+          "call": "G/G",
+          "alleles": [
+            "*23"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "G",
           "hasUndocumentedVariations": false,
           "warnings": []
         },
@@ -11915,9 +12013,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "RYR1": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "RYR1",
       "chr": "chr19",
       "phased": false,
@@ -11951,7 +12049,7 @@
             "activityValue": "n/a"
           },
           "gene": "RYR1",
-          "matchScore": 626,
+          "matchScore": 638,
           "phenotypes": [
             "Uncertain Susceptibility"
           ],
@@ -11984,7 +12082,7 @@
           },
           "allele2": null,
           "gene": "RYR1",
-          "matchScore": 313,
+          "matchScore": 319,
           "phenotypes": [
             "n/a"
           ],
@@ -12056,7 +12154,7 @@
                 "activityValue": "n/a"
               },
               "gene": "RYR1",
-              "matchScore": 626,
+              "matchScore": 638,
               "phenotypes": [
                 "Uncertain Susceptibility"
               ],
@@ -12742,8 +12840,23 @@
         {
           "gene": "RYR1",
           "chromosome": "chr19",
-          "position": 38452985,
+          "position": 38452964,
           "dbSnpId": null,
+          "call": "C/C",
+          "alleles": [
+            "c.1390C>A"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
+          "position": 38452985,
+          "dbSnpId": "rs1376393998",
           "call": "C/C",
           "alleles": [
             "c.1411C>T"
@@ -13271,6 +13384,21 @@
         {
           "gene": "RYR1",
           "chromosome": "chr19",
+          "position": 38473666,
+          "dbSnpId": "rs112105381",
+          "call": "C/C",
+          "alleles": [
+            "c.4055C>G"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
           "position": 38475335,
           "dbSnpId": "rs137933390",
           "call": "A/A",
@@ -13351,6 +13479,21 @@
           "call": "C/C",
           "alleles": [
             "c.4775C>T"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
+          "position": 38485654,
+          "dbSnpId": "rs144157950",
+          "call": "C/C",
+          "alleles": [
+            "c.4999C>T"
           ],
           "phased": false,
           "phaseSet": null,
@@ -14295,10 +14438,11 @@
           "gene": "RYR1",
           "chromosome": "chr19",
           "position": 38499730,
-          "dbSnpId": null,
+          "dbSnpId": "rs1568501059",
           "call": "G/G",
           "alleles": [
-            "c.7123G>A"
+            "c.7123G>A",
+            "c.7123G>C"
           ],
           "phased": false,
           "phaseSet": null,
@@ -14653,6 +14797,21 @@
           "phased": false,
           "phaseSet": null,
           "referenceAllele": "T",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
+          "position": 38502517,
+          "dbSnpId": "rs1220636855",
+          "call": "G/G",
+          "alleles": [
+            "c.7625G>A"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "G",
           "hasUndocumentedVariations": false,
           "warnings": []
         },
@@ -15045,6 +15204,21 @@
           "phased": false,
           "phaseSet": null,
           "referenceAllele": "G",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
+          "position": 38512364,
+          "dbSnpId": "rs2915960",
+          "call": "C/C",
+          "alleles": [
+            "c.9353C>T"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
           "hasUndocumentedVariations": false,
           "warnings": []
         },
@@ -15967,6 +16141,21 @@
         {
           "gene": "RYR1",
           "chromosome": "chr19",
+          "position": 38566975,
+          "dbSnpId": "rs73933023",
+          "call": "C/C",
+          "alleles": [
+            "c.13502C>T"
+          ],
+          "phased": false,
+          "phaseSet": null,
+          "referenceAllele": "C",
+          "hasUndocumentedVariations": false,
+          "warnings": []
+        },
+        {
+          "gene": "RYR1",
+          "chromosome": "chr19",
           "position": 38566978,
           "dbSnpId": "rs139647387",
           "call": "A/A",
@@ -16811,9 +17000,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "SLCO1B1": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "SLCO1B1",
       "chr": "chr12",
       "phased": false,
@@ -17492,9 +17681,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "TPMT": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "TPMT",
       "chr": "chr6",
       "phased": false,
@@ -18279,9 +18468,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "UGT1A1": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "UGT1A1",
       "chr": "chr2",
       "phased": false,
@@ -18451,9 +18640,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     "VKORC1": {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": null,
       "geneSymbol": "VKORC1",
       "chr": "chr16",
       "phased": false,
@@ -18467,31 +18656,27 @@
           "allele1": {
             "gene": "VKORC1",
             "name": "rs9923231 reference (C)",
-            "function": "Normal coumarin sensitivity",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "allele2": {
             "gene": "VKORC1",
             "name": "rs9923231 reference (C)",
-            "function": "Normal coumarin sensitivity",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "gene": "VKORC1",
           "matchScore": 2,
-          "phenotypes": [
-            "-1639 GG"
-          ],
+          "phenotypes": [],
           "outsidePhenotype": false,
           "outsidePhenotypeMismatch": null,
           "activityScore": null,
           "outsideActivityScore": false,
           "outsideActivityScoreMismatch": null,
           "variant": null,
-          "lookupKey": [
-            "-1639 GG"
-          ],
+          "lookupKey": [],
           "label": "rs9923231 reference (C)/rs9923231 reference (C)",
           "inferred": false,
           "inferredSourceDiplotypes": null,
@@ -18508,31 +18693,27 @@
           "allele1": {
             "gene": "VKORC1",
             "name": "rs9923231 reference (C)",
-            "function": "Normal coumarin sensitivity",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "allele2": {
             "gene": "VKORC1",
             "name": "rs9923231 reference (C)",
-            "function": "Normal coumarin sensitivity",
+            "function": null,
             "reference": true,
-            "activityValue": "n/a"
+            "activityValue": null
           },
           "gene": "VKORC1",
           "matchScore": 2,
-          "phenotypes": [
-            "-1639 GG"
-          ],
+          "phenotypes": [],
           "outsidePhenotype": false,
           "outsidePhenotypeMismatch": null,
           "activityScore": null,
           "outsideActivityScore": false,
           "outsideActivityScoreMismatch": null,
           "variant": null,
-          "lookupKey": [
-            "-1639 GG"
-          ],
+          "lookupKey": [],
           "label": "rs9923231 reference (C)/rs9923231 reference (C)",
           "inferred": false,
           "inferredSourceDiplotypes": null,
@@ -18566,9 +18747,9 @@
   },
   "unannotatedGeneCalls": [
     {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "F2",
       "chr": "chr11",
       "phased": false,
@@ -18679,9 +18860,9 @@
       "treatUndocumentedVariationsAsReference": false
     },
     {
-      "alleleDefinitionVersion": "2026-02-09-10-28",
+      "alleleDefinitionVersion": "2026-07-05-00-25",
       "alleleDefinitionSource": "CLINPGX",
-      "phenotypeVersion": "2026-02-09-10-28",
+      "phenotypeVersion": "2026-07-05-00-25",
       "geneSymbol": "F5",
       "chr": "chr1",
       "phased": false,
