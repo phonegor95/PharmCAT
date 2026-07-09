@@ -1,0 +1,53 @@
+name: Post Release Notes to Ghost
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-to-ghost:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      # install Node.js tool to securely generate Ghost Admin API tokens
+      - name: Generate Ghost Admin JWT Token
+        id: ghost_token
+        run: |
+          npm install jsonwebtoken
+          node -e "
+          const jwt = require('jsonwebtoken');
+          const key = '${{ secrets.GHOST_ADMIN_API_KEY }}';
+          const [id, secret] = key.split(':');
+          const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
+            keyid: id,
+            algorithm: 'HS256',
+            expiresIn: '5m',
+            audience: '/admin/'
+          });
+          console.log('::set-output name=token::' + token);
+          "
+
+      # format the Release Body and send it via the Ghost Admin API
+      - name: Post Draft to Ghost
+        run: |
+          # Clean and escape the release notes for JSON payload
+          RELEASE_BODY=$(echo '${{ github.event.release.body }}' | jq -sR .)
+          RELEASE_TITLE="Release ${{ github.event.release.name || github.event.release.tag_name }}"
+          
+          # HTML version wrapped for Ghost Content
+          HTML_BODY="<p>We are excited to announce our latest updates!</p><pre><code>${{ github.event.release.body }}</code></pre>"
+          JSON_HTML=$(echo "$HTML_BODY" | jq -sR .)
+
+          # Send Request to Ghost Admin API to create a draft post
+          curl -X POST "${{ secrets.GHOST_API_URL }}/ghost/api/admin/posts/?source=html" \
+            -H "Authorization: Ghost ${{ steps.ghost_token.outputs.token }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"posts\": [{
+                \"title\": \"$RELEASE_TITLE\",
+                \"html\": $JSON_HTML,
+                \"status\": \"draft\"
+              }]
+            }"

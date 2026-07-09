@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Install required packages
         run: |
@@ -38,7 +38,7 @@ jobs:
 
       - name: Cache bcftools
         id: cache-bcftools
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.TOOLS_DIR }}/bcftools
           key: bcftools-${{ env.BCFTOOLS_VERSION }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Cache htslib
         id: cache-htslib
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.TOOLS_DIR }}/htslib
           key: htslib-${{ env.HTSLIB_VERSION }}
@@ -81,7 +81,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: Set up python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
@@ -94,7 +94,7 @@ jobs:
 
       - name: Cache reference FASTA
         id: cache-ref-fasta
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             reference.fna.bgz
@@ -119,12 +119,13 @@ jobs:
         run: python3 -m pytest --cov-config=../.coveragerc --cov-report=xml --cov=pcat
         working-directory: preprocessor
 
-      - name: Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: preprocessor/coverage-python.xml
-          flags: Preprocessor
-          token: ${{ secrets.CODECOV_TOKEN }}
+#     Only run codecov in ci-preprocessor.yml
+#      - name: Codecov
+#        uses: codecov/codecov-action@v7
+#        with:
+#          files: preprocessor/coverage-python.xml
+#          flags: Preprocessor
+#          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Send Slack notification on failure
         if: failure()
