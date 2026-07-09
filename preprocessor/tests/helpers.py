@@ -105,10 +105,17 @@ def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str 
         shutil.copyfile(actual, actual.parent / actual.name)
 
     # compare VCFs line by line
-    expected_lines = read_vcf(expected).split('\n')
-    actual_lines = read_vcf(actual).split('\n')
+    orig_expected_lines = read_vcf(expected)
+    orig_actual_lines = read_vcf(actual)
+    expected_lines = orig_expected_lines.split('\n')
+    actual_lines = orig_actual_lines.split('\n')
 
     if len(expected_lines) != len(actual_lines):
+        print('----------')
+        print(f'Expected lines: {orig_expected_lines}')
+        print('----------')
+        print(f'Actual lines: {orig_actual_lines}')
+        print('----------')
         assert False, f'Different number of lines (expected {len(expected_lines)}, found {len(actual_lines)})'
 
     line_num = 0
@@ -127,10 +134,10 @@ def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str 
         for i, col in enumerate(columns):
             # compare the ALT alleles
             if i == 4 and set(actual_fields[3]) != set(expected_fields[3]):
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[3]}\n  actual: {actual_fields[3]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[3]}\n  actual: {actual_fields[3]}'
             # compare genotypes
             if i == 9 and actual_fields[9:] != expected_fields[9:]:
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[9]}\n  actual: {actual_fields[9]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[9:]}\n  actual: {actual_fields[9:]}'
             # compare the rest
             if actual_line[i] != expected_line[i]:
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[i]}\n  actual: {actual_fields[i]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[i]}\n  actual: {actual_fields[i]}'
