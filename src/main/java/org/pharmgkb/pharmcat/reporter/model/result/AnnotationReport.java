@@ -3,13 +3,16 @@ package org.pharmgkb.pharmcat.reporter.model.result;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.pharmgkb.common.util.ComparisonChain;
+import org.pharmgkb.pharmcat.UnexpectedStateException;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.reporter.model.MessageAnnotation;
 import org.pharmgkb.pharmcat.reporter.model.pgkb.AccessionObject;
@@ -27,6 +30,9 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
   @Expose
   @SerializedName("classification")
   private String m_classification;
+  @Expose
+  @SerializedName("activityScore")
+  private final SortedMap<String, String> m_activityScores = new TreeMap<>();
   @Expose
   @SerializedName("population")
   private String m_population = TextConstants.NA;
@@ -48,6 +54,9 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
   @Expose
   @SerializedName("otherPrescribingGuidance")
   private boolean m_otherPrescribingGuidance = false;
+  @Expose
+  @SerializedName("phenotypes")
+  private Map<String,String> m_phenotypes = new TreeMap<>();
   @Expose
   @SerializedName("lookupKey")
   private List<Map<String,Object>> m_lookupKey = new ArrayList<>();
@@ -123,7 +132,41 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
       if (m_lookupKey.stream().noneMatch(k -> k.containsKey(geneSymbol))) {
         continue;
       }
+
+      if (dip.isAllelePresenceType()) {
+        List<String> relevantAlleles = alleles.stream().filter((a) -> a.getSymbol().startsWith(dip.getGene())).map(AccessionObject::getName).toList();
+        for (String phenotype : dip.getPhenotypes()) {
+          if (relevantAlleles.stream().anyMatch(phenotype::startsWith)) {
+            m_phenotypes.put(geneSymbol, phenotype);
+          }
+        }
+      } else {
+        for (String phenotype : dip.getPhenotypes()) {
+          String oldPhenotype = m_phenotypes.put(geneSymbol, phenotype);
+          if (!dip.isAllelePresenceType() && oldPhenotype != null && !oldPhenotype.equals(phenotype)) {
+            throw new UnexpectedStateException("Multiple phenotypes for gene " + geneSymbol);
+          }
+        }
+      }
+      if (genotype.usesActivityScore()) {
+        // if this genotype uses activity score at all, then we need a value for activity score for each diplotype in
+        // this genotype
+        if (dip.isActivityScoreType()) {
+          String activityScore = dip.getActivityScore();
+          String oldActivity = m_activityScores.put(geneSymbol, activityScore);
+          if (oldActivity != null && !oldActivity.equals(activityScore)) {
+            throw new UnexpectedStateException("Multiple activity scores for gene " + geneSymbol);
+          }
+        } else {
+          /* if this diplotype does not use AS then just mark it as n/a */
+          m_activityScores.put(geneSymbol, TextConstants.NA);
+        }
+      }
     }
+  }
+
+  public Map<String,String> getPhenotypes() {
+    return m_phenotypes;
   }
 
   public String getDrugRecommendation() {
@@ -140,6 +183,10 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
 
   public List<String> getImplications() {
     return m_implications;
+  }
+
+  public Map<String, String> getActivityScores() {
+    return m_activityScores;
   }
 
 
@@ -210,6 +257,7 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
         .compare(m_genotypes, o.getGenotypes())
         .compare(m_population, o.getPopulation())
         .compare(m_highlightedVariants, o.getHighlightedVariants())
+        .compare(m_activityScores, o.getActivityScores())
         .compare(m_classification, o.getClassification())
         .compare(m_drugRecommendation, o.getDrugRecommendation())
         .compare(m_implications, o.getImplications())

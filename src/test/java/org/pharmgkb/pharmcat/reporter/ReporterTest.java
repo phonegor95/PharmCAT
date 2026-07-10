@@ -99,12 +99,16 @@ class ReporterTest {
     assertNotNull(tenoxicam);
     assertEquals(1, tenoxicam.getGuidelines().size());
     assertEquals(2, tenoxicam.getGuidelines().first().getAnnotations().size());
+    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getActivityScores().size());
+    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     // warfarin is a special case - even though CYP2C9 has 2 activity scores, it gets merged into 1 row/AnnotationReport
     DrugReport warfarin = reportContext.getDrugReport(PrescribingGuidanceSource.CPIC_GUIDELINE, "warfarin");
     assertNotNull(warfarin);
     assertEquals(1, warfarin.getGuidelines().size());
     assertEquals(1, warfarin.getGuidelines().first().getAnnotations().size());
+    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getActivityScores().size());
+    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     Path reporterOutput = printReport(testInfo, reportContext);
     Document document = Jsoup.parse(reporterOutput.toFile());
@@ -150,12 +154,16 @@ class ReporterTest {
     assertNotNull(tenoxicam);
     assertEquals(1, tenoxicam.getGuidelines().size());
     assertEquals(2, tenoxicam.getGuidelines().first().getAnnotations().size());
+    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getActivityScores().size());
+    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     // warfarin is a special case - even though CYP2C9 has 2 phenotypes, it gets merged into 1 row/AnnotationReport
     DrugReport warfarin = reportContext.getDrugReport(PrescribingGuidanceSource.CPIC_GUIDELINE, "warfarin");
     assertNotNull(warfarin);
     assertEquals(1, warfarin.getGuidelines().size());
     assertEquals(1, warfarin.getGuidelines().first().getAnnotations().size());
+    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getActivityScores().size());
+    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     Path reporterOutput = printReport(testInfo, reportContext);
     Document document = Jsoup.parse(reporterOutput.toFile());

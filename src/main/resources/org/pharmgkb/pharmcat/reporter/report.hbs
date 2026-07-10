@@ -80,7 +80,7 @@
               <tr>
                 <td>Genotype</td>
                 <td>Allele Functionality</td>
-                <td>Phenotype<br />(Activity Score)<sup>&loz;</sup></td>
+                <td>Phenotype</td>
               </tr>
               </tbody>
             </table>
@@ -188,9 +188,6 @@
         </div>
       {{/if}}
       <div class="footnote">
-        <sup>&loz;</sup> The Activity Score (AS) is only displayed for applicable genes.
-      </div>
-      <div class="footnote">
         CPIC terms for allele function and phenotype are used for all CPIC genes. For non-CPIC genes, DPWG terms are used.
       </div>
       <div class="footnote">
@@ -253,6 +250,7 @@
                         {{/unless}}
                       </td>
                       <td>
+                        <div class="hint">{{pluralize "Genotype" genotypes}}</div>
                         <ul class="{{#if (moreThanOne genotypes) }}noPadding{{else}}noBullet{{/if}} mt-0">
                           {{#each genotypes}}
                             <li>
@@ -265,6 +263,14 @@
                             </li>
                           {{/each}}
                         </ul>
+                        {{#if (thereAre phenotypes)}}
+                          <div class="hint">{{pluralize "Phenotype" phenotypes}}</div>
+                          {{{printRecMap phenotypes "rx-phenotype"}}}
+                        {{/if}}
+                        {{#if (thereAre activityScores)}}
+                          <div class="hint">{{pluralize "Activity Score" activityScores}}</div>
+                          {{{printRecMap activityScores "rx-activity"}}}
+                        {{/if}}
                       </td>
                     {{#if (rxIsCpicWarfarin drug source)}}
                         <td colspan="4">
