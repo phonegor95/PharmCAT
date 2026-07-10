@@ -67,6 +67,7 @@ class ToxicGenesTest {
         new ImmutableSortedMap.Builder<String, List<String>>(Ordering.natural())
             .put("TPMT", UNKNOWN_CALL)
             .build(),
+        null,
         null);
   }
 

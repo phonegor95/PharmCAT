@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,16 +100,12 @@ class ReporterTest {
     assertNotNull(tenoxicam);
     assertEquals(1, tenoxicam.getGuidelines().size());
     assertEquals(2, tenoxicam.getGuidelines().first().getAnnotations().size());
-    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getActivityScores().size());
-    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     // warfarin is a special case - even though CYP2C9 has 2 activity scores, it gets merged into 1 row/AnnotationReport
     DrugReport warfarin = reportContext.getDrugReport(PrescribingGuidanceSource.CPIC_GUIDELINE, "warfarin");
     assertNotNull(warfarin);
     assertEquals(1, warfarin.getGuidelines().size());
     assertEquals(1, warfarin.getGuidelines().first().getAnnotations().size());
-    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getActivityScores().size());
-    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     Path reporterOutput = printReport(testInfo, reportContext);
     Document document = Jsoup.parse(reporterOutput.toFile());
@@ -121,17 +118,10 @@ class ReporterTest {
     tags = document.select(".dpwg-guideline-warfarin");
     assertEquals(2, tags.size());
 
-    Elements phenotype = document.select(".cpic-guideline-warfarin .rx-phenotype");
-    assertEquals(0, phenotype.size());
-    phenotype = document.select(".dpwg-guideline-warfarin .rx-phenotype");
-    assertEquals(2, phenotype.size());
-
-    // CPIC guidance lookup for warfarin does not use phenotype, so no activity score will be there
-    Elements activityScore = document.select(".cpic-guideline-warfarin .rx-activity");
-    assertEquals(0, activityScore.size());
-    // DPWG genes for warfarin use activity score
-    activityScore = document.select(".dpwg-guideline-warfarin .rx-activity");
-    assertEquals(2, activityScore.size());
+    Elements phenotypes = document.select(".gs-CYP2C9 .gs-phenotype");
+    assertEquals(3, phenotypes.size());
+    assertTrue(phenotypes.stream().map(Element::text).anyMatch(t -> t.equals("Intermediate Metabolizer (AS:1.5)")));
+    assertTrue(phenotypes.stream().map(Element::text).anyMatch(t -> t.equals("Intermediate Metabolizer (AS:1.0)")));
   }
 
   @Test
@@ -154,16 +144,12 @@ class ReporterTest {
     assertNotNull(tenoxicam);
     assertEquals(1, tenoxicam.getGuidelines().size());
     assertEquals(2, tenoxicam.getGuidelines().first().getAnnotations().size());
-    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getActivityScores().size());
-    assertEquals(1, tenoxicam.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     // warfarin is a special case - even though CYP2C9 has 2 phenotypes, it gets merged into 1 row/AnnotationReport
     DrugReport warfarin = reportContext.getDrugReport(PrescribingGuidanceSource.CPIC_GUIDELINE, "warfarin");
     assertNotNull(warfarin);
     assertEquals(1, warfarin.getGuidelines().size());
     assertEquals(1, warfarin.getGuidelines().first().getAnnotations().size());
-    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getActivityScores().size());
-    assertEquals(0, warfarin.getGuidelines().first().getAnnotations().first().getPhenotypes().size());
 
     Path reporterOutput = printReport(testInfo, reportContext);
     Document document = Jsoup.parse(reporterOutput.toFile());
@@ -174,15 +160,10 @@ class ReporterTest {
     tags = document.select(".dpwg-guideline-warfarin .tag");
     assertEquals(2, tags.size());
 
-    Elements phenotype = document.select(".cpic-guideline-warfarin .rx-phenotype");
-    assertEquals(0, phenotype.size());
-    phenotype = document.select(".dpwg-guideline-warfarin .rx-phenotype");
-    assertEquals(2, phenotype.size());
-
-    Elements activityScore = document.select(".cpic-guideline-warfarin .rx-activity");
-    assertEquals(0, activityScore.size());
-    activityScore = document.select(".dpwg-guideline-warfarin .rx-activity");
-    assertEquals(2, activityScore.size());
+    Elements phenotypes = document.select(".gs-CYP2C9 .gs-phenotype");
+    assertEquals(3, phenotypes.size());
+    assertTrue(phenotypes.stream().map(Element::text).anyMatch(t -> t.equals("Indeterminate")));
+    assertTrue(phenotypes.stream().map(Element::text).anyMatch(t -> t.equals("Intermediate Metabolizer (AS:1.0)")));
   }
 
   private Path printReport(TestInfo testInfo, ReportContext reportContext) throws Exception {

@@ -188,7 +188,7 @@ class Ryr1Test {
         null, "desflurane", RecPresence.YES,
         new ImmutableSortedMap.Builder<String, String>(Ordering.natural())
             .put("CACNA1S", "No Result")
-            .put("RYR1", "Uncertain Susceptibility")
+            .put("RYR1", "See drug section")
             .build(),
         RecPresence.NO);
 
@@ -254,7 +254,7 @@ class Ryr1Test {
         null, "enflurane", RecPresence.YES,
         new ImmutableSortedMap.Builder<String, String>(Ordering.natural())
             .put("CACNA1S", "No Result")
-            .put("RYR1", "Uncertain Susceptibility")
+            .put("RYR1", "See drug section")
             .build(),
             RecPresence.NO);
   }

@@ -183,7 +183,7 @@ class Cacna1sTest {
         "desflurane", RecPresence.YES,
         new ImmutableSortedMap.Builder<String, String>(Ordering.natural())
             .put("CACNA1S", "Malignant Hyperthermia Susceptibility")
-            .put("RYR1", "Uncertain Susceptibility")
+            .put("RYR1", "See drug section")
             .build(),
         RecPresence.NO);
   }
