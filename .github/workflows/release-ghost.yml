@@ -11,14 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      # install Node.js tool to securely generate Ghost Admin API tokens
+      # install Node.js tools to securely generate Ghost Admin API tokens and convert Markdown
       - name: Generate Ghost Admin JWT Token
         id: ghost_token
+        env:
+          GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
         run: |
-          npm install jsonwebtoken
-          node -e "
+          npm install jsonwebtoken marked
+          node <<'NODE'
+          const fs = require('fs');
           const jwt = require('jsonwebtoken');
-          const key = '${{ secrets.GHOST_ADMIN_API_KEY }}';
+          const key = process.env.GHOST_ADMIN_API_KEY;
           const [id, secret] = key.split(':');
           const token = jwt.sign({}, Buffer.from(secret, 'hex'), {
             keyid: id,
@@ -26,28 +29,47 @@ jobs:
             expiresIn: '5m',
             audience: '/admin/'
           });
-          console.log('::set-output name=token::' + token);
-          "
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `token=${token}\n`);
+          NODE
 
       # format the Release Body and send it via the Ghost Admin API
       - name: Post Draft to Ghost
         run: |
-          # Clean and escape the release notes for JSON payload
-          RELEASE_BODY=$(echo '${{ github.event.release.body }}' | jq -sR .)
-          RELEASE_TITLE="Release ${{ github.event.release.name || github.event.release.tag_name }}"
-          
-          # HTML version wrapped for Ghost Content
-          HTML_BODY="<p>We are excited to announce our latest updates!</p><pre><code>${{ github.event.release.body }}</code></pre>"
-          JSON_HTML=$(echo "$HTML_BODY" | jq -sR .)
+          RELEASE_TITLE="$(jq -r '.release.name // .release.tag_name' "$GITHUB_EVENT_PATH") Released"
+
+          node <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+          const { marked } = require('marked');
+
+          const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
+          const releaseBody = event.release.body || '';
+          marked.use({
+            gfm: true,
+            breaks: false
+          });
+          const html = [
+            '<p>We are excited to announce our latest release!</p>',
+            marked.parse(releaseBody)
+          ].join('\n');
+
+          fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'release-notes.html'), html);
+          NODE
+
+          jq -n \
+            --arg title "$RELEASE_TITLE" \
+            --rawfile html "$RUNNER_TEMP/release-notes.html" \
+            '{
+              posts: [{
+                title: $title,
+                html: $html,
+                status: "draft",
+                tags: [{ name: "PharmCAT" }]
+              }]
+            }' > "$RUNNER_TEMP/ghost-payload.json"
 
           # Send Request to Ghost Admin API to create a draft post
           curl -X POST "${{ secrets.GHOST_API_URL }}/ghost/api/admin/posts/?source=html" \
             -H "Authorization: Ghost ${{ steps.ghost_token.outputs.token }}" \
             -H "Content-Type: application/json" \
-            -d "{
-              \"posts\": [{
-                \"title\": \"$RELEASE_TITLE\",
-                \"html\": $JSON_HTML,
-                \"status\": \"draft\"
-              }]
-            }"
+            -d @"$RUNNER_TEMP/ghost-payload.json"
