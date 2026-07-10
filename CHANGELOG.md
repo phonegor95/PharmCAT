@@ -1,5 +1,20 @@
 ## [3.3.0](https://github.com/PharmGKB/PharmCAT/compare/v3.2.0...v3.3.0) (2026-07-10)
 
+### Features:
+
+* **data:** update data from ClinPGx ([af8b4577](https://github.com/PharmGKB/PharmCAT/commit/af8b4577))
+
+### Bug Fixes
+
+* **preprocessor:** handle unquoted Java version string from Bioconda (#230) ([0b1d0fe2](https://github.com/PharmGKB/PharmCAT/commit/0b1d0fe2)).  Thanks, @rkmishra3893!
+* **preprocessor:** correct _is_phased() early return and prevent KeyError on duplicate variants (#222) ([67e36690](https://github.com/PharmGKB/PharmCAT/commit/67e36690)). Thanks, @haoyu-haoyu!
+* **preprocessor:** quick fix to not crash due to unordered symbolic structural variants (#225) ([76360022](https://github.com/PharmGKB/PharmCAT/commit/76360022))
+* **preprocessor:** fix bug when running pipeline on a directory (#229) ([b67ebb0a](https://github.com/PharmGKB/PharmCAT/commit/b67ebb0a))
+* **preprocessor:** don't display ambiguity warning if gene is effectively phased (#219) ([1767da4e](https://github.com/PharmGKB/PharmCAT/commit/1767da4e))
+* **preprocessor:** use long form for bcftools -W to support v1.18 ([7b075811](https://github.com/PharmGKB/PharmCAT/commit/7b075811))
+* **preprocessor:** update versions of htslib/bcftools dependencies ([bf2ab5b4](https://github.com/PharmGKB/PharmCAT/commit/bf2ab5b4))
+
+
 ## [3.2.0](https://github.com/PharmGKB/PharmCAT/compare/v3.1.1...v3.2.0) (2026-02-25)
 
 ### Features
