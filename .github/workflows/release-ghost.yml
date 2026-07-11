@@ -64,7 +64,9 @@ jobs:
                 title: $title,
                 html: $html,
                 status: "draft",
-                tags: [{ name: "PharmCAT" }]
+                tags: [{ name: "PharmCAT" }],
+                og_image: "https://blog.clinpgx.org/content/images/2026/07/pharmcat-social-card-8.svg",
+                twitter_image: "https://blog.clinpgx.org/content/images/2026/07/pharmcat-social-card-8.svg"
               }]
             }' > "$RUNNER_TEMP/ghost-payload.json"
 
