@@ -44,13 +44,43 @@ jobs:
 
           const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
           const releaseBody = event.release.body || '';
+          const demoteMarkdownHeadings = (markdown) => {
+            const lines = markdown.split(/\r?\n/);
+            let fence = null;
+
+            return lines.map((line) => {
+              const fenceMatch = line.match(/^ {0,3}(`{3,}|~{3,})/);
+              if (fenceMatch) {
+                const fenceMarker = fenceMatch[1];
+                if (fence) {
+                  if (fenceMarker[0] === fence.char && fenceMarker.length >= fence.length) {
+                    fence = null;
+                  }
+                } else {
+                  fence = {
+                    char: fenceMarker[0],
+                    length: fenceMarker.length
+                  };
+                }
+                return line;
+              }
+
+              if (fence) {
+                return line;
+              }
+
+              return line.replace(/^([ \t]{0,3})(#{1,5})([ \t]+.*|[ \t]*)$/, '$1#$2$3');
+            }).join('\n');
+          };
+          const demotedReleaseBody = demoteMarkdownHeadings(releaseBody);
           marked.use({
             gfm: true,
             breaks: false
           });
           const html = [
             '<p>We are excited to announce our latest release!</p>',
-            marked.parse(releaseBody)
+            '<h3>Changelog</h3>',
+            marked.parse(demotedReleaseBody)
           ].join('\n');
 
           fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'release-notes.html'), html);
