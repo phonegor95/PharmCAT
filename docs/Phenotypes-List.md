@@ -381,6 +381,12 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*86</li>
 <li>*87</li>
 <li>*88</li>
+<li>*89</li>
+<li>*90</li>
+<li>*91</li>
+<li>*92</li>
+<li>*93</li>
+<li>*94</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>
