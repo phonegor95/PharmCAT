@@ -8612,7 +8612,7 @@
         "name": "Annotation of CPIC Guideline for atomoxetine and CYP2D6",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 17,
+        "version": 19,
         "url": null,
         "relatedChemicals": [
           {
@@ -8714,7 +8714,7 @@
             "html": "<p>Initiate with a dose of 0.5 mg/kg and increase to 1.2 mg/kg/day after 3 days. If no clinical response and in the absence of adverse events after 2 weeks, consider obtaining a peak plasma concentration (1 to 2 hours after dose administered). If &lt; 200 ng/mL, consider a proportional increase in dose to approach 400 ng/mL.</p>\n"
           },
           "implications": [
-            "CYP2D6: Normal metabolizers of atomoxetine have a lower likelihood of response as compared to poor metabolizers. This is associated with increased discontinuation due to lack of efficacy as compared to poor metabolizers."
+            "CYP2D6: Based on very limited data available for CYP2D6 ultrarapid metabolizers taking atomoxetine, it is unlikely ultrarapid metabolizers would achieve adequate serum concentrations for the intended effect at standard dosing."
           ],
           "lookupKey": [
             {
@@ -11469,7 +11469,7 @@
         "name": "Annotation of CPIC Guideline for capecitabine and DPYD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 62,
+        "version": 63,
         "url": null,
         "relatedChemicals": [
           {
@@ -34368,7 +34368,7 @@
         "name": "Annotation of CPIC Guideline for fluorouracil and DPYD",
         "objCls": "Guideline Annotation",
         "source": "CPIC",
-        "version": 52,
+        "version": 53,
         "url": null,
         "relatedChemicals": [
           {
