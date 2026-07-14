@@ -1,3 +1,14 @@
+## [3.4.0](https://github.com/PharmGKB/PharmCAT/compare/v3.3.0...v3.4.0) (2026-07-14)
+
+### Features
+
+* **data:** update from PharmVar ([8ff5870](https://github.com/PharmGKB/PharmCAT/commit/8ff5870fa5ad6e80d5cc84b3622bcd51c096e1ca))
+
+### Bug Fixes
+
+* recommend bcftools 1.24 ([adfef81](https://github.com/PharmGKB/PharmCAT/commit/adfef81d5b8d69d72c287ca31cae0daf0ada955c))
+* **reporter:** fix bug when >1 phenotype applies to a single gene ([c0e5a1f](https://github.com/PharmGKB/PharmCAT/commit/c0e5a1fc5fabdc6dcdede9c3c929eb96061a951a))
+
 ## [3.3.0](https://github.com/PharmGKB/PharmCAT/compare/v3.2.0...v3.3.0) (2026-07-10)
 
 ### Features:
