@@ -12,9 +12,9 @@ set -e
 set -u
 set -o pipefail
 
-BCFTOOLS_VERSION=1.23.1
-HTSLIB_VERSION=1.23.1
-SAMTOOLS_VERSION=1.23.1
+BCFTOOLS_VERSION=1.24
+HTSLIB_VERSION=1.24
+SAMTOOLS_VERSION=1.24
 
 # download the suite of tools
 echo "Downloading..."

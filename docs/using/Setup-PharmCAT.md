@@ -20,8 +20,8 @@ Before installing PharmCAT, you will need to install the following dependencies:
     _We currently recommend Java 25._
 2. [Python 3.10.14](https://www.python.org/downloads/) or newer.
 3. The following bioinformatic tools:
-    * [bcftools >= v1.18](http://www.htslib.org/download/) (1.23.1 recommended)
-    * [htslib >= v1.18](http://www.htslib.org/download/) (for bgzip, 1.23.1 recommended)
+    * [bcftools >= v1.18](http://www.htslib.org/download/) (1.24 recommended)
+    * [htslib >= v1.18](http://www.htslib.org/download/) (for bgzip, 1.24 recommended)
    You will need to have the binaries from these packages available in your PATH.
 
 {: .info}
