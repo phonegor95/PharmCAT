@@ -1,0 +1,81 @@
+{
+  "formatVersion": "2",
+  "source": "CLINPGX",
+  "version": "2026-07-13-11-40",
+  "modificationDate": "2025-06-24T21:44:08.882Z",
+  "gene": "F2",
+  "orientation": null,
+  "chromosome": "chr11",
+  "genomeBuild": "GRCh38.p14",
+  "refSeqChromosomeId": "NC_000011.10",
+  "variants": [
+    {
+      "chromosome": "chr11",
+      "position": 46739505,
+      "cpicPosition": 46739505,
+      "rsid": "rs1799963",
+      "chromosomeHgvsName": "g.46739505G>A",
+      "cpicAlleles": [
+        "A",
+        "G"
+      ],
+      "cpicToVcfAlleleMap": {
+        "A": "A",
+        "G": "G"
+      },
+      "ref": "G",
+      "alts": [
+        "A"
+      ]
+    }
+  ],
+  "namedAlleles": [
+    {
+      "name": "rs1799963 reference (G)",
+      "id": "PA166411502",
+      "alleles": [
+        "G"
+      ],
+      "cpicAlleles": [
+        "G"
+      ],
+      "reference": true,
+      "structuralVariant": false,
+      "corePositions": [],
+      "score": 1,
+      "numCombinations": 0,
+      "numPartials": 0
+    },
+    {
+      "name": "rs1799963 Prothrombin 20210A",
+      "id": "PA166411503",
+      "alleles": [
+        "A"
+      ],
+      "cpicAlleles": [
+        "A"
+      ],
+      "reference": false,
+      "structuralVariant": false,
+      "corePositions": [
+        46739505
+      ],
+      "score": 1,
+      "numCombinations": 0,
+      "numPartials": 0
+    }
+  ],
+  "singularVariants": [
+    46739505
+  ],
+  "positionToAlleles": {
+    "46739505": [
+      "rs1799963 Prothrombin 20210A"
+    ]
+  },
+  "positionToLocus": {
+    "46739505": 0
+  },
+  "hiddenCoreAlleles": [],
+  "suballelesMap": {}
+}

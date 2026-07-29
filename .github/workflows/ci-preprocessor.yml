@@ -1,9 +1,7 @@
 name: Preprocessor CI
 
 on:
-  workflow_dispatch:
-    branches:
-      - '*'
+  workflow_dispatch: {}
   push:
     branches:
       - '*'
@@ -17,8 +15,10 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  BCFTOOLS_VERSION: '1.20'
-  HTSLIB_VERSION: '1.20'
+  BCFTOOLS_VERSION: '1.24'
+  HTSLIB_VERSION: '1.24'
+  JAVA_VERSION: '25'
+  PYTHON_VERSION: '3.14'
   REFERENCE_FASTA_ZENODO_ID: 7288118
   TOOLS_DIR: /home/runner/work/PharmCAT/PharmCAT/tools
 
@@ -29,7 +29,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Install required packages
         run: |
@@ -38,7 +38,7 @@ jobs:
 
       - name: Cache bcftools
         id: cache-bcftools
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.TOOLS_DIR }}/bcftools
           key: bcftools-${{ env.BCFTOOLS_VERSION }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Cache htslib
         id: cache-htslib
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ env.TOOLS_DIR }}/htslib
           key: htslib-${{ env.HTSLIB_VERSION }}
@@ -75,15 +75,15 @@ jobs:
 
       # need JDK present for tests
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Set up python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.10'
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: 'pip'
 
       - name: Install python dependencies
@@ -94,7 +94,7 @@ jobs:
 
       - name: Cache reference FASTA
         id: cache-ref-fasta
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             reference.fna.bgz
@@ -120,7 +120,7 @@ jobs:
         working-directory: preprocessor
 
       - name: Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           files: preprocessor/coverage-python.xml
           flags: Preprocessor

@@ -21,6 +21,7 @@ public class TextConstants {
   public static final String INDETERMINATE = "Indeterminate";
   public static final String UNSPECIFIED = "Unspecified";
   public static final String UNASSIGNED = "Unassigned";
+  public static final String REPEAT_WOBBLE_DELIMITER = " or ";
   // greater than or equal to symbol
   public static final String GTE = "\u2265";
 

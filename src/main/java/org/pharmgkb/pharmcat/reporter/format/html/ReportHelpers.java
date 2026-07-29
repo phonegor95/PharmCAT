@@ -313,7 +313,7 @@ public class ReportHelpers {
     if (diplotype.getPhenotypes().isEmpty()) {
       return TextConstants.NA.toUpperCase();
     }
-    return String.join("; ", diplotype.getPhenotypes());
+    return String.join("; ", diplotype.printPhenotype());
   }
 
 
@@ -347,7 +347,7 @@ public class ReportHelpers {
         if (x == 0) {
           builder.append("<td rowspan=\"")
               .append(components.size())
-              .append("\" class=\"center\">")
+              .append("\" class=\"center gs-phenotype\">")
               .append(TextConstants.SEE_DRUG)
               .append("</td>");
         }
@@ -529,6 +529,15 @@ public class ReportHelpers {
         }
       }
       builder.append("</span>");
+
+      if (!diplotype.getPhenotypes().isEmpty()) {
+        builder.append("<br /><span class=\"noWrap\">");
+        builder.append(String.join("; ", diplotype.getPhenotypes()));
+        if (diplotype.hasActivityScore()) {
+          builder.append(String.format(" (AS:%s)", diplotype.getActivityScore()));
+        }
+        builder.append("</span>");
+      }
     }
     return builder.toString();
   }

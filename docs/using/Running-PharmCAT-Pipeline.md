@@ -164,7 +164,7 @@ If you need to provide [outside calls](/using/Outside-Call-Format), you can do s
 convention: `<sample_id>.outside.tsv`.  For example, if your sample is `Sample_1`, then use `Sample_1.outside.tsv`.
 
 If you have a single sample VCF file, you can also use the base name of the VCF file.
-For example, use `mydata.outside.vcf` if you have a single sample VCF file called `mydata.vcf`.
+For example, use `mydata.outside.tsv` if you have a single sample VCF file called `mydata.vcf`.
 
 If you have a multi-sample VCF file, (e.g. `multisample.vcf`) and have outside calls for `Sample_1`, you can use
 `multisample.Sample_1.outside.tsv` instead.
@@ -175,7 +175,7 @@ These files need to be in the same directory as the VCF file.
 #### Filtering Samples
 
 If the provided VCF file contains multiple samples, you can limit which samples get processed with either the
-`-s` (a comma separated list of sample IDs) or `-S` flag (a file containing a list of sample IDs, one per line)
+`-s` (a comma-separated list of sample IDs) or `-S` flag (a file containing a list of sample IDs, one per line)
 
 
 #### Concurrent Processing
@@ -270,7 +270,7 @@ Notice that except for the filename, the command is the same as the previous exa
 If you want to provide outside calls, you _must_ use the sample ID file naming scheme.
 You do not need to provide outside call files for every sample if you do not wish to.
 For example, `split_vcf_list.txt` has 2 samples (Sample_1 and Sample_2).
-You can just have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
+You can have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
 
 
 #### Using multi-file VCF data
@@ -286,7 +286,7 @@ per line), sorted by chromosome position.
 
 You can download the sample [split VCF list](/examples/split_vcf_list.txt) to test this out.
 You will also need the actual [split VCF files](/examples/split_vcf.tar).
-Untar this file into the same directory of the split VCF list file.
+Un-tar this file into the same directory of the split VCF list file.
 
 ```console
 # pharmcat_pipeline split_vcf_list.txt
@@ -297,7 +297,7 @@ Notice that except for the filename, the command is the same as the first exampl
 If you want to provide outside calls, you _must_ use the sample ID file naming scheme.
 You do not need to provide outside call files for every sample if you do not wish to.
 For example, `split_vcf_list.txt` has 2 samples (Sample_1 and Sample_2).
-You can just have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
+You can have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
 
 
 #### Using multiple VCF files
@@ -320,5 +320,5 @@ If you want to provide outside calls, you can either use the VCF file base name 
 
 You do not need to provide outside call files for every sample if you do not wish to.
 For example, `split_vcf_list.txt` has 2 samples (Sample_1 and Sample_2).
-You can just have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
+You can have a `/data/Sample_1.outside.tsv` and no `/data/Sample_2.outside.tsv`, or vice versa.
 

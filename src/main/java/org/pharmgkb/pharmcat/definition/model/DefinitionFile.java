@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.ParseException;
 import org.pharmgkb.pharmcat.haplotype.Iupac;
+import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.reporter.model.DataSource;
 import org.pharmgkb.pharmcat.util.VcfHelper;
 
@@ -504,16 +505,14 @@ public class DefinitionFile {
       for (int x = 0; x < fixedAlleles.length; x += 1) {
         String cpicAllele = na.getCpicAlleles()[x];
         if (cpicAllele != null) {
-          VariantLocus vl = m_variants[x];
-          fixedAlleles[x] = vl.getCpicToVcfAlleleMap().get(cpicAllele);
-          if (fixedAlleles[x] == null) {
-            if (Iupac.lookup(cpicAllele).isAmbiguity()) {
-              fixedAlleles[x] = cpicAllele;
-            } else {
-              throw new IllegalStateException("Don't know how to translate CPIC allele '" + cpicAllele + "' @ " +
-                  " position " + x + " (" + vl + ") for " + m_geneSymbol + " " + na.getName() +
-                  "; expecting " + vl.getRef() + " / " + String.join(" / ", vl.getAlts()));
-            }
+          if (cpicAllele.contains(TextConstants.REPEAT_WOBBLE_DELIMITER)) {
+            List<String> vcfAlleles = new ArrayList<>();
+            int pos = x;
+            Arrays.stream(cpicAllele.split(TextConstants.REPEAT_WOBBLE_DELIMITER))
+                .forEach(allele -> vcfAlleles.add(lookupVcfAllele(na, pos, allele)));
+            fixedAlleles[x] = String.join(TextConstants.REPEAT_WOBBLE_DELIMITER, vcfAlleles);
+          } else {
+            fixedAlleles[x] = lookupVcfAllele(na, x, cpicAllele);
           }
         }
       }
@@ -562,9 +561,25 @@ public class DefinitionFile {
     }
   }
 
+  private String lookupVcfAllele(NamedAllele na, int x, String cpicAllele) {
+    VariantLocus vl = m_variants[x];
+    String vcfAllele = vl.getCpicToVcfAlleleMap().get(cpicAllele);
+    if (vcfAllele == null) {
+      if (Iupac.lookup(cpicAllele).isAmbiguity()) {
+        vcfAllele = cpicAllele;
+      } else {
+        throw new IllegalStateException("Don't know how to translate CPIC allele '" + cpicAllele + "' @ " +
+            " position " + x + " (" + vl + ") for " + m_geneSymbol + " " + na.getName() +
+            "; expecting " + vl.getRef() + " / " + String.join(" / ", vl.getAlts()));
+      }
+    }
+    return vcfAllele;
+  }
+
   private static final Pattern sf_hgvsRepeatPattern = Pattern.compile("g\\.[\\d_]+([ACGT]+\\[\\d+])$");
   private static final Pattern sf_hgvsInsPattern = Pattern.compile("g\\.[\\d_]+(del[ACGT]*)?(ins[ACGT]+)$");
   private static final Pattern sf_hgvsDelPattern = Pattern.compile("g\\.[\\d_]+del[ACGT]*$");
+  private static final Pattern sf_pgkbRepeatPattern = Pattern.compile("^([ACGT]+)\\((\\d+)\\)$");
 
   private void translateVariantLocus(NamedAllele referenceNamedAllele, VariantLocus vl, VcfHelper vcfHelper)
       throws IOException {
@@ -578,14 +593,36 @@ public class DefinitionFile {
           ") @ " + vl.getCpicPosition() + " is ambiguous (" + refAllele + "):  using " + vcf.ref + " for VCF");
       refAllele = vcf.ref;
     }
+
+    List<String> cpicAlleles = new ArrayList<>();
+    for (String cpicAllele : vl.getCpicAlleles()) {
+      if (cpicAllele.contains(TextConstants.REPEAT_WOBBLE_DELIMITER)) {
+        String[] wobbles = cpicAllele.split(TextConstants.REPEAT_WOBBLE_DELIMITER);
+        // expect all to be repeats
+        Arrays.stream(wobbles).forEach(a -> {
+          Matcher m = sf_pgkbRepeatPattern.matcher(a);
+          if (!m.matches()) {
+            throw new IllegalStateException(errorLocation + ": allele has non-repeat in repeat wobble - " + cpicAllele);
+          }
+          cpicAlleles.add(a);
+        });
+      } else {
+        cpicAlleles.add(cpicAllele);
+      }
+    }
+
     SortedSet<String> altAlleles = new TreeSet<>();
     boolean isSnp = true;
     List<String> repeats = new ArrayList<>();
     List<String> nonRepeats = new ArrayList<>();
-    for (String allele : vl.getCpicAlleles()) {
+    for (String allele : cpicAlleles) {
       if (allele.length() > 1) {
         isSnp = false;
       }
+      if (allele.contains("[") || allele.contains("]")) {
+        throw new IllegalStateException(errorLocation + ": allele uses square brackets - " + allele);
+      }
+
       if (allele.contains("(") || allele.contains(")")) {
         if (!allele.contains("(") || !allele.contains(")")) {
           throw new IllegalStateException(errorLocation + ": allele has mismatched parentheses - " + allele);
@@ -594,14 +631,11 @@ public class DefinitionFile {
       } else {
         nonRepeats.add(allele);
       }
-      if (allele.contains("[") || allele.contains("]")) {
-        throw new IllegalStateException(errorLocation + ": allele uses square brackets - " + allele);
-      }
       if (!allele.equals(refAllele) && !Iupac.isWobble(allele)) {
         altAlleles.add(allele);
       }
     }
-    if (!repeats.isEmpty() && repeats.size() != vl.getCpicAlleles().size()) {
+    if (!repeats.isEmpty() && repeats.size() != cpicAlleles.size()) {
       boolean haveSingle = false;
       if (nonRepeats.size() == 1) {
         String repeatedSequence = repeats.get(0);
@@ -610,7 +644,7 @@ public class DefinitionFile {
       }
       if (!haveSingle) {
         throw new IllegalStateException(errorLocation + ": has " + repeats.size() + " repeat alleles but " +
-            vl.getCpicAlleles().size() + " total alleles (" + vl.getCpicAlleles() + ")");
+            cpicAlleles.size() + " total alleles (" + cpicAlleles + ")");
       }
     }
 
@@ -683,8 +717,9 @@ public class DefinitionFile {
       vcfMap.put(refAllele, vcf.ref);
       SortedSet<String> repAlts = new TreeSet<>(vcf.getAlts());
       if (altAlleles.size() != repAlts.size()) {
-        throw new IllegalStateException(errorLocation + ": Expected " + altAlleles.size() +
-            " repeats but VCF normalization produced " + repAlts.size());
+        throw new IllegalStateException(errorLocation + ": Expected " + altAlleles.size() + " repeats (" +
+            String.join(", ", altAlleles) + ") but VCF normalization produced " + repAlts.size() + " (" +
+            String.join(", ", repAlts) + ")");
       }
       Iterator<String> repIt = repAlts.iterator();
       for (String alt : altAlleles) {

@@ -27,6 +27,8 @@ match them to known allele definitions.
 | [CYP3A5](/Phenotypes-List#cyp3a5) | :heavy_check_mark: | :heavy_check_mark: |
 | [CYP4F2](/Phenotypes-List#cyp4f2) | :heavy_check_mark: |  |
 | [DPYD](/Phenotypes-List#dpyd) | :heavy_check_mark: | :heavy_check_mark: |
+| [F2](/Phenotypes-List#f2) |  |  |
+| [F5](/Phenotypes-List#f5) |  |  |
 | [G6PD](/Phenotypes-List#g6pd) | :heavy_check_mark: |  |
 | [IFNL3](/Phenotypes-List#ifnl3) | :heavy_check_mark: |  |
 | [NAT2](/Phenotypes-List#nat2) | :heavy_check_mark: |  |
@@ -63,7 +65,7 @@ HLA calls, respectively, using sequencing data.
 
 ## Drugs
 
-The following table lists the 193 drugs for which PharmCAT has recommendations for, along with their sources.
+The following table lists the 197 drugs for which PharmCAT has recommendations for, along with their sources.
 
 | Drug | CPIC | DPWG | FDA Label | FDA PGx Assoc |
 | :--- | :---: | :---: | :---: | :---: |
@@ -86,7 +88,7 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | atazanavir | :heavy_check_mark: | :heavy_check_mark: |  |  |
 | atomoxetine | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | atorvastatin | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
-| avatrombopag |  |  |  | :heavy_check_mark: |
+| avatrombopag |  |  | :heavy_check_mark: | :heavy_check_mark: |
 | azathioprine | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | belinostat |  |  | :heavy_check_mark: | :heavy_check_mark: |
 | belzutifan |  |  | :heavy_check_mark: | :heavy_check_mark: |
@@ -126,10 +128,12 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | efavirenz | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
 | elagolix |  |  |  | :heavy_check_mark: |
 | eliglustat |  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| eltrombopag |  |  | :heavy_check_mark: |  |
 | enflurane | :heavy_check_mark: |  |  |  |
 | erdafitinib |  |  | :heavy_check_mark: | :heavy_check_mark: |
 | escitalopram | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
 | esomeprazole |  |  |  | :heavy_check_mark: |
+| ethinyl estradiol / norelgestromin |  |  | :heavy_check_mark: |  |
 | fesoterodine |  |  |  | :heavy_check_mark: |
 | flecainide |  | :heavy_check_mark: |  |  |
 | flibanserin |  |  | :heavy_check_mark: | :heavy_check_mark: |
@@ -144,7 +148,7 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | fluvoxamine | :heavy_check_mark: |  | :heavy_check_mark: | :heavy_check_mark: |
 | fosphenytoin | :heavy_check_mark: |  | :heavy_check_mark: | :heavy_check_mark: |
 | galantamine |  |  |  | :heavy_check_mark: |
-| gefitinib |  |  | :heavy_check_mark: | :heavy_check_mark: |
+| gefitinib |  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | gentamicin | :heavy_check_mark: |  | :heavy_check_mark: |  |
 | glimepiride |  |  | :heavy_check_mark: |  |
 | glipizide |  |  | :heavy_check_mark: |  |
@@ -162,7 +166,7 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | isoniazid |  |  |  | :heavy_check_mark: |
 | ivacaftor | :heavy_check_mark: |  | :heavy_check_mark: |  |
 | kanamycin | :heavy_check_mark: |  |  |  |
-| lamotrigine |  | :heavy_check_mark: |  |  |
+| lamotrigine |  | :heavy_check_mark: | :heavy_check_mark: |  |
 | lansoprazole | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
 | lesinurad |  |  | :heavy_check_mark: |  |
 | lidocaine / prilocaine |  |  | :heavy_check_mark: |  |
@@ -170,6 +174,7 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | lofexidine |  |  | :heavy_check_mark: | :heavy_check_mark: |
 | lornoxicam | :heavy_check_mark: |  |  |  |
 | lovastatin | :heavy_check_mark: |  |  |  |
+| lusutrombopag |  |  | :heavy_check_mark: |  |
 | mavacamten |  | :heavy_check_mark: |  | :heavy_check_mark: |
 | meclizine |  |  | :heavy_check_mark: | :heavy_check_mark: |
 | meloxicam | :heavy_check_mark: |  |  | :heavy_check_mark: |
@@ -219,12 +224,13 @@ The following table lists the 193 drugs for which PharmCAT has recommendations f
 | rabeprazole |  |  |  | :heavy_check_mark: |
 | raltegravir |  |  |  | :heavy_check_mark: |
 | rasburicase | :heavy_check_mark: |  | :heavy_check_mark: |  |
+| relugolix / estradiol / norethindrone acetate |  |  | :heavy_check_mark: |  |
 | ribavirin | :heavy_check_mark: |  |  |  |
 | ribostamycin | :heavy_check_mark: |  |  |  |
 | risperidone |  | :heavy_check_mark: |  | :heavy_check_mark: |
 | ropivacaine |  |  | :heavy_check_mark: |  |
 | rosuvastatin | :heavy_check_mark: | :heavy_check_mark: |  | :heavy_check_mark: |
-| sacituzumab govitecan |  |  | :heavy_check_mark: | :heavy_check_mark: |
+| sacituzumab govitecan |  | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | seladelpar |  |  | :heavy_check_mark: |  |
 | sertraline | :heavy_check_mark: | :heavy_check_mark: |  |  |
 | sevoflurane | :heavy_check_mark: |  | :heavy_check_mark: |  |

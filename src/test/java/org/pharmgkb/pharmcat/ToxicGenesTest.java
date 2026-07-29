@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.pharmgkb.pharmcat.haplotype.NamedAlleleMatcher;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.reporter.format.html.ReportHelpers;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
@@ -25,6 +26,7 @@ import static org.pharmgkb.pharmcat.PipelineTest.*;
 
 /**
  * These are JUnit tests for toxic genes.
+ * These are genes in the {@link NamedAlleleMatcher#TREAT_UNDOCUMENTED_VARIATIONS_AS_REFERENCE} list.
  *
  * @author Mark Woon
  */
@@ -65,6 +67,7 @@ class ToxicGenesTest {
         new ImmutableSortedMap.Builder<String, List<String>>(Ordering.natural())
             .put("TPMT", UNKNOWN_CALL)
             .build(),
+        null,
         null);
   }
 
@@ -350,7 +353,7 @@ class ToxicGenesTest {
   }
 
   @Test
-  void testNudt15S2(TestInfo testInfo) throws Exception {
+  void testNudt15S3Wobble(TestInfo testInfo) throws Exception {
     PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
     testWrapper.getVcfBuilder()
         .variation("NUDT15", "rs746071566", "GAGTCG(3)", "GAGTCG(4)")
@@ -359,8 +362,8 @@ class ToxicGenesTest {
     testWrapper.execute();
 
     testWrapper.testCalledByMatcher("NUDT15");
-    testWrapper.testPrintCpicCalls("NUDT15", "*1/*2");
-    testWrapper.testRecommendedDiplotypes("NUDT15", "*1", "*2");
+    testWrapper.testPrintCpicCalls("NUDT15", "*1/*3");
+    testWrapper.testRecommendedDiplotypes("NUDT15", "*1", "*3");
 
     DrugReport azaReport = testWrapper.getContext().getDrugReport(PrescribingGuidanceSource.CPIC_GUIDELINE, "azathioprine");
     assertNotNull(azaReport);
@@ -372,7 +375,7 @@ class ToxicGenesTest {
   }
 
   @Test
-  void testNudt15S3(TestInfo testInfo) throws Exception {
+  void testNudt15S3Ref(TestInfo testInfo) throws Exception {
     PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
     testWrapper.getVcfBuilder()
         .variation("NUDT15", "rs116855232", "C", "T")
@@ -403,6 +406,6 @@ class ToxicGenesTest {
 
     GeneReport tpmtReport = testWrapper.getContext().getGeneReport("TPMT");
     assertNotNull(tpmtReport);
-    assertEquals(43, tpmtReport.getVariantReports().size());
+    assertEquals(45, tpmtReport.getVariantReports().size());
   }
 }

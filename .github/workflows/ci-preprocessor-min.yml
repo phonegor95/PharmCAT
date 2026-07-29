@@ -1,0 +1,167 @@
+name: Preprocessor CI (min. versions)
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - '*'
+    paths:
+      - '.github/workflows/ci-preprocessor-min.yml'
+      - 'preprocessor/**'
+
+# cancel the current build on push from the same PR, branch or tag (https://stackoverflow.com/a/72408109/1063501)
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  BCFTOOLS_VERSION: '1.18'
+  HTSLIB_VERSION: '1.18'
+  JAVA_VERSION: '17'
+  PYTHON_VERSION: '3.10'
+  REFERENCE_FASTA_ZENODO_ID: 7288118
+  TOOLS_DIR: /home/runner/work/PharmCAT/PharmCAT/tools
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libbz2-dev libncurses-dev liblzma-dev
+
+      - name: Cache bcftools
+        id: cache-bcftools
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.TOOLS_DIR }}/bcftools
+          key: bcftools-${{ env.BCFTOOLS_VERSION }}
+
+      - name: Install bcftools
+        if: steps.cache-bcftools.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/samtools/bcftools/releases/download/${BCFTOOLS_VERSION}/bcftools-${BCFTOOLS_VERSION}.tar.bz2
+          tar -xjf bcftools-${BCFTOOLS_VERSION}.tar.bz2
+          cd bcftools-${BCFTOOLS_VERSION}
+          ./configure --prefix ${TOOLS_DIR}/bcftools
+          make
+          make install
+
+      - name: Cache htslib
+        id: cache-htslib
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.TOOLS_DIR }}/htslib
+          key: htslib-${{ env.HTSLIB_VERSION }}
+
+      - name: Install htslib
+        if: steps.cache-htslib.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/samtools/htslib/releases/download/${HTSLIB_VERSION}/htslib-${HTSLIB_VERSION}.tar.bz2
+          tar -xjf htslib-${HTSLIB_VERSION}.tar.bz2
+          cd htslib-${HTSLIB_VERSION}
+          ./configure --prefix ${TOOLS_DIR}/htslib
+          make
+          make install
+
+      - name: Add tools to path
+        run: echo "${TOOLS_DIR}/bcftools/bin:${TOOLS_DIR}/htslib/bin" >> $GITHUB_PATH
+
+      # need JDK present for tests
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Set up python
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install python dependencies
+        run: pip3 install -r preprocessor/requirements.txt
+
+      - name: Install pytest
+        run: pip3 install pytest pytest-cov pytest-github-actions-annotate-failures
+
+      - name: Cache reference FASTA
+        id: cache-ref-fasta
+        uses: actions/cache@v6
+        with:
+          path: |
+            reference.fna.bgz
+            reference.fna.bgz.fai
+            reference.fna.bgz.gzi
+          key: ref-fasta-${{ env.REFERENCE_FASTA_ZENODO_ID }}
+
+      - name: Download reference FASTA
+        if: steps.cache-ref-fasta.outputs.cache-hit != 'true'
+        run: |
+          wget https://zenodo.org/record/${REFERENCE_FASTA_ZENODO_ID}/files/GRCh38_reference_fasta.tar
+          tar -xf GRCh38_reference_fasta.tar
+          rm -f GRCh38_reference_fasta.tar
+
+      # wait a bit on a release commit to give release action time to upload the resources necessary for test
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+        if: ${{ startsWith(github.event.head_commit.message, 'chore(release)') }}
+
+      - name: Run preprocessor tests
+        run: python3 -m pytest --cov-config=../.coveragerc --cov-report=xml --cov=pcat
+        working-directory: preprocessor
+
+#     Only run codecov in ci-preprocessor.yml
+#      - name: Codecov
+#        uses: codecov/codecov-action@v7
+#        with:
+#          files: preprocessor/coverage-python.xml
+#          flags: Preprocessor
+#          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Send Slack notification on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          channel-id: 'dev'
+          payload: |
+            {
+              "attachments": [{
+                "color": "#ff0000",
+                "blocks": [
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ":stop: <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|FAILED ${{ github.workflow }}!>"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "Triggered by ${{ github.event_name }} on <${{ github.event.pull_request.html_url || github.event.head_commit.url }}|${{ github.ref_name }}> by ${{ github.actor }}."
+                    }
+                  },
+                  {
+                    "type": "context",
+                    "elements": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "Last commit:\n${{ github.event.head_commit.message }}"
+                      }
+                    ]
+                  }
+                ]
+            }]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}

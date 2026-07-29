@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set appVersion
         uses: bhowell2/github-substring-action@v1
@@ -23,7 +23,7 @@ jobs:
       - run: echo "Version = ${{steps.appVersion.outputs.substring}}"
 
       - name: Set up JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
@@ -32,7 +32,7 @@ jobs:
       - name: Package PharmCAT
         run: make pipelinePkg scriptPkg
 
-      - name: Upload jar to release
+      - name: Upload shadow jar to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

@@ -70,13 +70,13 @@ public class Pipeline implements Callable<PipelineResult> {
 
   private final boolean m_runReporter;
   private @Nullable Path m_reporterInputFile;
-  private String m_reporterTitle;
+  private @Nullable String m_reporterTitle;
   private boolean m_reporterCompact;
   private @Nullable List<PrescribingGuidanceSource> m_reporterSources;
   private @Nullable Path m_reporterJsonFile;
   private @Nullable Path m_reporterHtmlFile;
   private @Nullable Path m_reporterCallsOnlyFile;
-  private ReportContext m_reportContext;
+  private @Nullable ReportContext m_reportContext;
 
   private final boolean m_deleteIntermediateFiles;
   private final Mode m_mode;
@@ -439,7 +439,7 @@ public class Pipeline implements Callable<PipelineResult> {
   }
 
 
-  public ReportContext getReportContext() {
+  public @Nullable ReportContext getReportContext() {
     return m_reportContext;
   }
 

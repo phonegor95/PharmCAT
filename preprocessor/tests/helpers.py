@@ -23,14 +23,14 @@ except:
 if os.environ.get('PHARMCAT_TEST_DOWNLOAD'):
     TEST_DOWNLOAD = True
 
-test_dir: Path = Path(globals().get("__file__", "./_")).absolute().parent
+test_dir: Path = Path(globals().get("__file__", "./_")).resolve().parent
 src_dir: Path = test_dir / '../pcat'
 pharmcat_positions_file: Path = test_dir / '../../pharmcat_positions.vcf.bgz'
 uniallelic_pharmcat_positions_file: Path = test_dir / '../../pharmcat_positions.uniallelic.vcf.bgz'
 
 
 def get_reference_fasta(pharmcat_positions: Path) -> Path:
-    reference_fasta: Path = pharmcat_positions.parent / pcat.REFERENCE_FASTA_FILENAME
+    reference_fasta: Path = pharmcat_positions.resolve().parent / pcat.REFERENCE_FASTA_FILENAME
     if not reference_fasta.is_file():
         if TEST_DOWNLOAD:
             download_reference_fasta_and_index(pharmcat_positions.parent, True)
@@ -78,8 +78,8 @@ def _read_vcf(in_f, skip_comments: bool = True):
     return '\n'.join(lines)
 
 
-def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str = None, split_sample: bool = False,
-                      copy_to_test_dir: bool = False, results: Optional[List[Path]] = None):
+def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str | None = None,
+                      split_sample: bool = False, copy_to_test_dir: bool = False, results: List[Path] | None = None):
     key: str = basename
     orig_actual_vcf: Path
     if sample:
@@ -104,11 +104,18 @@ def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str 
     if copy_to_test_dir:
         shutil.copyfile(actual, actual.parent / actual.name)
 
-    # compare vcfs line by line
-    expected_lines = read_vcf(expected).split('\n')
-    actual_lines = read_vcf(actual).split('\n')
+    # compare VCFs line by line
+    orig_expected_lines = read_vcf(expected)
+    orig_actual_lines = read_vcf(actual)
+    expected_lines = orig_expected_lines.split('\n')
+    actual_lines = orig_actual_lines.split('\n')
 
     if len(expected_lines) != len(actual_lines):
+        print('----------')
+        print(f'Expected lines: {orig_expected_lines}')
+        print('----------')
+        print(f'Actual lines: {orig_actual_lines}')
+        print('----------')
         assert False, f'Different number of lines (expected {len(expected_lines)}, found {len(actual_lines)})'
 
     line_num = 0
@@ -127,10 +134,10 @@ def compare_vcf_files(expected: Path, tmp_dir: Path, basename: str, sample: str 
         for i, col in enumerate(columns):
             # compare the ALT alleles
             if i == 4 and set(actual_fields[3]) != set(expected_fields[3]):
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[3]}\n  actual: {actual_fields[3]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[3]}\n  actual: {actual_fields[3]}'
             # compare genotypes
             if i == 9 and actual_fields[9:] != expected_fields[9:]:
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[9]}\n  actual: {actual_fields[9]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[9:]}\n  actual: {actual_fields[9:]}'
             # compare the rest
             if actual_line[i] != expected_line[i]:
-                assert False, f'Line {line_num}: mismatched {col}\nexpected: {expected_fields[i]}\n  actual: {actual_fields[i]}'
+                assert False, f'Line {line_num}: mismatch in {col} column\nexpected: {expected_fields[i]}\n  actual: {actual_fields[i]}'

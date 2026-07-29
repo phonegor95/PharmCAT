@@ -1,3 +1,42 @@
+## [3.4.0](https://github.com/PharmGKB/PharmCAT/compare/v3.3.0...v3.4.0) (2026-07-14)
+
+### Features
+
+* **data:** update from PharmVar ([8ff5870](https://github.com/PharmGKB/PharmCAT/commit/8ff5870fa5ad6e80d5cc84b3622bcd51c096e1ca))
+
+### Bug Fixes
+
+* recommend bcftools 1.24 ([adfef81](https://github.com/PharmGKB/PharmCAT/commit/adfef81d5b8d69d72c287ca31cae0daf0ada955c))
+* **reporter:** fix bug when >1 phenotype applies to a single gene ([c0e5a1f](https://github.com/PharmGKB/PharmCAT/commit/c0e5a1fc5fabdc6dcdede9c3c929eb96061a951a))
+
+## [3.3.0](https://github.com/PharmGKB/PharmCAT/compare/v3.2.0...v3.3.0) (2026-07-10)
+
+### Features:
+
+* **data:** update data from ClinPGx ([af8b4577](https://github.com/PharmGKB/PharmCAT/commit/af8b4577))
+
+### Bug Fixes
+
+* **preprocessor:** handle unquoted Java version string from Bioconda (#230) ([0b1d0fe2](https://github.com/PharmGKB/PharmCAT/commit/0b1d0fe2)).  Thanks, @rkmishra3893!
+* **preprocessor:** correct _is_phased() early return and prevent KeyError on duplicate variants (#222) ([67e36690](https://github.com/PharmGKB/PharmCAT/commit/67e36690)). Thanks, @haoyu-haoyu!
+* **preprocessor:** quick fix to not crash due to unordered symbolic structural variants (#225) ([76360022](https://github.com/PharmGKB/PharmCAT/commit/76360022))
+* **preprocessor:** fix bug when running pipeline on a directory (#229) ([b67ebb0a](https://github.com/PharmGKB/PharmCAT/commit/b67ebb0a))
+* **preprocessor:** don't display ambiguity warning if gene is effectively phased (#219) ([1767da4e](https://github.com/PharmGKB/PharmCAT/commit/1767da4e))
+* **preprocessor:** use long form for bcftools -W to support v1.18 ([7b075811](https://github.com/PharmGKB/PharmCAT/commit/7b075811))
+* **preprocessor:** update versions of htslib/bcftools dependencies ([bf2ab5b4](https://github.com/PharmGKB/PharmCAT/commit/bf2ab5b4))
+
+
+## [3.2.0](https://github.com/PharmGKB/PharmCAT/compare/v3.1.1...v3.2.0) (2026-02-25)
+
+### Features
+
+* **data:** update data from PharmVar and ClinPGx ([1b37164](https://github.com/PharmGKB/PharmCAT/commit/1b3716464dbcc09e96efa1392b1ed065b947374f))
+* **namedAlleleMatcher:** support handling repeat wobbles (NUDT15) ([4964ee7](https://github.com/PharmGKB/PharmCAT/commit/4964ee71b113345524caa5fe217a864fc6f7ac4e))
+
+### Bug Fixes
+
+* **data:** update data from ClinPGx ([b7a487a](https://github.com/PharmGKB/PharmCAT/commit/b7a487ac8c01dc71e62a0f4c597468c79800e08b))
+
 ## [3.1.1](https://github.com/PharmGKB/PharmCAT/compare/v3.1.0...v3.1.1) (2025-11-19)
 
 ### Bug Fixes

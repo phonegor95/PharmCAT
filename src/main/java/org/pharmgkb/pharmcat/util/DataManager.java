@@ -194,7 +194,10 @@ public class DataManager {
         List<String> genesUsedInDrugRecommendations = new ArrayList<>(pgkbGuidelineCollection.getGenesWithRecommendations());
         genesUsedInDrugRecommendations.removeAll(definitionReader.getGeneAlleleCount().keySet());
         genesUsedInDrugRecommendations.stream()
+            // TODO: should add a way to catalog exceptions so we don't have to hard code this
             .filter(g -> !g.startsWith("HLA"))
+            .filter(g -> !g.startsWith("MT-RNR1"))
+            .filter(g -> !g.startsWith("rs12777823"))
             .map(g -> "Gene used in drug recommendation has no allele mapping: " + g)
             .forEach(DataManager::printWarning);
 

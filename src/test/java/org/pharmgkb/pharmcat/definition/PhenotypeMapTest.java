@@ -47,16 +47,16 @@ class PhenotypeMapTest {
         "CYP3A4",
         "CYP3A5",
         "DPYD",
+        "F2",
+        "F5",
         "G6PD",
-        "IFNL3",
         "MT-RNR1",
         "NAT2",
         "NUDT15",
         "RYR1",
         "SLCO1B1",
         "TPMT",
-        "UGT1A1",
-        "VKORC1"
+        "UGT1A1"
     );
     List<String> phenotypeGenes = phenotypeMap.getGenePhenotypes().stream()
         .map(GenePhenotype::getGene)

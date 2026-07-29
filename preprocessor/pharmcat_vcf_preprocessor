@@ -4,14 +4,15 @@ __author__ = 'BinglanLi'
 
 import sys
 from pathlib import Path
-from timeit import default_timer as timer
-from typing import List, Optional
 
 import pcat
+from pcat import ReportableException
 
 
 if __name__ == "__main__":
     import argparse
+    import colorama
+    from timeit import default_timer as timer
 
     # describe the tool
     parser = argparse.ArgumentParser(description='Prepares a VCF file for use by PharmCAT.')
@@ -80,6 +81,7 @@ if __name__ == "__main__":
 
     # parse arguments
     args = parser.parse_args()
+    colorama.init()
 
     # print the version number
     print('PharmCAT VCF Preprocessor version: %s' % pcat.PHARMCAT_VERSION)
@@ -108,34 +110,36 @@ if __name__ == "__main__":
         m_bcftools_path = pcat.validate_bcftools(args.path_to_bcftools)
         m_bgzip_path = pcat.validate_bgzip(args.path_to_bgzip)
 
-        script_dir: Path = Path(globals().get("__file__", "./_")).absolute().parent
+        script_dir: Path = Path(globals().get("__file__", "./_")).resolve().parent
 
         # make sure we have pharmcat_positions.vcf.bgz
         m_pharmcat_positions_vcf: Path
         if args.reference_pgx_vcf:
-            m_pharmcat_positions_vcf = pcat.validate_file(args.reference_pgx_vcf)
+            m_pharmcat_positions_vcf = pcat.validate_file(args.reference_pgx_vcf).resolve()
         else:
-            m_pharmcat_positions_vcf = pcat.find_file(pcat.PHARMCAT_POSITIONS_FILENAME,
-                                                      [Path.cwd(), script_dir])
-            if m_pharmcat_positions_vcf is None:
-                print('Downloading pharmcat_positions.vcf...')
-                m_pharmcat_positions_vcf = pcat.download_pharmcat_accessory_files(script_dir,
-                                                                                  verbose=args.verbose)
+            _expected_file = pcat.find_file(pcat.PHARMCAT_POSITIONS_FILENAME, [Path.cwd(), script_dir])
+            if _expected_file is None:
+                print('Downloading %s...' % pcat.PHARMCAT_POSITIONS_FILENAME)
+                m_pharmcat_positions_vcf = pcat.download_pharmcat_accessory_files(script_dir, verbose=args.verbose)
+            else:
+                m_pharmcat_positions_vcf = _expected_file
 
         # make sure we have reference FASTA
         m_reference_genome: Path
         if args.reference_genome:
             m_reference_genome = pcat.validate_file(args.reference_genome)
         else:
-            m_reference_genome = pcat.find_file(pcat.REFERENCE_FASTA_FILENAME,
-                                                [m_pharmcat_positions_vcf.parent, Path.cwd(), script_dir])
-            if m_reference_genome is None:
+            _expected_file = pcat.find_file(pcat.REFERENCE_FASTA_FILENAME,
+                                            [m_pharmcat_positions_vcf.parent, Path.cwd(), script_dir])
+            if _expected_file is None:
                 print('Downloading reference FASTA.  This may take a while...')
                 m_reference_genome = pcat.download_reference_fasta_and_index(m_pharmcat_positions_vcf.parent,
                                                                              verbose=args.verbose)
+            else:
+                m_reference_genome = _expected_file
 
         # validate .bed file if retaining specific regions
-        m_regions_bed: Optional[Path] = None
+        m_regions_bed: Path | None = None
         if args.retain_specific_regions:
             m_regions_bed = pcat.validate_file(args.retain_specific_regions)
 
@@ -145,13 +149,11 @@ if __name__ == "__main__":
         # validate input vcf or file list
         vcf_path: Path = Path(args.vcf)
         if vcf_path.is_dir():
-            print('%s is a directory not a file' % vcf_path)
-            sys.exit(1)
+            raise ReportableException('%s is a directory not a file' % vcf_path)
         elif not vcf_path.is_file():
-            print("Error: no VCF input")
-            sys.exit(1)
+            raise ReportableException("Error: no VCF input")
 
-        m_vcf_files: List[Path] = []
+        m_vcf_files: list[Path] = []
         m_input_basename: str
         if pcat.is_vcf_or_bcf_file(vcf_path):
             m_vcf_files.append(vcf_path)
@@ -162,12 +164,14 @@ if __name__ == "__main__":
             with open(vcf_path, 'r') as in_f:
                 for line in in_f:
                     line = line.strip()
+                    file: Path = pcat.validate_file(line)
+                    if not pcat.is_vcf_or_bcf_file(file):
+                        raise ReportableException('Error: %s is not a VCF/BCF file' % str(file))
                     m_vcf_files.append(pcat.validate_file(line))
-            m_input_basename = vcf_path.stem
+        m_input_basename = vcf_path.stem
 
-        if len(m_vcf_files) == 0:
-            print("Error: no VCF input")
-            sys.exit(1)
+        if not m_vcf_files:
+            raise ReportableException("Error: no VCF input")
 
         # check whether input is a gVCF, which currently does not support yet
         if args.no_gvcf_check:
@@ -175,20 +179,19 @@ if __name__ == "__main__":
         else:
             for file in m_vcf_files:
                 if pcat.is_gvcf_file(file):
-                    print('%s is a gVCF file, which is not currently supported.\n'
-                          'See https://github.com/PharmGKB/PharmCAT/issues/79 for details.\n'
-                          'If this is not a gVCF file, use -G to bypass.' % str(file))
-                    sys.exit(1)
+                    raise ReportableException('%s is a gVCF file, which is not currently supported.\n'
+                                              'See https://github.com/PharmGKB/PharmCAT/issues/79 for details.\n'
+                                              'If this is not a gVCF file, use -G to bypass.' % str(file))
 
         # check whether a sample file is provided, otherwise proceed with all samples in the input VCF
-        m_samples: List[str] = []
+        m_samples: list[str] = []
         if args.sample_file:
             # validate sample file
             m_samples = pcat.read_sample_file(pcat.validate_file(args.sample_file),
                                               verbose=args.verbose)
         elif args.samples:
             m_samples = pcat.parse_samples(args.samples)
-        if len(m_samples) == 0:
+        if not m_samples:
             m_samples = pcat.read_vcf_samples(m_vcf_files[0], verbose=args.verbose)
 
         # make sure xx-to-ref commands are provided correctly
@@ -218,7 +221,7 @@ if __name__ == "__main__":
             print("-cp/--max_processes will be ignored (not running in multiprocess mode)")
 
         # get pgx_regions we care about
-        custom_regions: bool = bool(m_regions_bed)
+        custom_regions: bool = m_regions_bed is not None
         pgx_regions = pcat.get_pgx_regions(m_regions_bed or m_pharmcat_positions_vcf)
 
         start = timer()
@@ -226,7 +229,7 @@ if __name__ == "__main__":
         # normalize variant representations and reconstruct multi-allelic variants in the input VCF
         if args.verbose:
             print("Using reference FASTA at", m_reference_genome)
-        print("Saving output to", m_output_dir.absolute())
+        print("Saving output to", m_output_dir.resolve())
         print()
         results = pcat.preprocess(pharmcat_positions_vcf=m_pharmcat_positions_vcf,
                                   reference_genome=m_reference_genome,
@@ -248,7 +251,7 @@ if __name__ == "__main__":
         end = timer()
         if len(results) == 1:
             print()
-            print('Generated PharmCAT-ready VCF:', str(results[0].absolute()))
+            print('Generated PharmCAT-ready VCF:', str(results[0].resolve()))
         elif args.verbose:
             print()
             print('Generated PharmCAT-ready VCFs:')
@@ -258,6 +261,7 @@ if __name__ == "__main__":
         print("Done.")
         print("Preprocessed input VCF in %.2f seconds" % (end - start))
 
-    except pcat.ReportableException as e:
-        print(e)
+    except ReportableException as e:
+        print('%s%s%s' % (colorama.Fore.RED, e, colorama.Style.RESET_ALL))
+        colorama.deinit()
         sys.exit(1)

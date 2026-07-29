@@ -172,9 +172,8 @@ class PipelineTest {
       throw new IllegalArgumentException("If you don't want to provide drug, use htmlCheckGenes()");
     }
 
-    htmlCheckGenes(document, expectedCalls, cpicStyleCalls);
-    htmlCheckDrug(document, expectedCalls, cpicStyleCalls, drug, cpicAnnPresence, cpicPhenotypes, cpicActivityScores,
-        dpwgAnnPresence);
+    htmlCheckGenes(document, expectedCalls, cpicStyleCalls, cpicPhenotypes);
+    htmlCheckDrug(document, expectedCalls, cpicStyleCalls, drug, cpicAnnPresence, dpwgAnnPresence);
   }
 
   /**
@@ -183,14 +182,17 @@ class PipelineTest {
    * @param expectedCalls - use {@link #UNKNOWN_CALL} or {@link #NO_DATA} where necessary
    */
   static void htmlCheckGenes(Document document, Map<String, List<String>> expectedCalls,
-      @Nullable Map<String, List<String>> cpicStyleCalls) {
+      @Nullable Map<String, List<String>> cpicStyleCalls, Map<String, @Nullable String> expectedPhenotypes) {
     for (String gene : expectedCalls.keySet()) {
-      htmlCheckGene(document, gene, expectedCalls.get(gene), cpicStyleCalls == null ? null : cpicStyleCalls.get(gene));
+      htmlCheckGene(
+          document, gene, expectedCalls.get(gene),
+          cpicStyleCalls == null ? null : cpicStyleCalls.get(gene),
+          expectedPhenotypes == null ? null : expectedPhenotypes.get(gene));
     }
   }
 
   static void htmlCheckGene(Document document, String gene, List<String> expectedCalls,
-      @Nullable List<String> cpicStyleCalls) {
+      @Nullable List<String> cpicStyleCalls, @Nullable String expectedPhenotype) {
     Preconditions.checkNotNull(expectedCalls);
     if (cpicStyleCalls != null && cpicStyleCalls.isEmpty()) {
       cpicStyleCalls = null;
@@ -244,6 +246,16 @@ class PipelineTest {
           assertEquals(cpicStyleCalls == null ? expectedCalls : cpicStyleCalls, gsDips);
         }
       }
+
+      if (expectedPhenotype != null) {
+        Elements genePhenotypes = document.select("* .gs-" + gene + " .gs-phenotype");
+        if (genePhenotypes.isEmpty()) {
+          fail("No phenotype for " + gene + ", expected " + expectedPhenotype);
+        }
+        List<String> presentPhenotypes = genePhenotypes.stream().map(Element::text).toList();
+        assertTrue(presentPhenotypes.contains(expectedPhenotype), "Phenotype " + gene + " " + expectedPhenotype + " not in " + presentPhenotypes);
+      }
+
       // check section iii
       Elements geneSection = document.select(".gene." + gene);
       assertEquals(1, geneSection.size());
@@ -253,7 +265,6 @@ class PipelineTest {
 
   private static void htmlCheckDrug(Document document, SortedMap<String, List<String>> expectedCalls,
       @Nullable Map<String, List<String>> cpicStyleCalls, String drug, RecPresence cpicAnnPresence,
-      @Nullable SortedMap<String, String> cpicPhenotypes, @Nullable SortedMap<String, SortedSet<String>> cpicActivityScores,
       RecPresence dpwgAnnPresence) {
 
     String sanitizedDrug = ReportHelpers.sanitizeCssSelector(drug);
@@ -292,27 +303,17 @@ class PipelineTest {
         }
       }
 
-      htmlCheckDrugAnnotation(drugSections, "cpic-guideline", sanitizedDrug, cpicAnnPresence,
-          filterRxCalls(expectedRxCalls, cpicPhenotypes), cpicPhenotypes, cpicActivityScores);
+      htmlCheckDrugAnnotation(drugSections, "cpic-guideline", sanitizedDrug, cpicAnnPresence, expectedRxCalls);
     }
   }
 
-  private static SortedMap<String, List<String>> filterRxCalls(SortedMap<String, List<String>> expectedRxCalls,
-      Map<String, String> phenotypes) {
-    if (phenotypes == null || phenotypes.size() == expectedRxCalls.size()) {
-      return expectedRxCalls;
-    }
-    SortedMap<String, List<String>> filteredRxCalls = new TreeMap<>();
-    for (String gene : phenotypes.keySet()) {
-      filteredRxCalls.put(gene, expectedRxCalls.get(gene));
-    }
-    return filteredRxCalls;
-  }
-
-
-  private static void htmlCheckDrugAnnotation(Elements drugSections, String src, String drug, RecPresence annPresence,
-      SortedMap<String, List<String>> expectedRxCalls, @Nullable SortedMap<String, String> expectedPhenotypes,
-      @Nullable SortedMap<String, SortedSet<String>> expectedActivityScores) {
+  private static void htmlCheckDrugAnnotation(
+      Elements drugSections,
+      String src,
+      String drug,
+      RecPresence annPresence,
+      SortedMap<String, List<String>> expectedRxCalls
+  ) {
 
     String srcSelector = "." + src + "-" + ReportHelpers.sanitizeCssSelector(drug);
     Elements srcSections = drugSections.select(srcSelector);
@@ -343,57 +344,6 @@ class PipelineTest {
             rxDips.stream()
                 .map(e -> cleanupRxDip(e, expectedRxCalls.keySet()))
                 .toList());
-
-        Elements rxPhenotypes = row.select(".rx-phenotype");
-        if (expectedPhenotypes != null) {
-          assertEquals(expectedPhenotypes.size(), rxPhenotypes.size());
-          SortedMap<String, String> actualPhenotypes = new TreeMap<>();
-          if (rxPhenotypes.size() == 1) {
-            actualPhenotypes.put(expectedPhenotypes.firstKey(), rxPhenotypes.get(0).text());
-          } else {
-            for (Element e : rxPhenotypes) {
-              Elements dts = e.select("dt");
-              String gene = dts.get(0).text();
-              if (gene.endsWith(":")) {
-                gene = gene.substring(0, gene.length() - 1);
-              }
-              actualPhenotypes.put(gene, e.select("dd").get(0).text());
-            }
-          }
-          assertEquals(expectedPhenotypes, actualPhenotypes);
-        }
-
-        Elements rxActivityScores = row.select(".rx-activity");
-        if (!rxActivityScores.isEmpty()) {
-          hasActivityScore = true;
-        }
-        if (expectedActivityScores != null) {
-          assertEquals(expectedActivityScores.size(), rxActivityScores.size());
-          if (rxActivityScores.size() == 1) {
-            String gene = expectedActivityScores.firstKey();
-            actualActivityScores.putIfAbsent(gene, new TreeSet<>());
-            actualActivityScores.get(gene).add(rxActivityScores.get(0).text());
-          } else {
-            for (Element e : rxActivityScores) {
-              Elements dts = e.select("dt");
-              String gene = dts.get(0).text();
-              if (gene.endsWith(":")) {
-                gene = gene.substring(0, gene.length() - 1);
-              }
-              actualActivityScores.putIfAbsent(gene, new TreeSet<>());
-              actualActivityScores.get(gene).add(e.select("dd").get(0).text());
-            }
-          }
-        }
-      }
-
-      // we check activity scores across all rows
-      if (expectedActivityScores == null) {
-        if (hasActivityScore) {
-          fail("Not checking for activity score!");
-        }
-      } else {
-        assertEquals(expectedActivityScores, actualActivityScores);
       }
     }
   }
@@ -557,7 +507,7 @@ class PipelineTest {
         new ImmutableSortedMap.Builder<String, List<String>>(Ordering.natural())
             .put("CYP2C19", UNKNOWN_CALL)
             .build(),
-        null);
+        null, null);
   }
 
   @Test
@@ -576,7 +526,7 @@ class PipelineTest {
         new ImmutableSortedMap.Builder<String, List<String>>(Ordering.natural())
             .put("CYP2C19", UNKNOWN_CALL)
             .build(),
-        null);
+        null, null);
   }
 
   @Test
@@ -613,7 +563,11 @@ class PipelineTest {
             .put("TPMT", tpmtExpectedCalls)
             .put("RYR1", ryr1ExpectedCalls)
             .build(),
-        null);
+        null,
+        Map.of(
+            "TPMT", "Normal Metabolizer",
+            "RYR1", "See drug section")
+    );
   }
 
   @Test
@@ -649,7 +603,7 @@ class PipelineTest {
         new ImmutableSortedMap.Builder<String, List<String>>(Ordering.natural())
             .put("RYR1", ryr1ExpectedCalls)
             .build(),
-        null);
+        null, null);
   }
 
 
@@ -684,7 +638,7 @@ class PipelineTest {
     SortedMap<String, List<String>> expectedCallsMap = new TreeMap<>();
     expectedCallsMap.put("CYP2C19", UNKNOWN_CALL);
     expectedCallsMap.put("TPMT", UNKNOWN_CALL);
-    htmlCheckGenes(document, expectedCallsMap, null);
+    htmlCheckGenes(document, expectedCallsMap, null, null);
   }
 
 
@@ -1778,23 +1732,6 @@ class PipelineTest {
 
     testWrapper.testMatchedAnnotations("carbamazepine", PrescribingGuidanceSource.CPIC_GUIDELINE, 3);
     testWrapper.testMatchedAnnotations("carbamazepine", PrescribingGuidanceSource.DPWG_GUIDELINE, 1);
-  }
-
-  @Test
-  void testTpmtStar1s(TestInfo testInfo) throws Exception {
-    PipelineWrapper testWrapper = new PipelineWrapper(testInfo, false);
-    testWrapper.getVcfBuilder()
-        .variation("TPMT", "rs1800460", "C", "T")
-        .variation("TPMT", "rs1142345", "T", "C");
-    testWrapper.execute();
-
-    testWrapper.testCalledByMatcher("TPMT");
-    testWrapper.testPrintCpicCalls("TPMT", "*1/*3A");
-    testWrapper.testRecommendedDiplotypes("TPMT", "*1", "*3A");
-
-    GeneReport tpmtReport = testWrapper.getContext().getGeneReport("TPMT");
-    assertNotNull(tpmtReport);
-    assertEquals(43, tpmtReport.getVariantReports().size());
   }
 
 

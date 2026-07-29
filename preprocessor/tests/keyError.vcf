@@ -1,0 +1,12 @@
+##fileformat=VCFv4.1
+##source=array-analysis-cli 2.1.0
+##genomeBuild=38
+##reference=file://hg38_nochr_MT_no_mask.fa
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=GS,Number=1,Type=Float,Description="GenCall score. For merged multi-assay or multi-allelic record, min GenCall score is reported.">
+##FORMAT=<ID=BAF,Number=1,Type=Float,Description="B Allele Frequency">
+##FORMAT=<ID=LRR,Number=1,Type=Float,Description="Log R Ratio">
+##contig=<ID=2,length=242193529>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	209456060003_R10C02
+2	233760233	rs34983651	C	CAT	.	PASS	.	GT:GS:BAF:LRR	0/1:0.2630:0.4862696:0.44543433
+2	233760234	ilmnseq_rs3064744	A	ATA	.	PASS	.	GT:GS:BAF:LRR	0/1:0.3315:0.50640655:0.541491

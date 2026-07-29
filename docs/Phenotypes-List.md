@@ -381,6 +381,12 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*86</li>
 <li>*87</li>
 <li>*88</li>
+<li>*89</li>
+<li>*90</li>
+<li>*91</li>
+<li>*92</li>
+<li>*93</li>
+<li>*94</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>
@@ -672,6 +678,11 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*46</li>
 <li>*47</li>
 <li>*48</li>
+<li>*49</li>
+<li>*50</li>
+<li>*51</li>
+<li>*52</li>
+<li>*53</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Intermediate Metabolizer</li>
 <li>Normal Metabolizer</li>
@@ -693,6 +704,8 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*7</li>
 <li>*8</li>
 <li>*9</li>
+<li>*10</li>
+<li>*11</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>
@@ -704,7 +717,6 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 </table>
 
 ### CYP4F2
-<p>No recommendations available for this gene.</p>
 <table>
 <tr>
 <th style="text-align: left">Named Alleles</th>
@@ -838,6 +850,30 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>1.0</li>
 <li>1.5</li>
 <li>2.0</li>
+</ul></td>
+</tr>
+</table>
+
+### F2
+<table>
+<tr>
+<th style="text-align: left">Named Alleles</th>
+</tr>
+<tr>
+<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs1799963 Prothrombin 20210A</li>
+<li>rs1799963 reference (G)</li>
+</ul></td>
+</tr>
+</table>
+
+### F5
+<table>
+<tr>
+<th style="text-align: left">Named Alleles</th>
+</tr>
+<tr>
+<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs6025 Factor V Leiden (T)</li>
+<li>rs6025 reference (C)</li>
 </ul></td>
 </tr>
 </table>
@@ -1180,7 +1216,6 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 </tr>
 <tr>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>*1</li>
-<li>*2</li>
 <li>*3</li>
 <li>*4</li>
 <li>*5</li>
@@ -1200,6 +1235,8 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*19</li>
 <li>*20</li>
 <li>*21</li>
+<li>*22</li>
+<li>*23</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>
@@ -1270,6 +1307,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.1202G>A</li>
 <li>c.1202G>T</li>
 <li>c.1209C>G</li>
+<li>c.1390C>A</li>
 <li>c.1411C>T</li>
 <li>c.1422G>T</li>
 <li>c.1453A>G</li>
@@ -1309,12 +1347,14 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.3656A>C</li>
 <li>c.3667G>A</li>
 <li>c.4024A>G</li>
+<li>c.4055C>G</li>
 <li>c.4178A>G</li>
 <li>c.4400A>G</li>
 <li>c.4711A>G</li>
 <li>c.4747C>T</li>
 <li>c.4763C>T</li>
 <li>c.4775C>T</li>
+<li>c.4999C>T</li>
 <li>c.5024T>C</li>
 <li>c.5033A>G</li>
 <li>c.5036G>A</li>
@@ -1381,6 +1421,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.7099G>A</li>
 <li>c.7112A>G</li>
 <li>c.7123G>A</li>
+<li>c.7123G>C</li>
 <li>c.7124G>C</li>
 <li>c.7199A>G</li>
 <li>c.7210G>A</li>
@@ -1409,6 +1450,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.7522C>T</li>
 <li>c.7523G>A</li>
 <li>c.7528T>C</li>
+<li>c.7625G>A</li>
 <li>c.7760A>G</li>
 <li>c.7771C>G</li>
 <li>c.7771C>T</li>
@@ -1437,6 +1479,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.9152G>A</li>
 <li>c.9268G>A</li>
 <li>c.9310G>A</li>
+<li>c.9353C>T</li>
 <li>c.9356G>A</li>
 <li>c.9499C>T</li>
 <li>c.9635A>G</li>
@@ -1499,6 +1542,7 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>c.12848A>T</li>
 <li>c.12881C>T</li>
 <li>c.12884C>T</li>
+<li>c.13502C>T</li>
 <li>c.13505A>G</li>
 <li>c.13513G>C</li>
 <li>c.13672C>T</li>
@@ -1680,6 +1724,9 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <li>*42</li>
 <li>*43</li>
 <li>*44</li>
+<li>*45</li>
+<li>*46</li>
+<li>*47</li>
 </ul></td>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>Indeterminate</li>
 <li>Intermediate Metabolizer</li>
@@ -1719,15 +1766,10 @@ If you are using [outside calls](/using/Outside-Call-Format), you can see how we
 <table>
 <tr>
 <th style="text-align: left">Named Variants</th>
-<th style="text-align: left">CPIC Phenotypes</th>
 </tr>
 <tr>
 <td style="vertical-align: top"><ul style="padding-left: 1rem"><li>rs9923231 reference (C)</li>
 <li>rs9923231 variant (T)</li>
-</ul></td>
-<td style="vertical-align: top"><ul style="padding-left: 1rem"><li>-1639 AA</li>
-<li>-1639 AG</li>
-<li>-1639 GG</li>
 </ul></td>
 </tr>
 </table>

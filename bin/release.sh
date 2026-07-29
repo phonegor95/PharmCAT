@@ -28,8 +28,11 @@ script_dir="$( dirname -- "$BASH_SOURCE"; )";
 "${script_dir}/update_disclaimer.js"
 
 # this reverts files with only EOL changes
-git stash
-git stash pop
+stash_out=$(git stash)
+if [[ $stash_out != "No local changes to save" ]]
+then
+  git stash pop
+fi
 
 diffs=$(git diff --name-only | wc -l)
 if [[ $diffs -gt 0 ]]

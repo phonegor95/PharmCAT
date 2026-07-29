@@ -23,9 +23,12 @@ import org.pharmgkb.pharmcat.reporter.MessageHelper;
 import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.reporter.format.html.ReportHelpers;
 import org.pharmgkb.pharmcat.reporter.model.PrescribingGuidanceSource;
+import org.pharmgkb.pharmcat.reporter.model.result.AnnotationReport;
 import org.pharmgkb.pharmcat.reporter.model.result.Diplotype;
 import org.pharmgkb.pharmcat.reporter.model.result.DrugReport;
 import org.pharmgkb.pharmcat.reporter.model.result.GeneReport;
+import org.pharmgkb.pharmcat.reporter.model.result.Genotype;
+import org.pharmgkb.pharmcat.reporter.model.result.GuidelineReport;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -290,8 +293,12 @@ public class Cyp2d6Test {
   }
 
 
+  /**
+   * This tests to make sure the report generates even when multiple matching phenotypes apply to the same gene (CYP2D6
+   * in this case). Previously, this would give an UnexpectedStateException, it should no longer do so.
+   */
   @Test
-  void testCyp2d6CpicVsDpwg(TestInfo testInfo) throws Exception {
+  void testCyp2d6MultiplePhenotypes(TestInfo testInfo) throws Exception {
     // NOTE: this test has multiple annotations for a single population - amitriptyline
     Path outsideCallPath = TestUtils.createTestFile(testInfo,".tsv");
     try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(outsideCallPath))) {
@@ -316,7 +323,19 @@ public class Cyp2d6Test {
     testWrapper.testSourceDiplotypes("CYP2D6", expectedCyp2d6Calls);
     testWrapper.testPrintCalls("CYP2D6", expectedCyp2d6Calls);
 
-    // TODO: finish this!
+    DrugReport atoReport = testWrapper.getContext().getDrugReport(PrescribingGuidanceSource.FDA_LABEL, "primaquine");
+    assertNotNull(atoReport);
+    // technically, there are two annotations for this drug
+    assertEquals(2, atoReport.getGuidelines().size());
+    // but only 1 is reportable since we don't specify G6PD
+    assertEquals(1, atoReport.getGuidelines().stream().filter(GuidelineReport::isReportable).count());
+    GuidelineReport gr = atoReport.getGuidelines().stream().filter(GuidelineReport::isReportable).findFirst().orElseThrow(() -> new AssertionError("No reportable guidelines"));
+    assertEquals(1, gr.getAnnotations().size());
+    AnnotationReport ar = gr.getAnnotations().first();
+    // test to see if there are TWO genotypes
+    assertEquals(2, ar.getGenotypes().size());
+    // ...with TWO distinct phenotypes
+    assertEquals(2, ar.getGenotypes().stream().map(Genotype::getPhenotypes).distinct().count());
   }
 
 

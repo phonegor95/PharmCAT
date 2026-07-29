@@ -17,6 +17,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.jspecify.annotations.Nullable;
 import org.pharmgkb.pharmcat.haplotype.Iupac;
 import org.pharmgkb.pharmcat.haplotype.MatchData;
+import org.pharmgkb.pharmcat.reporter.TextConstants;
 import org.pharmgkb.pharmcat.util.HaplotypeNameComparator;
 
 
@@ -445,6 +446,8 @@ public class NamedAllele implements Comparable<NamedAllele> {
       if (allele != null) {
         if (allele.length() == 1) {
           allele = Iupac.lookup(allele).getRegex();
+        } else if (allele.contains(TextConstants.REPEAT_WOBBLE_DELIMITER)) {
+          allele = "(" + String.join("|", allele.split(TextConstants.REPEAT_WOBBLE_DELIMITER)) + ")";
         }
         builder.append(allele);
       } else {

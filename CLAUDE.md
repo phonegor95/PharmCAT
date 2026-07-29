@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Read `CLAUDE.md` files in subdirectories you are working in.
+If there is an `AGENTS.md` but no `CLAUDE.md`, read that instead.
+
+@AGENTS.md
+
 ## Project Overview
 
 PharmCAT (Pharmacogenomics Clinical Annotation Tool) is a bioinformatics tool that analyzes genetic variants to predict drug response and tailor medical treatment to individual patient genetic profiles. It operates in two phases:
@@ -9,7 +14,8 @@ PharmCAT (Pharmacogenomics Clinical Annotation Tool) is a bioinformatics tool th
 1. **Named Allele Matching**: Processes VCF files from NGS/genotyping and identifies pharmacogenomic genotypes, inferring haplotypes (star alleles)
 2. **Phenotyping & Reporting**: Uses pharmacogene diplotypes to predict PGx phenotypes and generates drug-prescribing recommendations from CPIC guidelines, DPWG guidelines, and FDA-approved drug labels
 
-This branch (`claude/merge-main-chinese-translation-011gZdzwd92xhF2XQn9VcQzo`) includes Chinese translation support for drug names, phenotypes, and prescribing guidance.
+This branch (`chinese-translation`) tracks upstream PharmCAT and translates the prescribing
+guidance into Chinese. It is currently merged up to upstream **v3.4.0**.
 
 ## Build System & Commands
 
@@ -111,20 +117,30 @@ Key classes:
 
 ## Chinese Translation Feature
 
-This branch adds comprehensive Chinese translation support:
+The translation is **data-only** — no Java or template changes are required.
 
-### Modified Components
-1. **Data Model** ([AnnotationReport.java](src/main/java/org/pharmgkb/pharmcat/reporter/model/result/AnnotationReport.java)):
-   - Added `lookupKey_cn` field for Chinese phenotype translations
-   - Added `name_cn` field for Chinese drug names
+### How it works
+`src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.json` is upstream's
+file with exactly two fields translated in place, for every recommendation:
 
-2. **Report Helpers** ([ReportHelpers.java](src/main/java/org/pharmgkb/pharmcat/reporter/format/html/ReportHelpers.java)):
-   - `getChineseDrugName()`: Retrieves Chinese drug names
-   - `printRecMapWithChinese()`: Formats recommendation maps with Chinese phenotypes
+- `recommendations[].text.html`
+- `recommendations[].implications[]`
 
-3. **Prescribing Guidance**:
-   - Original: `src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.json`
-   - Chinese version: `prescribing_guidance_v3.1.1.json` (with `name_cn` and `lookupKey_cn` fields)
+Everything else (ids, lookup keys, genotypes, drug names, structure) is byte-identical to
+upstream. `prescribing_guidance.v3.4.0.json` sits alongside it as the untranslated English
+reference for the current data version — diff it against the next upstream release to find
+what needs re-translating.
+
+Conventions to preserve when editing translations:
+- Keep HTML tags and `id="..."` anchors intact; translate only the visible text.
+- Keep entities as-is (`&quot;` `&gt;` `&le;`) — both fields render via `{{{ }}}` (raw HTML).
+- Keep gene symbols, star alleles, rsIDs, PMIDs, doses and units in the original form.
+- Implications keep their `GENE: ` prefix in English.
+
+### Leftover Java code
+`ReportHelpers.getChineseDrugName()` / `printRecMapWithChinese()`, `AccessionObject.nameCn`
+and `AnnotationReport.getLookupKey()` are remnants of an earlier approach that was rolled
+back in 59a8d86a. Nothing references them — `report.hbs` is identical to upstream.
 
 ### Building with Chinese Translation
 ```bash

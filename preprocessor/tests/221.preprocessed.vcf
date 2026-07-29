@@ -1,0 +1,15 @@
+##fileformat=VCFv4.1
+##FILTER=<ID=PASS,Description="All filters passed">
+##source=PharmCAT allele definitions
+##reference=hg38
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##contig=<ID=chr19,length=58617616,assembly=GRCh38.p13,species="Homo sapiens">
+##INFO=<ID=PX,Number=.,Type=String,Description="Gene">
+##INFO=<ID=POI,Number=0,Type=Flag,Description="Position of Interest but not part of an allele definition">
+##FILTER=<ID=PCATxREF,Description="Reference allele does not match PharmCAT reference alleles">
+##FILTER=<ID=PCATxALT,Description="Alternate alleles do not match PharmCAT alternate alleles">
+##FILTER=<ID=PCATxINDEL,Description="Unexpected format for INDELs">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Sample_1
+chr19	41016778	rs564083989	G	A	.	PASS	PX=CYP2B6	GT	0/0
+chr19	41016805	rs2516199080	A	T	.	PASS	PX=CYP2B6	GT	0/0
+chr19	41016810	rs3211371	C	A,T	.	PASS	PX=CYP2B6	GT	2|0

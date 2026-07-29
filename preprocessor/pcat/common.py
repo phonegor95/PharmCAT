@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 # version is dynamically updated - DO NOT MODIFY MANUALLY
-PHARMCAT_VERSION = '3.1.1'
+PHARMCAT_VERSION = '3.4.0'
 
 # expected tool versions
 MIN_BCFTOOLS_VERSION = '1.18'
@@ -19,7 +19,7 @@ UNIALLELIC_VCF_FILENAME = 'pharmcat_positions' + UNIALLELIC_VCF_SUFFIX
 CHR_RENAME_MAP_FILENAME = 'chr_rename_map.tsv'
 
 # paths
-SCRIPT_DIR: Path = Path(globals().get("__file__", "./_")).absolute().parent
+SCRIPT_DIR: Path = Path(globals().get("__file__", "./_")).resolve().parent
 CHR_RENAME_FILE: Path = SCRIPT_DIR / CHR_RENAME_MAP_FILENAME
 BCFTOOLS_PATH = 'bcftools'
 BGZIP_PATH = 'bgzip'
