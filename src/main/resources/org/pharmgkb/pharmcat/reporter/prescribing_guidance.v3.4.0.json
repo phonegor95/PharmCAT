@@ -74830,7 +74830,7 @@
             "html": "<p>IMMUNOSUPPRESSION: Start with 50% of the standard dose. Adjustment of the initial dose should be performed based on toxicity (monitoring of the blood counts) and efficacy.</p>\n<p>Note: The percentage of 50% is based on the analogy with TPMT, for which the gene variants have a comparable effect on toxicity to those of NUDT15. A percentage of &lt; 70% was calculated for NUDT15, but there were insufficient data available to calculate the exact percentage. Note: Dose adjustment based on the total of 6-TGN metabolites is not possible for these patients, as they develop toxicity within the therapeutic range that applies for patients without gene variants. Note: more stringent dose reductions are necessary if the patient is also TPMT IM or TPMT PM.</p>\n"
           },
           "implications": [
-            "Grade >=2 leukopaenia occurs in 42% of these patients with standard therapy. The gene variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
+            "Grade ≥2 leukopaenia occurs in 42% of these patients with standard therapy. The gene variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
           ],
           "lookupKey": [
             {
@@ -74892,7 +74892,7 @@
             "html": "<p>IMMUNOSUPPRESSION: Start with 50% of the standard dose. Adjustment of the initial dose should be performed based on toxicity (monitoring of the blood counts) and efficacy.</p>\n<p>Note: The percentage of 50% is based on the analogy with TPMT, for which the gene variants have a comparable effect on toxicity to those of NUDT15. A percentage of &lt; 70% was calculated for NUDT15, but there were insufficient data available to calculate the exact percentage.\nNote: Dose adjustment based on the total of 6-TGN metabolites is not possible for these patients, as they develop toxicity within the therapeutic range that applies for patients without gene variants.\nNote: more stringent dose reductions are necessary if the patient is also TPMT IM or TPMT PM.</p>\n"
           },
           "implications": [
-            "Grade >=2 leukopaenia occurs in 42% of these patients with standard therapy. The gene variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
+            "Grade ≥2 leukopaenia occurs in 42% of these patients with standard therapy. The gene variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
           ],
           "lookupKey": [
             {
@@ -74923,7 +74923,7 @@
             "html": "<p>Avoid azathioprine and 6-mercaptopurine.</p>\n<p>If it is not possible to avoid azathioprine and mercaptopurine: use 10% of the standard dose and advise patients to seek medical attention when symptoms of myelosuppression (such as severe sore throat in combination with fever, regular nosebleeds and tendency to bruising) occur. Any adjustment of the initial dose should be guided by toxicity (monitoring of blood counts) and efficacy.</p>\n<p>Note: The percentage of 10% is based on the analogy with TPMT, for which the gene variants have a comparable effect on toxicity to those of NUDT15. A percentage of &lt; 20% was calculated for NUDT15 PM, but there were insufficient data available to calculate the exact percentage.\nNote: Dose adjustment based on the total of 6-TGN metabolites is not possible for these patients, as they develop toxicity within the therapeutic range that applies for patients without gene variants.</p>\n"
           },
           "implications": [
-            "Grade >=2 leukopaenia occurs in 96% of these patients with standard therapy. The genetic variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
+            "Grade ≥2 leukopaenia occurs in 96% of these patients with standard therapy. The genetic variation increases the concentration of the fully activated metabolite of azathioprine and 6-mercaptopurine."
           ],
           "lookupKey": [
             {
@@ -76653,7 +76653,7 @@
             "html": "<p>NO action is required for this gene-drug interaction.</p>\n"
           },
           "implications": [
-            "The gene variation does increase clomipramine plasma concentrations, but not clomipramine+desmethylclomipramine plasma concentrations, which determines side effects and efficacy in depression. The increase in the plasma concentration of clomipramine is favourable for the efficacy in anxiety and obsessive compulsive disorder.  About ClinPGx Acknowledgements FAQ Publications Downloads Citing Licensing & Usage Privacy Policy"
+            "The gene variation does increase clomipramine plasma concentrations, but not clomipramine+desmethylclomipramine plasma concentrations, which determines side effects and efficacy in depression. The increase in the plasma concentration of clomipramine is favourable for the efficacy in anxiety and obsessive compulsive disorder.  About ClinPGx Acknowledgements FAQ Publications Downloads Citing Licensing &amp; Usage Privacy Policy"
           ],
           "lookupKey": [
             {
@@ -96010,7 +96010,7 @@
             "html": "<p>Monitor the plasma concentration.</p>\n"
           },
           "implications": [
-            "The gene variation can reduce the conversion of voriconazole and consequently increase the plasma concentration. This could result in improved efficacy or an increase in the risk of side effects.  About ClinPGx Acknowledgements FAQ Publications Downloads Citing Licensing & Usage Privacy Policy"
+            "The gene variation can reduce the conversion of voriconazole and consequently increase the plasma concentration. This could result in improved efficacy or an increase in the risk of side effects.  About ClinPGx Acknowledgements FAQ Publications Downloads Citing Licensing &amp; Usage Privacy Policy"
           ],
           "lookupKey": [
             {
@@ -96821,7 +96821,7 @@
             "html": "<p>Use 60% of the standard initial dose.</p>\n<p>The genotype-specific initial dose and maintenance dose can be calculated using an algorithm, as used in\nEU-PACT: see <a rel=\"noopener noreferrer\" href=\"https://www.knmp.nl/patientenzorg/medicatiebewaking/farmacogenetica\" target=\"_blank\">knmp</a>.\nFrom day 6 on the standard algorithm without genotype information can be used to calculate the dose.</p>\n"
           },
           "implications": [
-            "The genetic variation results in increased sensitivity to warfarin. This results in an increase in the risk of excessively severe inhibition of blood clotting (INR > 4) during the first month of the treatment."
+            "The genetic variation results in increased sensitivity to warfarin. This results in an increase in the risk of excessively severe inhibition of blood clotting (INR &gt; 4) during the first month of the treatment."
           ],
           "lookupKey": [
             {
