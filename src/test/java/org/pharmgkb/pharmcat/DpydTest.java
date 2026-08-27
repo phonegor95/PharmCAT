@@ -443,11 +443,12 @@ class DpydTest {
         .toList();
     assertEquals(1, lowRecs.size());
 
-    // this is the point of this test:
+    // The lower-score recommendation has an additional genotype-specific sentence.
+    // Assert the shared recommendation prefix rather than splitting on the English
+    // phrase "(if available)", which is absent from translated guidance.
     String lowRec = lowRecs.get(0);
     String highRec = highRecs.get(0);
-    // we're doing this split because there is "other consideration" text in this field that IS different between them
-    assertEquals(lowRec.split("\\(if available\\)")[0], highRec.split("\\(if available\\)")[0]);
+    assertTrue(lowRec.startsWith(highRec));
   }
 
   /**

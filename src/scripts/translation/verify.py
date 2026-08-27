@@ -8,7 +8,7 @@ Checks, in order of how much damage each failure does:
   entities     no HTML entity present in English is missing in Chinese
   tags         same tag multiset, same <br> count and spelling, balanced nesting
   unescaped    no raw < > & left in text content, in either language
-  numbers      digits in the English also appear in the Chinese (reported, not fatal)
+  numbers      every non-lexicalized number is preserved (fatal)
   terminology  one canonical rendering per term across the whole file
 
     src/scripts/translation/verify.py
@@ -122,15 +122,50 @@ def check_pairs(cn_data, en_data):
         print('  unescaped   OK  (no raw < > & in Chinese text content)')
 
     num = re.compile(r'\d+(?:\.\d+)?')
-    odd = [e for _k, e, c in uniq
-           if collections.Counter(num.findall(pgcore.strip_artifacts(e)))
-           - collections.Counter(num.findall(c))]
+    clinical_tokens = {
+        'percent': re.compile(r'\d+(?:\.\d+)?%'),
+        'dose': re.compile(r'\d+(?:\.\d+)?\s*(?:mg|mcg|µg|ng|kg|mL)(?![A-Za-z])', re.I),
+        'PMID': re.compile(r'PMID\s*:?[ ]*\d+', re.I),
+        'rsID': re.compile(r'(?<![A-Za-z0-9])rs\d+(?![A-Za-z0-9])', re.I),
+    }
+    odd = []
+    for _kind, e, c in uniq:
+        e_clean = pgcore.strip_artifacts(e)
+        for pattern in pgcore.LEXICALIZED_NUMBER_TERMS:
+            e_clean = pattern.sub('', e_clean)
+        missing_numbers = (collections.Counter(num.findall(e_clean))
+                           - collections.Counter(num.findall(c)))
+        allowed = collections.Counter(pgcore.ALLOWED_MISSING_NUMBERS.get((e, c), {}))
+        unexpected = missing_numbers - allowed
+        if unexpected:
+            odd.append((unexpected, e))
     if odd:
-        warn('numbers', f'{len(odd)} pair(s) have digits in the English missing from the '
-                        f'Chinese. Often benign (5-fluorouracil -> 氟尿嘧啶, CYP2D6, 6-TGN) '
-                        f'but dosing numbers must match — review these.')
+        first_missing, first_text = odd[0]
+        fail('numbers', f'{len(odd)} pair(s) drop a non-lexicalized number; '
+                        f'first missing {dict(first_missing)} from: {first_text[:100]}')
     else:
-        print('  numbers     OK')
+        print('  numbers     OK  (all non-lexicalized values preserved)')
+
+    token_issues = []
+    for label, pattern in clinical_tokens.items():
+        for _kind, e, c in uniq:
+            normalize = lambda token: re.sub(r'\s+', '', token).lower()
+            expected = collections.Counter(normalize(x) for x in pattern.findall(e))
+            actual = collections.Counter(normalize(x) for x in pattern.findall(c))
+            # Chinese convention writes kg as 公斤 in prose. The plain-number
+            # gate above still enforces the values; ignore only that unit spelling.
+            if label == 'dose':
+                expected = collections.Counter({k: v for k, v in expected.items()
+                                                if not k.endswith('kg')})
+            missing = expected - actual
+            if missing:
+                token_issues.append((label, missing, e))
+    if token_issues:
+        label, missing, text = token_issues[0]
+        fail('clinical tokens', f'{len(token_issues)} pair(s) drop a {label} token; '
+                                f'first missing {dict(missing)} from: {text[:100]}')
+    else:
+        print('  tokens      OK  (doses, percentages, PMIDs and rsIDs preserved)')
 
 
 def check_terminology(cn_data):

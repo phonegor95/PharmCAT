@@ -1,161 +1,56 @@
-# Contributing Chinese Translation to PharmCAT
+# Contributing Chinese prescribing-guidance translations
 
-This guide explains how to contribute the Chinese translation feature to the main PharmCAT repository.
+This fork keeps PharmCAT behavior aligned with upstream and translates data only. Contributions must not add Chinese-specific Java, template, matching, phenotyping, or serialization logic.
 
-## 🚀 Quick Start
+## Allowed translation surface
 
-### Step 1: Fork the Repository
+Only these values may differ from the matching upstream release:
 
-1. **Go to the main PharmCAT repository**: https://github.com/PharmGKB/PharmCAT
-2. **Click "Fork"** in the top right corner
-3. **Select your account** to create the fork
-4. **Wait for the fork to be created** at `https://github.com/YOUR_USERNAME/PharmCAT`
+```text
+guidelines[].recommendations[].text.html
+guidelines[].recommendations[].implications[]
+```
 
-### Step 2: Update Remote URLs
+They live in:
 
-After forking, update your local repository to push to your fork:
+```text
+src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.json
+```
+
+The adjacent `prescribing_guidance.v<version>.json` is the immutable English reference used by the translation tools.
+
+## Before editing
+
+Read [`docs/translation-workflow.md`](docs/translation-workflow.md). Preserve HTML tags and entities, gene symbols, alleles, variants, PMIDs, doses, units, percentages, and the `GENE: ` implication prefix. Use terminology already established in `src/scripts/translation/pgcore.py`.
+
+For an upstream-version merge, build translation memory and generate a work list rather than text-merging the large JSON file.
+
+## Required checks
 
 ```bash
-# Add your fork as a remote (replace YOUR_USERNAME with your GitHub username)
-git remote add fork https://github.com/YOUR_USERNAME/PharmCAT.git
-
-# Verify remotes
-git remote -v
+python3 src/scripts/translation/verify.py
+python3 -m unittest discover \
+  -s src/test/python/translation -p 'test_*.py' -v
+./gradlew test
+./gradlew shadowJar
 ```
 
-### Step 3: Push Your Branch
+Generate a local review page:
 
 ```bash
-# Push the chinese-translation branch to your fork
-git push fork chinese-translation
+python3 src/scripts/translation/make_review.py --all \
+  -o /tmp/pharmcat-zh-cn-review.html
 ```
 
-### Step 4: Create Pull Request
+A clinician or pharmacist should review new or materially changed clinical text. Mechanical HTML alignment does not substitute for clinical review.
 
-1. **Go to your fork**: `https://github.com/YOUR_USERNAME/PharmCAT`
-2. **Click "Compare & pull request"** (GitHub will show this automatically)
-3. **Fill out the pull request template**:
+## GenDecoder coordination
 
-## 📝 Pull Request Template
+The JAR intentionally leaves structured names and classifications in English. GenDecoder translates those CSV fields using `assets/pharmcat/data/zh-cn/*.json`. When adding or changing a canonical drug, phenotype, genotype, source, or recommendation-level term:
 
-```markdown
-## Chinese Translation Support for PharmCAT
+1. update the relevant GenDecoder dictionary;
+2. update `pgcore.CANONICAL` for any deprecated internal aliases;
+3. run GenDecoder's cross-layer PharmCAT validator against this source/JAR;
+4. rebuild a newly named bilingual SIF—never overwrite the existing production image.
 
-### Summary
-This PR adds comprehensive Chinese translation support to PharmCAT, enabling the generation of pharmacogenomic reports with Chinese drug names, phenotype descriptions, and prescribing guidance.
-
-### Features Implemented
-- ✅ Chinese drug names in prescribing recommendation section headers
-- ✅ Chinese phenotype translation system (慢代谢型, 正常代谢型, etc.)
-- ✅ Chinese prescribing guidance content support
-- ✅ Backward compatibility maintained
-- ✅ Automated build and deployment script
-- ✅ Comprehensive documentation and examples
-
-### Technical Changes
-
-#### Core Implementation
-- **ReportHelpers.java**: Added `getChineseDrugName()` and `printRecMapWithChinese()` methods
-- **AccessionObject.java**: Added `name_cn` field support for Chinese drug names
-- **RecommendationAnnotation.java**: Added `lookupKey_cn` support for Chinese phenotypes
-- **AnnotationReport.java**: Added missing `getLookupKey()` method
-- **report.hbs**: Updated HTML template to use Chinese translation methods
-
-#### New Files
-- **README_Chinese.md**: Comprehensive documentation with setup guide
-- **run_pharmcat_chinese.sh**: Unified build/pull/run script with online Docker support
-- **test_chinese_translation.sh**: Validation script
-- **setup_contribution.sh**: Git setup helper for contributors
-
-### Translation Examples
-
-| English | Chinese |
-|---------|---------|
-| Poor Metabolizer | 慢代谢型 |
-| Normal Metabolizer | 正常代谢型 |
-| Intermediate Metabolizer | 中等代谢型 |
-| Decreased Function | 功能降低 |
-| Normal Function | 正常功能 |
-
-### Usage
-
-```bash
-# Run with online Docker image (recommended)
-./run_pharmcat_chinese.sh -i your_file.vcf.gz
-
-# Quick run without updating image
-./run_pharmcat_chinese.sh --skip-pull -i your_file.vcf.gz
-
-# Build locally instead of pulling
-./run_pharmcat_chinese.sh --build-local -i your_file.vcf.gz
-```
-
-### Testing
-- ✅ All existing tests pass
-- ✅ Chinese translation validation script included
-- ✅ Example configuration provided
-- ✅ Backward compatibility verified
-
-### Configuration
-Users can add Chinese translations to their prescribing guidance JSON:
-
-```json
-{
-  "relatedChemicals": [
-    {
-      "name": "warfarin",
-      "name_cn": "华法林"
-    }
-  ],
-  "lookupKey": {
-    "CYP2C9": "Poor Metabolizer"
-  },
-  "lookupKey_cn": {
-    "CYP2C9": "慢代谢型"
-  }
-}
-```
-
-### Impact
-- Enables PharmCAT usage in Chinese-speaking healthcare environments
-- Maintains full backward compatibility
-- Provides foundation for other language translations
-- Includes comprehensive documentation and automation
-
-### Checklist
-- [x] Code follows project style guidelines
-- [x] Self-review completed
-- [x] Documentation updated
-- [x] Tests added/updated
-- [x] Backward compatibility maintained
-- [x] Example usage provided
-```
-
-## 🔧 Alternative: Create Patch Files
-
-If you prefer not to use GitHub's web interface, you can create patch files:
-
-```bash
-# Create patch files for your commits
-git format-patch origin/development..chinese-translation
-
-# This will create .patch files that can be emailed or shared
-```
-
-## 📧 Contact Information
-
-If you need help with the contribution process:
-
-1. **GitHub Issues**: Create an issue in the main PharmCAT repository
-2. **Email**: Contact the PharmCAT maintainers
-3. **Documentation**: Refer to PharmCAT's CONTRIBUTING.md file
-
-## 🎯 Next Steps
-
-1. **Fork the repository** on GitHub
-2. **Update your remote** to point to your fork
-3. **Push your branch** to your fork
-4. **Create a pull request** using the template above
-5. **Respond to feedback** from maintainers
-
-Your Chinese translation feature is well-implemented and ready for contribution! 🎉
+Do not commit generated JARs, SIFs, review HTML, translation-memory work files, or floating Docker-image references.

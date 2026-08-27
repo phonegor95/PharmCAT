@@ -10,7 +10,6 @@ to which English source string.
     src/scripts/translation/build_tm.py -o tm.json
 """
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -18,8 +17,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 import pgcore  # noqa: E402
 
 
-def build(en_path, cn_path):
-    en_data, cn_data = pgcore.load(en_path), pgcore.load(cn_path)
+def build_from_data(en_data, cn_data):
+    """Build a translation memory from already-loaded guidance trees."""
     tm = {'text': {}, 'impl': {}}
     conflicts = []
     for kind, en, cn in pgcore.pair(en_data, cn_data):
@@ -29,6 +28,10 @@ def build(en_path, cn_path):
             continue          # keep first occurrence, deterministic
         bucket.setdefault(en, cn)
     return tm, conflicts
+
+
+def build(en_path, cn_path):
+    return build_from_data(pgcore.load(en_path), pgcore.load(cn_path))
 
 
 def main():
@@ -57,8 +60,7 @@ def main():
             print(f'   -> {first[:70]}')
             print(f'   -> {other[:70]}')
 
-    with open(args.out, 'w', encoding='utf-8') as fh:
-        json.dump(tm, fh, ensure_ascii=False, indent=1)
+    pgcore.dump(tm, args.out)
     print(f'\nwrote {args.out}')
 
 

@@ -10,7 +10,9 @@ Everything else must stay byte-identical to upstream. Every tool in this
 directory relies on that invariant, and verify.py enforces it.
 """
 import json
+import os
 import re
+import tempfile
 from pathlib import Path
 
 # The active (translated) data file and the untranslated English reference that
@@ -37,12 +39,51 @@ CANONICAL = {
     '血药浓度监测': '治疗药物监测',    # therapeutic drug monitoring
     '初始剂量': '起始剂量',          # initial / starting dose
     '巯基嘌呤': '巯嘌呤',            # mercaptopurine
+    # Shared with GenDecoder's structured-field translation dictionaries.
+    '布美匹唑': '布瑞哌唑',          # brexpiprazole
+    '布美哌唑': '布瑞哌唑',
+    '阿布西替尼': '阿布罗替尼',      # abrocitinib
+    '月桂酰阿立哌唑': '阿立哌唑月桂酯',  # aripiprazole lauroxil
+    '布瓦西坦': '布瑞西坦',          # brivaracetam
+    '司维美林': '西维美林',          # cevimeline
+    '德鲁索利替尼': '德鲁佐利替尼',  # deuruxolitinib
+    '氘代丁苯那嗪': '氘丁苯那嗪',    # deutetrabenazine
+    '美克洛嗪': '氯苯甲嗪',          # meclizine
+    '莫维普': 'MoviPrep',            # brand name
+    '妥拉唑胺': '妥拉磺胺',          # tolazamide
+    '甲苯磺丁脲': '妥布他胺',        # tolbutamide
+    '活动评分': '活性评分',          # activity score
+    '功能正常和降低功能者': '功能正常和功能降低者',
+    '野生型': '参考型',              # reference, not necessarily wild type
 }
 
 # Text upstream scraped into its own data by accident. Translations are expected
 # to leave it out, so the entity and number checks must ignore it rather than
 # report the omission as a defect. Add to this list, with the reason, whenever a
 # new upstream artifact turns up — do not weaken the checks themselves.
+# Numeric fragments that are deliberately lexicalized in Chinese. Keys are
+# exact English/Chinese field pairs so an unrelated missing number still fails.
+# Keep this list small and explain every entry.
+ALLOWED_MISSING_NUMBERS = {
+    (
+        'CYP2D6: Based on very limited data available for CYP2D6 ultrarapid metabolizers taking atomoxetine, it is unlikely ultrarapid metabolizers would achieve adequate serum concentrations for the intended effect at standard dosing.',
+        'CYP2D6: 根据阿托莫西汀超快代谢者非常有限的数据，超快代谢者在标准剂量下不太可能达到预期效果的足够血清浓度。',
+    ): {'2': 1, '6': 1},
+}
+
+# Drug and metabolite prefixes whose digits are conventionally lexicalized in
+# Chinese. The verifier removes only these exact tokens before comparing the
+# remaining numbers, leaving all doses, percentages and clinical thresholds
+# strict.
+LEXICALIZED_NUMBER_TERMS = (
+    re.compile(r'(?i)5-fluorouracil'),
+    re.compile(r'(?i)6-mercaptopurine'),
+    re.compile(r'(?i)6-TGN'),
+    re.compile(r'(?i)N-acetyltransferase 2'),
+    re.compile(r'(?i)Z-10-hydroxy'),
+)
+
+
 UPSTREAM_ARTIFACTS = [
     # Website footer navigation appended to two DPWG implications (v3.4.0).
     # Carries a "&amp;" that the Chinese therefore does not have.
@@ -87,9 +128,22 @@ def load(path):
 
 
 def dump(data, path):
-    """Write with upstream's formatting (2-space indent, real UTF-8, no final newline)."""
-    with open(path, 'w', encoding='utf-8') as fh:
-        fh.write(json.dumps(data, indent=2, ensure_ascii=False))
+    """Atomically write with upstream's formatting and no final newline."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix=f'.{path.name}.', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as fh:
+            fh.write(json.dumps(data, indent=2, ensure_ascii=False))
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
 
 
 def iter_fields(data):

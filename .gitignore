@@ -62,5 +62,6 @@ __pycache__/
 
 # Local Netlify folder
 .netlify
-test/
+
+# Local editor settings
 .vscode/

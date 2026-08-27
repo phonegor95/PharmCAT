@@ -126,10 +126,6 @@ public class AnnotationReport implements Comparable<AnnotationReport> {
     }
   }
 
-  public List<Map<String,Object>> getLookupKey() {
-    return m_lookupKey;
-  }
-
   public String getDrugRecommendation() {
     return m_drugRecommendation;
   }
