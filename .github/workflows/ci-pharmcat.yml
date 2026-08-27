@@ -11,6 +11,8 @@ on:
       - '.github/workflows/ci-pharmcat.yml'
       - 'src/main/**'
       - 'src/test/**'
+      - 'src/scripts/translation/**'
+      - 'docs/translation-workflow.md'
       - 'build.gradle'
 
 # cancel the current build on push from the same PR, branch or tag (https://stackoverflow.com/a/72408109/1063501)
@@ -38,6 +40,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
+
+      - name: Verify Chinese prescribing guidance
+        run: |
+          python3 src/scripts/translation/verify.py
+          python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
 
       - name: Run PharmCAT tests
         run: ./gradlew test --no-daemon --info --scan

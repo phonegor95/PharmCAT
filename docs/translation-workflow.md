@@ -130,6 +130,7 @@ clinical review.
 |---|---|---|
 | reuse existing translations | `apply.py` | yes, exact match then markup-insensitive |
 | terminology consistency | `apply.py` / `verify.py` | yes, enforced |
+| numbers, doses, percentages, PMIDs and rsIDs | `verify.py` | yes, enforced; lexicalized drug/metabolite numbers are narrowly allowlisted |
 | `<br>` spelling and count, `&le;`/`&ge;` style | `html_align.py` | yes |
 | `&quot;` placement around quoted label text | — | **no**, needs judgment; `verify.py` fails so it surfaces |
 | broken tag nesting | `verify.py` | detected, fixed by hand |
@@ -201,5 +202,14 @@ All scripts live in `src/scripts/translation/` and take `--help`.
 | `verify.py` | the gate: structure, coverage, entities, tags, terminology |
 | `make_review.py` | side-by-side HTML review page |
 
-`verify.py` exits non-zero on failure, so it can gate a build. Run it before
-`build_pharmcat_image.sh`, always.
+`verify.py` exits non-zero on failure, so it can gate a build. Run it together
+with the translation-tool unit tests before `build_pharmcat_image.sh`, always:
+
+```bash
+python3 src/scripts/translation/verify.py
+python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
+```
+
+Structured output fields (drug, genotype, phenotype, source and recommendation
+level) are translated by GenDecoder rather than this JAR. GenDecoder's
+cross-layer validator must also pass before publishing a bilingual runtime.

@@ -3,7 +3,6 @@ package org.pharmgkb.pharmcat.reporter.format.html;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +29,6 @@ import org.pharmgkb.pharmcat.reporter.model.result.AnnotationReport;
 import org.pharmgkb.pharmcat.reporter.model.result.CallSource;
 import org.pharmgkb.pharmcat.reporter.model.result.Diplotype;
 import org.pharmgkb.pharmcat.reporter.model.result.GeneReport;
-import org.pharmgkb.pharmcat.reporter.PgkbGuidelineCollection;
-import org.pharmgkb.pharmcat.reporter.model.pgkb.GuidelinePackage;
-import org.pharmgkb.pharmcat.reporter.model.pgkb.RecommendationAnnotation;
-import org.pharmgkb.pharmcat.reporter.model.pgkb.AccessionObject;
 import org.pharmgkb.pharmcat.reporter.model.result.Genotype;
 import org.pharmgkb.pharmcat.reporter.model.result.GuidelineReport;
 
@@ -127,74 +122,6 @@ public class ReportHelpers {
     builder.append("</dl>");
     return builder.toString();
   }
-
-  /**
-   * Print a recommendation map with Chinese phenotype support.
-   * This method translates common English phenotype values to Chinese.
-   */
-  public static String printRecMapWithChinese(Map<String, String> data, @Nullable String cssClass, Object context) {
-    Map<String, String> chineseData = translatePhenotypesToChinese(data);
-    return printRecMap(chineseData, cssClass);
-  }
-
-  /**
-   * Translate common English phenotype values to Chinese.
-   * This method provides direct translations for common phenotype terms.
-   */
-  private static Map<String, String> translatePhenotypesToChinese(Map<String, String> originalData) {
-    Map<String, String> chineseData = new HashMap<>();
-
-    for (Map.Entry<String, String> entry : originalData.entrySet()) {
-      String key = entry.getKey();
-      String value = entry.getValue();
-      String chineseValue = translatePhenotypeValue(value);
-      chineseData.put(key, chineseValue);
-    }
-
-    return chineseData;
-  }
-
-  /**
-   * Translate a single phenotype value from English to Chinese.
-   */
-  private static String translatePhenotypeValue(String englishValue) {
-    if (englishValue == null) {
-      return null;
-    }
-
-    // Direct translations for common phenotype values
-    switch (englishValue.trim()) {
-      case "Poor Metabolizer":
-        return "慢代谢型";
-      case "Likely Poor Metabolizer":
-        return "可能为慢代谢型";
-      case "Intermediate Metabolizer":
-        return "中等代谢型";
-      case "Normal Metabolizer":
-        return "正常代谢型";
-      case "Rapid Metabolizer":
-        return "快代谢型";
-      case "Ultrarapid Metabolizer":
-        return "超快代谢型";
-      case "Normal Function":
-        return "正常功能";
-      case "Decreased Function":
-        return "功能降低";
-      case "Possible Decreased Function":
-        return "可能功能降低";
-      case "No Function":
-        return "无功能";
-      case "Increased Function":
-        return "功能增强";
-      case "Indeterminate":
-        return "不确定";
-      default:
-        // If no translation found, return original value
-        return englishValue;
-    }
-  }
-
-
 
 
   public static String pluralize(String word, Object col) {
@@ -564,33 +491,6 @@ public class ReportHelpers {
     return annotationReport.getMessages().stream()
         .filter(MessageAnnotation.isMessage)
         .toList();
-  }
-
-  /**
-   * Gets the Chinese display name for a drug, falling back to English name if Chinese not available.
-   * This helper is used in HTML templates to show Chinese drug names.
-   */
-  public static String getChineseDrugName(String englishDrugName, Object reportContext) {
-    try {
-      // Load prescribing guidance data directly
-      PgkbGuidelineCollection guidelineCollection = new PgkbGuidelineCollection();
-      for (GuidelinePackage guidelinePackage : guidelineCollection.getGuidelinePackages()) {
-        for (RecommendationAnnotation annotation : guidelinePackage.getRecommendations()) {
-          for (AccessionObject chemical : annotation.getRelatedChemicals()) {
-            if (chemical.getName().equalsIgnoreCase(englishDrugName)) {
-              String chineseName = chemical.getDisplayName();
-              if (chineseName != null && !chineseName.equals(chemical.getName())) {
-                return chineseName;
-              }
-            }
-          }
-        }
-      }
-    } catch (Exception e) {
-      // If there's any error loading the data, just return the English name
-      System.err.println("Error loading Chinese drug names: " + e.getMessage());
-    }
-    return englishDrugName; // Fallback to English name if no Chinese name found
   }
 
   public static String annotationTags(AnnotationReport annotationReport) {

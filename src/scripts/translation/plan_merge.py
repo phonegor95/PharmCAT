@@ -11,7 +11,6 @@ translation as a style reference.
 """
 import argparse
 import difflib
-import json
 import sys
 from pathlib import Path
 
@@ -77,8 +76,7 @@ def main():
                         entry['hint_similarity'] = round(ratio, 3)
             items.append(entry)
 
-    with open(args.out, 'w', encoding='utf-8') as fh:
-        json.dump(items, fh, ensure_ascii=False, indent=1)
+    pgcore.dump(items, args.out)
     print(f'\nwrote {args.out} — fill in each "cn" field, then run apply.py')
     print('Keep HTML tags, id="..." anchors, entities (&quot; &gt; &le;), gene symbols,')
     print('star alleles, rsIDs, PMIDs, doses and units exactly as they appear in "en".')

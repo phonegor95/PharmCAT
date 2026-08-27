@@ -137,29 +137,26 @@ Conventions to preserve when editing translations:
 - Keep gene symbols, star alleles, rsIDs, PMIDs, doses and units in the original form.
 - Implications keep their `GENE: ` prefix in English.
 
-### Leftover Java code
-`ReportHelpers.getChineseDrugName()` / `printRecMapWithChinese()`, `AccessionObject.nameCn`
-and `AnnotationReport.getLookupKey()` are remnants of an earlier approach that was rolled
-back in 59a8d86a. Nothing references them — `report.hbs` is identical to upstream.
+### No fork-specific Java path
+All legacy Chinese Java/model/template changes were removed. `src/main/java/` and
+`report.hbs` must remain identical to upstream for this release; the translated guidance
+resource is the only runtime difference.
 
 ### Building with Chinese Translation
 ```bash
-# Using the helper script
-./run_pharmcat_chinese.sh -i <input.vcf>
-
-# Manual build
-./gradlew clean shadowJar
-cp build/libs/pharmcat-*-all.jar build/pharmcat.jar
-docker build -t pharmcat:chinese .
+python3 src/scripts/translation/verify.py
+python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
+./gradlew clean test shadowJar
 ```
 
-### Phenotype Translation Mapping
-Common phenotype translations are automatically handled:
-- Poor Metabolizer → 慢代谢型
-- Normal Metabolizer → 正常代谢型
-- Intermediate Metabolizer → 中等代谢型
-- Decreased Function → 功能降低
-- Normal Function → 正常功能
+GenDecoder creates the production bilingual Singularity image with its own pinned
+`bin/build_pharmcat_image.sh`. Do not use or document a floating
+`phonegor95/pharmcat:chinese` image.
+
+### Canonical terminology
+Core terms use 慢代谢者 / 中间代谢者 / 正常代谢者 / 快代谢者 / 超快代谢者,
+活性评分, and 参考型. Deprecated aliases are enforced by `pgcore.CANONICAL`; structured
+CSV-field terms are maintained in GenDecoder and checked across both layers.
 
 ## Important Data Files
 

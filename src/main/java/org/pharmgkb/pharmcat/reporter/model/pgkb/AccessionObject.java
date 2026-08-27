@@ -18,9 +18,6 @@ public class AccessionObject {
   @Expose
   @SerializedName("symbol")
   private String symbol;
-  @Expose
-  @SerializedName("name_cn")
-  private String nameCn;
 
 
   public String getId() {
@@ -45,20 +42,5 @@ public class AccessionObject {
 
   public void setSymbol(String symbol) {
     this.symbol = symbol;
-  }
-
-  public String getNameCn() {
-    return nameCn;
-  }
-
-  public void setNameCn(String nameCn) {
-    this.nameCn = nameCn;
-  }
-
-  /**
-   * Gets the display name, preferring Chinese name if available, otherwise English name.
-   */
-  public String getDisplayName() {
-    return nameCn != null && !nameCn.trim().isEmpty() ? nameCn : name;
   }
 }
