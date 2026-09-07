@@ -117,46 +117,10 @@ Key classes:
 
 ## Chinese Translation Feature
 
-The translation is **data-only** — no Java or template changes are required.
-
-### How it works
-`src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.json` is upstream's
-file with exactly two fields translated in place, for every recommendation:
-
-- `recommendations[].text.html`
-- `recommendations[].implications[]`
-
-Everything else (ids, lookup keys, genotypes, drug names, structure) is byte-identical to
-upstream. `prescribing_guidance.v3.4.0.json` sits alongside it as the untranslated English
-reference for the current data version — diff it against the next upstream release to find
-what needs re-translating.
-
-Conventions to preserve when editing translations:
-- Keep HTML tags and `id="..."` anchors intact; translate only the visible text.
-- Keep entities as-is (`&quot;` `&gt;` `&le;`) — both fields render via `{{{ }}}` (raw HTML).
-- Keep gene symbols, star alleles, rsIDs, PMIDs, doses and units in the original form.
-- Implications keep their `GENE: ` prefix in English.
-
-### No fork-specific Java path
-All legacy Chinese Java/model/template changes were removed. `src/main/java/` and
-`report.hbs` must remain identical to upstream for this release; the translated guidance
-resource is the only runtime difference.
-
-### Building with Chinese Translation
-```bash
-python3 src/scripts/translation/verify.py
-python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
-./gradlew clean test shadowJar
-```
-
-GenDecoder creates the production bilingual Singularity image with its own pinned
-`bin/build_pharmcat_image.sh`. Do not use or document a floating
-`phonegor95/pharmcat:chinese` image.
-
-### Canonical terminology
-Core terms use 慢代谢者 / 中间代谢者 / 正常代谢者 / 快代谢者 / 超快代谢者,
-活性评分, and 参考型. Deprecated aliases are enforced by `pgcore.CANONICAL`; structured
-CSV-field terms are maintained in GenDecoder and checked across both layers.
+Read [README_Chinese.md](README_Chinese.md) for the canonical fork-specific
+guide: translation invariants, terminology, validation, upstream upgrades,
+and GenDecoder bilingual Singularity image builds. Preserve upstream Java
+and template behavior; translation changes are data-only.
 
 ## Important Data Files
 
