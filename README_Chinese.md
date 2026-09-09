@@ -87,9 +87,14 @@ export TMPDIR=/path/to/large-local-scratch/pharmcat-build
 export SINGULARITY_IMAGE_DIR=/path/to/new-image-directory
 mkdir -p "$TMPDIR" "$SINGULARITY_IMAGE_DIR"
 
-# 保存精确源码身份；构建前应确认没有未提交的源码修改。
-git -C "$FORK" status --short
-git -C "$GENDECODER" status --short
+# 记录提交前，拒绝暂存、未暂存或未忽略的未跟踪文件；忽略的构建产物不受影响。
+for repo in "$FORK" "$GENDECODER"; do
+    status=$(git -C "$repo" status --porcelain --untracked-files=all)
+    if [[ -n "$status" ]]; then
+        printf 'ERROR: checkout is not clean: %s\n%s\n' "$repo" "$status" >&2
+        exit 1
+    fi
+done
 {
     git -C "$FORK" rev-parse HEAD
     git -C "$GENDECODER" rev-parse HEAD
