@@ -1,5 +1,7 @@
 # PharmCAT
 
+**[PharmCAT 中文指南](README_Chinese.md)** — translation scope, validation, upstream upgrades, and the GenDecoder bilingual Singularity image build.
+
 [![PharmCAT CI](https://github.com/PharmGKB/PharmCAT/actions/workflows/ci-pharmcat.yml/badge.svg)](https://github.com/PharmGKB/PharmCAT/actions/workflows/ci-pharmcat.yml)
 [![Preprocessor CI](https://github.com/PharmGKB/PharmCAT/actions/workflows/ci-preprocessor.yml/badge.svg)](https://github.com/PharmGKB/PharmCAT/actions/workflows/ci-preprocessor.yml)
 [![codecov.io](https://codecov.io/github/PharmGKB/PharmCAT/coverage.svg?branch=main)](https://codecov.io/github/PharmGKB/PharmCAT?branch=development)

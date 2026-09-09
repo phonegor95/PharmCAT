@@ -49,7 +49,7 @@ CANONICAL = {
     '德鲁索利替尼': '德鲁佐利替尼',  # deuruxolitinib
     '氘代丁苯那嗪': '氘丁苯那嗪',    # deutetrabenazine
     '美克洛嗪': '氯苯甲嗪',          # meclizine
-    '莫维普': 'MoviPrep',            # brand name
+    'MoviPrep': '莫维普',            # zh-cn product name
     '妥拉唑胺': '妥拉磺胺',          # tolazamide
     '甲苯磺丁脲': '妥布他胺',        # tolbutamide
     '活动评分': '活性评分',          # activity score
