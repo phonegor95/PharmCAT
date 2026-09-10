@@ -137,7 +137,15 @@ python3 src/scripts/translation/plan_merge.py --tm "$SCRATCH/tm.json" --new "$SC
 git merge v3.5.0
 ```
 
-合并 guidance 冲突是预期情况。暂停并检查其他冲突，不手工文本合并大型 guidance JSON。根据英文和最近似的中文逐项填写 `todo.json` 中的 `cn`，然后生成结果：
+合并 guidance 冲突是预期情况。暂停并检查其他冲突，不手工文本合并大型 guidance JSON。逐项对照当前英文填写 `todo.json` 中的 `cn`；最近似的旧中文仅供参考，可能含有旧错误。
+
+使用 Gemini 辅助起草时，采用版本化的 [gemini-review-todo-v1.md](src/scripts/translation/prompts/gemini-review-todo-v1.md) 提示词，并提供 `todo.json` 和已批准的药物/表型词汇表（含 `pgcore.CANONICAL` 的规范值）。这是离线生产流程之外的**源文本编写**步骤，不会在报告生成时调用 Gemini，也不发送患者数据。此仓库不包含 Gemini API 客户端；将提示词用作 Gemini 的指令，将待译 JSON 和词汇表作为数据输入。
+
+输出保持顶层 JSON 数组，逐项保留 `kind`、`en`、提示字段和顺序，只填写 `cn`。有歧义或需要源级审阅的项保留空 `cn`。不要把模型返回值直接应用到临床资源：由双语审校者检查完整性、否定、条件、可能性、统计量、阈值边界和术语；新增或实质变化的临床文字仍需临床医生或药师审阅。审阅完成后才将草稿作为 `todo.json` 交给下面的 `apply.py`，再执行完整验证门禁。
+
+模型/提示词缓存与经过审校的翻译记忆不是同一回事。在 scratch 中另存 provenance sidecar，记录实际模型 ID、生成时间、参数、提示词版本及 SHA-256、词汇表 SHA-256、输入/输出 SHA-256 和审校状态；不要向 `todo.json` 插入这些字段。外部生成缓存键至少包含模型 ID、参数、提示词/词汇表哈希、`kind` 和原始 `en` 哈希。更换提示词或词汇表后，重新生成或审阅受影响的旧缓存，不能仅修改提示词就继续复用旧结果。不要提交缓存、翻译记忆、响应或 provenance 临时文件。
+
+审阅后生成结果：
 
 ```bash
 python3 src/scripts/translation/apply.py \
