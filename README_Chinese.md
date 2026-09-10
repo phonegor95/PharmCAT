@@ -140,17 +140,35 @@ git merge v3.5.0
 
 合并 guidance 冲突是预期情况。暂停并检查其他冲突，不手工文本合并大型 guidance JSON。逐项对照当前英文填写 `todo.json` 中的 `cn`；最近似的旧中文仅供参考，可能含有旧错误。
 
-使用 Gemini 辅助起草时，采用版本化的 [gemini-review-todo-v1.md](src/scripts/translation/prompts/gemini-review-todo-v1.md) 提示词，并提供 `todo.json` 和已批准的药物/表型词汇表（含 `pgcore.CANONICAL` 的规范值）。这是离线生产流程之外的**源文本编写**步骤，不会在报告生成时调用 Gemini，也不发送患者数据。此仓库不包含 Gemini API 客户端；将提示词用作 Gemini 的指令，将待译 JSON 和词汇表作为数据输入。
+### Gemini 辅助源文本编写（可选，非生产运行）
 
-输出保持顶层 JSON 数组，逐项保留 `kind`、`en`、提示字段和顺序，只填写 `cn`。有歧义或需要源级审阅的项保留空 `cn`。不要把模型返回值直接应用到临床资源：由双语审校者检查完整性、否定、条件、可能性、统计量、阈值边界和术语；新增或实质变化的临床文字仍需临床医生或药师审阅。审阅完成后才将草稿作为 `todo.json` 交给下面的 `apply.py`，再执行完整验证门禁。
+`translate_gemini.py` 默认自动读取版本化的 [gemini-review-todo-v1.md](src/scripts/translation/prompts/gemini-review-todo-v1.md)，作为每个批次和单项回退请求的 system instructions。提供 `plan_merge.py` 生成的 todo 和已批准的药物/表型 JSON 词汇表（字符串到字符串的映射，例如 `{"brexpiprazole": "布瑞哌唑"}`）。脚本还单独提供 `pgcore.CANONICAL` 中的中文别名/规范值约束，不自动替换译文。这是离线生产流程之外的**源文本编写**步骤，不会在报告生成时调用 Gemini；不得输入患者数据。旧仓库的 API 脚本与 source-only 缓存不参与此流程。
 
-模型/提示词缓存与经过审校的翻译记忆不是同一回事。在 scratch 中另存 provenance sidecar，记录实际模型 ID、生成时间、参数、提示词版本及 SHA-256、词汇表 SHA-256、输入/输出 SHA-256 和审校状态；不要向 `todo.json` 插入这些字段。外部生成缓存键至少包含模型 ID、参数、提示词/词汇表哈希、`kind` 和原始 `en` 哈希。更换提示词或词汇表后，重新生成或审阅受影响的旧缓存，不能仅修改提示词就继续复用旧结果。不要提交缓存、翻译记忆、响应或 provenance 临时文件。
+以下命令**会调用 Gemini**，只在明确准备好发送源文本时执行。仅实际请求需要在独立编写环境安装可选 `google-genai`；帮助和 mock 测试只需 Python 标准库。通过环境安全设置 `GEMINI_API_KEY` 或 `GOOGLE_API_KEY`（前者优先），不要把密钥写进命令、文件或日志。`--model` 必填，由操作者选择实际可用的明确模型 ID，没有臆测的“最新”默认值。
 
-审阅后生成结果：
+```bash
+# 先配置模型 ID、API 密钥和已批准的 glossary.json；所有输出使用新的 scratch 路径。
+python3 src/scripts/translation/translate_gemini.py \
+    --todo "$SCRATCH/todo.json" --glossary "$SCRATCH/glossary.json" \
+    --model "$GEMINI_MODEL" --output "$SCRATCH/todo.draft.json" \
+    --cache "$SCRATCH/gemini-draft-cache.json"
+
+# 完全离线，不安装 SDK、不使用密钥，也不发送请求：
+python3 -S src/scripts/translation/translate_gemini.py --help
+python3 -S -m unittest discover -s src/test/python/translation -p 'test_translate_gemini.py' -v
+```
+
+输出始终为**未经人工审校的草稿**：保持顶层 JSON 数组、条目数量和顺序、`kind`（`text`/`impl`）、原始 `en`、键及可选 `hint_en`/`hint_cn`/`hint_similarity` 的值和类型，只填写 `cn`。已有非空 `cn` 原样保留，不发送、不加入缓存。默认每批 10 项（`--batch-size` 可调）；只有无效 JSON、契约或机械保真检查失败才回退到单项。单项仍失败则保留空 `cn`；模型主动返回空白也保留，不重试、不缓存。退出码 **0** 仅表示草稿无空白项，**2** 表示已写出仍有待解决项的草稿，**1** 表示输入/文件/请求错误。认证、配额或网络错误直接中止，不逐项重试，不打印 SDK 异常内容；修复后使用新输出路径重试。
+
+脚本检查字面 HTML 标签/属性的顺序、实体、数字、常见标识符、单位和 implication 基因前缀；这些保守检查比旧翻译的部分豁免更严格，可能将合理的译法留空。它们不能证明临床语义正确或识别所有变异/占位符。由双语审校者检查完整性、否定、条件、可能性、统计量、阈值边界和术语；新增或实质变化的临床文字仍需临床医生或药师审阅。解决全部空白并审阅后，另存为 `todo.reviewed.json`，下面的 `apply.py` 才可使用这个文件；脚本绝不自动 apply 或修改 guidance。
+
+草稿旁自动生成 `<output>.provenance.json`，记录模型、时间、参数、提示词文件名及 SHA-256、有效词汇表 SHA-256（含 canonical 约束）、输入/输出 SHA-256、未解决项索引和 `unreviewed_draft` 状态，不向 todo 插入元数据。所有草稿、sidecar、缓存输出都必须是新文件；拒绝覆盖、路径别名和应用资源目录。可选 `--cache` **仅写新缓存**，可选 `--cache-input` **只读**上次草稿缓存；二者必须使用不同路径。缓存隔离包含格式版本、模型、生成参数/批大小、提示词和词汇表哈希、`kind`、精确原始 `en` 及提示字段；配置变化不复用，旧 source-only 缓存拒绝读取。缓存不是经过审校的翻译记忆，即使命中仍需人工审阅。不要提交草稿、缓存、翻译记忆、响应或 provenance 临时文件。
+
+审阅后生成结果（手工填写 todo 的流程也先另存为 `todo.reviewed.json`）：
 
 ```bash
 python3 src/scripts/translation/apply.py \
-    --tm "$SCRATCH/tm.json" --new "$SCRATCH/new.json" --todo "$SCRATCH/todo.json" \
+    --tm "$SCRATCH/tm.json" --new "$SCRATCH/new.json" --todo "$SCRATCH/todo.reviewed.json" \
     --reference-out src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.v3.5.0.json
 git rm src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.v3.4.0.json
 python3 src/scripts/translation/html_align.py --write
@@ -179,6 +197,7 @@ python3 src/scripts/translation/make_review.py --base-rev v3.4.0 -o "$SCRATCH/re
 | `pgcore.py` | 结构比较、规范术语、已知上游例外 |
 | `build_tm.py` | 从当前英中数据构建翻译记忆 |
 | `plan_merge.py` | 计算新版本复用覆盖率和待翻译内容 |
+| `translate_gemini.py` | 可选 Gemini 源文本起草；默认强提示词，输出未审草稿/溯源信息，不自动应用；mock 测试离线运行 |
 | `apply.py` | 应用记忆和新翻译，生成 guidance/英文参考 |
 | `html_align.py` | HTML 的机械对齐，不替代临床审校 |
 | `verify.py` | 结构、覆盖、实体、标签、数字和术语门禁 |
