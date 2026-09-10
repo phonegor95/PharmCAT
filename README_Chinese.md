@@ -53,7 +53,7 @@ python3 src/scripts/translation/make_review.py --all -o /path/to/scratch/pharmca
 
 由临床医生或药师审阅新增或实质变化的临床文本；机械 HTML 对齐不能替代审阅。不要提交 JAR、SIF、审校 HTML、翻译记忆或临时工作文件。
 
-## 构建 pharmcat-3.4.0-bilingual.sif
+## 构建 pharmcat-3.4.0-bilingual-zhcn-<commit>.sif
 
 构建脚本属于 **GenDecoder**：[bin/build_pharmcat_image.sh](https://github.com/quantumlifetech/GenDecoder/blob/main/bin/build_pharmcat_image.sh)。需要包含验证门禁和拒绝覆盖检查的脚本版本；记录实际使用的两个仓库提交，不能只依赖分支名。
 
@@ -71,7 +71,7 @@ python3 src/scripts/translation/make_review.py --all -o /path/to/scratch/pharmca
 - 已授权访问 GenDecoder，并准备好两个仓库的明确提交及 PharmCAT 的 `v3.4.0` tag。
 - Java 17、Python 3、Git、可用的 Gradle wrapper/依赖，以及支持 `--fakeroot` 的 Singularity。
 - 有足够空间且适合 Singularity sandbox 提取的**本地 scratch**。此部署 `/mnt/SA127` 是 `nodev`，不能拿它做 sandbox 临时目录；不要默认 `/tmp` 足够大。
-- 在已分配的 SLURM **计算节点**上执行以下构建和 Singularity 验证，不在登录节点执行。按站点配置申请资源。
+- 此部署的 SIF **构建在本地管理节点执行，不提交到 SLURM**；构建前确认该节点为当前用户配置了 `/etc/subuid` 和 `/etc/subgid` fakeroot 映射。使用上述本地 scratch。报告运行和独立的 Singularity/bcftools 验证仍按 GenDecoder 的运行约定提交到 SLURM 计算节点。
 - 首次预置 Gradle 依赖和基础镜像可能需要联网；离线生产运行前必须完成缓存。
 
 ### 命令
@@ -109,14 +109,15 @@ done
 )
 bash "$GENDECODER/bin/build_pharmcat_image.sh" 3.4.0 "$FORK"
 
-IMAGE="$SINGULARITY_IMAGE_DIR/pharmcat-3.4.0-bilingual.sif"
+SOURCE_COMMIT=$(git -C "$FORK" rev-parse HEAD)
+IMAGE="$SINGULARITY_IMAGE_DIR/pharmcat-3.4.0-bilingual-zhcn-${SOURCE_COMMIT:0:8}.sif"
 singularity exec "$IMAGE" java -jar /pharmcat/pharmcat.jar -version
 singularity exec "$IMAGE" java -jar /pharmcat/pharmcat-zh-cn.jar -version
 singularity inspect --labels "$IMAGE"
 sha256sum "$IMAGE" > "$IMAGE.sha256"
 ```
 
-主线脚本只接受版本和 fork 路径两个参数；不要依赖其他未合并分支的第三个 suffix 参数。重建相同版本时更换 `SINGULARITY_IMAGE_DIR`。已存在的基础 `pharmcat-3.4.0.sif` 会被复用，因此应确认基础镜像来源可信。
+上述命令要求使用支持提交命名的 GenDecoder 构建脚本：默认输出 `pharmcat-<version>-bilingual-zhcn-<commit前8位>.sif`，其中 commit 必须是实际构建的 PharmCAT 源提交，而不是分支名称。要发布默认分支的镜像，先将修改 PR 合并到本仓库默认分支 `chinese-translation`，再从该分支合并后的明确提交构建；不要把尚未合并的修复镜像标成旧默认分支提交。相同提交重新构建时更换 `SINGULARITY_IMAGE_DIR`，不覆盖已有镜像。已存在的基础 `pharmcat-3.4.0.sif` 会被复用，因此应确认基础镜像来源可信。
 
 在计算节点用公共/测试 VCF 分别生成英文和中文报告，确认版本一致、中文处方正文存在且结构化调用一致，再推广镜像。使用本版本支持的 CLI 参数（`java -jar ... -help`），不要以真实患者样本作为文档示例。版本输出本身不能证明翻译或临床报告正确。
 
