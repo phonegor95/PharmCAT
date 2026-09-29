@@ -16,7 +16,10 @@
 ```text
 guidelines[].recommendations[].text.html
 guidelines[].recommendations[].implications[]
+guidelines[].recommendations[].population
 ```
+
+Population 使用 `src/main/resources/org/pharmgkb/pharmcat/reporter/populations.zh-cn.json` 的精确英文→中文映射，并缓存到中文 guidance；null 保持不变。当前 v3.4.0 的 56 个非空标签均已覆盖。`apply.py` 自动应用映射，`verify.py` 检查覆盖、逐项对应和数字。新增标签必须补充映射；运行时无需翻译服务。GenDecoder 直接读取中文报告中已缓存的 Population，不需要运行时翻译服务。
 
 其他结构和字段必须与对应上游版本一致。不引入中文专用 Java、模板、匹配、表型推断或序列化逻辑。相邻的 `prescribing_guidance.v3.4.0.json` 是翻译工具的英文参考；真正的上游结构比较使用 Git tag 中的文件，不应通过修改检查器来掩盖差异。
 

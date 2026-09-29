@@ -3,8 +3,8 @@
 
 Takes upstream's untranslated file, substitutes Chinese into the two translated
 fields from the translation memory plus the filled-in work list, and applies the
-canonical terminology map. Everything outside those two fields is left exactly
-as upstream wrote it.
+canonical terminology map. Population labels use the separate exact EN→ZH cache. All other fields stay
+as upstream wrote them.
 
     src/scripts/translation/apply.py --tm tm.json --new /tmp/new.json --todo todo.json
 
@@ -32,6 +32,8 @@ def main():
     ap.add_argument('--reference-out', type=Path,
                     help='also write upstream\'s file here as the new English reference '
                          '(e.g. .../prescribing_guidance.v3.5.0.json)')
+    ap.add_argument('--population-map', type=Path, default=pgcore.POPULATIONS,
+                    help='cached English to Chinese population labels')
     ap.add_argument('--allow-partial', action='store_true',
                     help='write even if some strings are still untranslated')
     ap.add_argument('--no-terminology', action='store_true',
@@ -89,6 +91,7 @@ def main():
             for variant, n in counts.most_common():
                 print(f'  {n:>5}  {variant} -> {pgcore.CANONICAL[variant]}')
 
+    pgcore.apply_populations(data, pgcore.load(args.population_map))
     pgcore.dump(data, args.out)
     print(f'\nwrote {args.out}')
 

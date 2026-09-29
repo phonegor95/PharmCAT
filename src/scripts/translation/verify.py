@@ -3,7 +3,7 @@
 
 Checks, in order of how much damage each failure does:
 
-  structure    nothing outside text.html / implications differs from upstream
+  structure    nothing outside text.html / implications / population differs from upstream
   coverage     every field value that should be Chinese is Chinese
   entities     no HTML entity present in English is missing in Chinese
   tags         same tag multiset, same <br> count and spelling, balanced nesting
@@ -58,7 +58,7 @@ def structural_diff(a, b, path=''):
     return out
 
 
-TRANSLATED_PATH = re.compile(r'\.recommendations\[\d+\]\.(text\.html|implications\[\d+\])$')
+TRANSLATED_PATH = re.compile(r'\.recommendations\[\d+\]\.(text\.html|implications\[\d+\]|population)$')
 
 
 def check_structure(cn, upstream):
@@ -66,10 +66,10 @@ def check_structure(cn, upstream):
     stray = [d for d in diffs if not (d.endswith(': value differs')
                                       and TRANSLATED_PATH.search(d[:-len(': value differs')]))]
     if stray:
-        fail('structure', f'{len(stray)} difference(s) outside the two translated fields; '
+        fail('structure', f'{len(stray)} difference(s) outside the translated fields; '
                           f'first: {stray[0]}')
     else:
-        print(f'  structure   OK  ({len(diffs)} value diffs, all in text.html / implications)')
+        print(f'  structure   OK  ({len(diffs)} value diffs, all in text.html / implications / population)')
 
 
 def check_pairs(cn_data, en_data):
@@ -180,6 +180,29 @@ def check_terminology(cn_data):
         print(f'  terminology OK  ({len(pgcore.CANONICAL)} canonical terms enforced)')
 
 
+def check_populations(cn, en, mapping):
+    """Require exact cache coverage and alignment, preserving nulls and numbers."""
+    labels = {r['population'] for g in en['guidelines'] for r in g['recommendations']
+              if r.get('population') is not None}
+    if labels - set(mapping):
+        fail('population', 'missing cached labels: ' + str(sorted(labels - set(mapping))))
+    for label in labels & set(mapping):
+        value = mapping[label]
+        if not isinstance(value, str) or not pgcore.HAN.search(value):
+            fail('population', f'cached label is not Chinese: {label}')
+        elif collections.Counter(re.findall(r'\d+', label)) != collections.Counter(re.findall(r'\d+', value)):
+            fail('population', f'numbers changed in cached label: {label}')
+    for gi, eg in enumerate(en['guidelines']):
+        for ri, er in enumerate(eg['recommendations']):
+            cr = cn['guidelines'][gi]['recommendations'][ri]
+            label = er.get('population')
+            expected = None if label is None else mapping.get(label)
+            if cr.get('population') != expected:
+                fail('population', f'guideline {gi}, recommendation {ri}: population does not match cache')
+    if not any(kind == 'population' for kind, _ in FATAL):
+        print(f'  population  OK  ({len(labels)} cached labels; nulls preserved)')
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -215,6 +238,7 @@ def main():
     elif not tag:
         warn('structure', 'no upstream tag inferred — skipped the structural check')
 
+    check_populations(cn_data, en_data, pgcore.load(pgcore.POPULATIONS))
     check_pairs(cn_data, en_data)
     check_terminology(cn_data)
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Shared helpers for the prescribing_guidance.json translation workflow.
 
-Only two fields in prescribing_guidance.json are translated:
+Clinical prose is translated in these fields:
 
     guidelines[].recommendations[].text.html
     guidelines[].recommendations[].implications[]
 
-Everything else must stay byte-identical to upstream. Every tool in this
-directory relies on that invariant, and verify.py enforces it.
+Population labels are translated separately using the exact EN→ZH cache.
+All remaining fields must stay identical to upstream; verify.py enforces this.
 """
 import json
 import os
@@ -20,6 +20,7 @@ from pathlib import Path
 REPORTER_DIR = Path('src/main/resources/org/pharmgkb/pharmcat/reporter')
 GUIDANCE = REPORTER_DIR / 'prescribing_guidance.json'
 REFERENCE_GLOB = 'prescribing_guidance.v*.json'
+POPULATIONS = REPORTER_DIR / 'populations.zh-cn.json'
 
 HAN = re.compile(r'[一-鿿]')
 ENTITY = re.compile(r'&[a-zA-Z][a-zA-Z0-9]{1,8};|&#\d{1,6};|&#x[0-9a-fA-F]{1,6};')
@@ -261,3 +262,17 @@ def needs_translation(value):
     """
     body = re.sub(r'<[^>]*>', '', value).strip()
     return len(body) > 25
+
+
+def apply_populations(data, mapping):
+    """Translate exact population labels; preserve nulls and reject unknowns."""
+    labels = {r['population'] for g in data['guidelines'] for r in g['recommendations']
+              if r.get('population') is not None}
+    missing = labels - set(mapping)
+    if missing:
+        raise ValueError('Missing population translations: ' + ', '.join(sorted(missing)))
+    for guideline in data['guidelines']:
+        for recommendation in guideline['recommendations']:
+            value = recommendation.get('population')
+            if value is not None:
+                recommendation['population'] = mapping[value]
