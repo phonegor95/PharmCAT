@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-import importlib.util
-import json
 import sys
-import tempfile
 import unittest
 from pathlib import Path
 
@@ -10,8 +7,6 @@ ROOT = Path(__file__).resolve().parents[4]
 TOOLS = ROOT / "src" / "scripts" / "translation"
 sys.path.insert(0, str(TOOLS))
 
-import build_tm  # noqa: E402
-import html_align  # noqa: E402
 import pgcore  # noqa: E402
 import verify  # noqa: E402
 
@@ -30,43 +25,12 @@ def guidance(text, implication="GENE: 中文含义"):
 
 
 class PgcoreTest(unittest.TestCase):
-    def test_lookup_prefers_exact_then_normalized_markup(self):
-        exact, normalized = pgcore.build_lookup({"Dose &gt; 5": "剂量&gt;5"})
-        self.assertEqual(("剂量&gt;5", "exact"), pgcore.lookup(exact, normalized, "Dose &gt; 5"))
-        self.assertEqual(("剂量&gt;5", "normalized"), pgcore.lookup(exact, normalized, "Dose > 5"))
-
-    def test_translation_memory_reports_conflicting_source_strings(self):
-        en = guidance("same", "same")
-        cn = guidance("中文一", "中文二")
-        memory, conflicts = build_tm.build_from_data(en, cn)
-        self.assertEqual("中文一", memory["text"]["same"])
-        self.assertEqual("中文二", memory["impl"]["same"])
-        self.assertEqual([], conflicts)
-
-        en["guidelines"][0]["recommendations"].append({
-            "id": "r2", "text": {"html": "same"}, "implications": []})
-        cn["guidelines"][0]["recommendations"].append({
-            "id": "r2", "text": {"html": "不同翻译"}, "implications": []})
-        _memory, conflicts = build_tm.build_from_data(en, cn)
-        self.assertEqual(1, len(conflicts))
-
     def test_pair_rejects_structure_mismatch(self):
         en, cn = guidance("English"), guidance("中文")
         cn["guidelines"][0]["recommendations"][0]["implications"].append("extra")
         with self.assertRaises(SystemExit):
             list(pgcore.pair(en, cn))
 
-    def test_atomic_dump_round_trip(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "nested" / "data.json"
-            pgcore.dump({"中文": [1, 2]}, path)
-            self.assertEqual({"中文": [1, 2]}, pgcore.load(path))
-            self.assertFalse(path.read_bytes().endswith(b"\n"))
-
-    def test_html_alignment_never_changes_text(self):
-        source = "中文≤值<br />\n</li>"
-        expected_markup = "English &le; value<br/>\n</li>"
-        self.assertEqual("中文&le;值<br/>\n</li>", html_align.align(source, expected_markup))
 
 
 class VerifyTest(unittest.TestCase):
@@ -106,41 +70,51 @@ class PopulationTranslationTest(unittest.TestCase):
         verify.FATAL.clear()
         verify.WARN.clear()
 
-    def test_cached_mapping_covers_reference_and_guidance(self):
+    def test_all_population_labels_in_guidance_are_translated(self):
         reporter = ROOT / pgcore.REPORTER_DIR
         en = pgcore.load(reporter / 'prescribing_guidance.v3.4.0.json')
         cn = pgcore.load(reporter / 'prescribing_guidance.json')
-        mapping = pgcore.load(reporter / 'populations.zh-cn.json')
-        labels = {r['population'] for g in en['guidelines'] for r in g['recommendations']
-                  if r.get('population') is not None}
-        self.assertEqual(set(mapping), labels)
-        verify.check_populations(cn, en, mapping)
+        verify.check_populations(cn, en)
         self.assertEqual([], verify.FATAL)
 
-    def test_apply_preserves_null_and_refuses_unknown_before_mutation(self):
-        data = guidance('English')
-        rec = data['guidelines'][0]['recommendations'][0]
-        rec['population'] = None
-        pgcore.apply_populations(data, {'adults': '成人'})
-        self.assertIsNone(rec['population'])
-        rec['population'] = 'new population'
-        with self.assertRaisesRegex(ValueError, 'Missing population translations'):
-            pgcore.apply_populations(data, {'adults': '成人'})
-        self.assertEqual('new population', rec['population'])
-        rec['population'] = 'adults'
-        pgcore.apply_populations(data, {'adults': '成人'})
-        self.assertEqual('成人', rec['population'])
-
-    def test_wrong_population_or_threshold_fails_validation(self):
-        import copy
-        en = guidance('English')
-        en['guidelines'][0]['recommendations'][0]['population'] = 'child >40kg_adult'
-        cn = copy.deepcopy(en)
-        cn['guidelines'][0]['recommendations'][0]['population'] = '体重 >50 kg 的儿童及成人'
-        verify.check_populations(cn, en, {'child >40kg_adult': '体重 >50 kg 的儿童及成人'})
+    def test_null_population_is_preserved(self):
+        en, cn = guidance('English'), guidance('中文')
+        for data in (en, cn):
+            data['guidelines'][0]['recommendations'][0]['population'] = None
+        verify.check_populations(cn, en)
+        self.assertEqual([], verify.FATAL)
+        cn['guidelines'][0]['recommendations'][0]['population'] = '一般人群'
+        verify.check_populations(cn, en)
         self.assertTrue(any(kind == 'population' for kind, _ in verify.FATAL))
-        verify.FATAL.clear()
-        verify.check_populations(cn, en, {'child >40kg_adult': '体重 >40 kg 的儿童及成人'})
+
+    def test_population_threshold_is_preserved(self):
+        en, cn = guidance('English'), guidance('中文')
+        en['guidelines'][0]['recommendations'][0]['population'] = 'child >40kg_adult'
+        rec = cn['guidelines'][0]['recommendations'][0]
+        rec['population'] = '体重 >40 kg 的儿童及成人'
+        verify.check_populations(cn, en)
+        self.assertEqual([], verify.FATAL)
+        rec['population'] = '体重 >50 kg 的儿童及成人'
+        verify.check_populations(cn, en)
+        self.assertTrue(any(kind == 'population' for kind, _ in verify.FATAL))
+
+    def test_untranslated_population_is_rejected(self):
+        en, cn = guidance('English'), guidance('中文')
+        for data in (en, cn):
+            data['guidelines'][0]['recommendations'][0]['population'] = 'adults'
+        verify.check_populations(cn, en)
+        self.assertTrue(any(kind == 'population' for kind, _ in verify.FATAL))
+
+    def test_inconsistent_translation_is_rejected(self):
+        import copy
+        en, cn = guidance('English'), guidance('中文')
+        en['guidelines'][0]['recommendations'][0]['population'] = 'adults'
+        cn['guidelines'][0]['recommendations'][0]['population'] = '成人'
+        for data in (en, cn):
+            rows = data['guidelines'][0]['recommendations']
+            rows.append(copy.deepcopy(rows[0]))
+        cn['guidelines'][0]['recommendations'][1]['population'] = '儿童'
+        verify.check_populations(cn, en)
         self.assertTrue(any(kind == 'population' for kind, _ in verify.FATAL))
 
 

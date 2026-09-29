@@ -180,27 +180,28 @@ def check_terminology(cn_data):
         print(f'  terminology OK  ({len(pgcore.CANONICAL)} canonical terms enforced)')
 
 
-def check_populations(cn, en, mapping):
-    """Require exact cache coverage and alignment, preserving nulls and numbers."""
-    labels = {r['population'] for g in en['guidelines'] for r in g['recommendations']
-              if r.get('population') is not None}
-    if labels - set(mapping):
-        fail('population', 'missing cached labels: ' + str(sorted(labels - set(mapping))))
-    for label in labels & set(mapping):
-        value = mapping[label]
-        if not isinstance(value, str) or not pgcore.HAN.search(value):
-            fail('population', f'cached label is not Chinese: {label}')
-        elif collections.Counter(re.findall(r'\d+', label)) != collections.Counter(re.findall(r'\d+', value)):
-            fail('population', f'numbers changed in cached label: {label}')
+def check_populations(cn, en):
+    """Validate labels directly, without maintaining a duplicate mapping file."""
+    translations = {}
     for gi, eg in enumerate(en['guidelines']):
         for ri, er in enumerate(eg['recommendations']):
-            cr = cn['guidelines'][gi]['recommendations'][ri]
+            value = cn['guidelines'][gi]['recommendations'][ri].get('population')
             label = er.get('population')
-            expected = None if label is None else mapping.get(label)
-            if cr.get('population') != expected:
-                fail('population', f'guideline {gi}, recommendation {ri}: population does not match cache')
+            location = f'guideline {gi}, recommendation {ri}'
+            if label is None:
+                if value is not None:
+                    fail('population', f'{location}: null population was changed')
+                continue
+            if not isinstance(value, str) or not pgcore.HAN.search(value):
+                fail('population', f'{location}: population is not Chinese')
+                continue
+            if collections.Counter(re.findall(r'\d+', label)) != collections.Counter(re.findall(r'\d+', value)):
+                fail('population', f'{location}: population numbers changed')
+            if label in translations and translations[label] != value:
+                fail('population', f'{location}: inconsistent translation for {label}')
+            translations[label] = value
     if not any(kind == 'population' for kind, _ in FATAL):
-        print(f'  population  OK  ({len(labels)} cached labels; nulls preserved)')
+        print(f'  population  OK  ({len(translations)} translated labels; nulls preserved)')
 
 
 def main():
@@ -238,7 +239,7 @@ def main():
     elif not tag:
         warn('structure', 'no upstream tag inferred — skipped the structural check')
 
-    check_populations(cn_data, en_data, pgcore.load(pgcore.POPULATIONS))
+    check_populations(cn_data, en_data)
     check_pairs(cn_data, en_data)
     check_terminology(cn_data)
 

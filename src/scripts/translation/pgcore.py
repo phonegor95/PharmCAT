@@ -6,13 +6,12 @@ Clinical prose is translated in these fields:
     guidelines[].recommendations[].text.html
     guidelines[].recommendations[].implications[]
 
-Population labels are translated separately using the exact EN→ZH cache.
+Population labels are stored directly in the Chinese guidance and checked
+against the paired English reference.
 All remaining fields must stay identical to upstream; verify.py enforces this.
 """
 import json
-import os
 import re
-import tempfile
 from pathlib import Path
 
 # The active (translated) data file and the untranslated English reference that
@@ -20,7 +19,6 @@ from pathlib import Path
 REPORTER_DIR = Path('src/main/resources/org/pharmgkb/pharmcat/reporter')
 GUIDANCE = REPORTER_DIR / 'prescribing_guidance.json'
 REFERENCE_GLOB = 'prescribing_guidance.v*.json'
-POPULATIONS = REPORTER_DIR / 'populations.zh-cn.json'
 
 HAN = re.compile(r'[一-鿿]')
 ENTITY = re.compile(r'&[a-zA-Z][a-zA-Z0-9]{1,8};|&#\d{1,6};|&#x[0-9a-fA-F]{1,6};')
@@ -128,25 +126,6 @@ def load(path):
         return json.load(fh)
 
 
-def dump(data, path):
-    """Atomically write with upstream's formatting and no final newline."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fd, temporary = tempfile.mkstemp(prefix=f'.{path.name}.', dir=path.parent)
-    try:
-        with os.fdopen(fd, 'w', encoding='utf-8') as fh:
-            fh.write(json.dumps(data, indent=2, ensure_ascii=False))
-            fh.flush()
-            os.fsync(fh.fileno())
-        os.replace(temporary, path)
-    except BaseException:
-        try:
-            os.unlink(temporary)
-        except FileNotFoundError:
-            pass
-        raise
-
-
 def iter_fields(data):
     """Yield (guideline_idx, rec_idx, kind, sub_idx, value) for translated fields.
 
@@ -159,14 +138,6 @@ def iter_fields(data):
                 yield gi, ri, 'text', None, html
             for si, imp in enumerate(r.get('implications') or []):
                 yield gi, ri, 'impl', si, imp
-
-
-def set_field(data, gi, ri, kind, si, value):
-    r = data['guidelines'][gi]['recommendations'][ri]
-    if kind == 'text':
-        r['text']['html'] = value
-    else:
-        r['implications'][si] = value
 
 
 def pair(en_data, cn_data):
@@ -212,49 +183,6 @@ def unescaped(text):
     return {ch: stripped.count(ch) for ch in '<>&' if stripped.count(ch)}
 
 
-#: Markup spellings that mean the same thing. Used only for fallback matching,
-#: never to rewrite data.
-_EQUIVALENT = [
-    ('&quot;', '"'), ('&gt;', '>'), ('&lt;', '<'), ('&amp;', '&'),
-    ('&ge;', '≥'), ('&le;', '≤'), ('&nbsp;', ' '),
-    ('>=', '≥'), ('<=', '≤'), ('<br/>', '<br />'),
-]
-
-
-def match_key(text):
-    """A markup-insensitive key for translation-memory lookup.
-
-    Exact matching is tried first everywhere; this is the fallback. It exists
-    because the English reference in this repo has had a few unescaped
-    characters corrected (raw '>' -> '&gt;', 'Grade >=2' -> 'Grade ≥2'), so its
-    strings are no longer byte-identical to upstream's. Without this, a merge
-    would treat those already-translated strings as new work.
-    """
-    key = text
-    for entity, literal in _EQUIVALENT:
-        key = key.replace(entity, literal)
-    return re.sub(r'\s+', ' ', key).strip()
-
-
-def build_lookup(tm_bucket):
-    """Return (exact, normalized) dicts for a translation-memory bucket."""
-    exact = dict(tm_bucket)
-    norm = {}
-    for en, cn in tm_bucket.items():
-        norm.setdefault(match_key(en), cn)
-    return exact, norm
-
-
-def lookup(exact, norm, value):
-    """Exact match first, then markup-insensitive. Returns (cn, how) or (None, None)."""
-    if value in exact:
-        return exact[value], 'exact'
-    key = match_key(value)
-    if key in norm:
-        return norm[key], 'normalized'
-    return None, None
-
-
 def needs_translation(value):
     """True when a field value should contain Chinese.
 
@@ -262,17 +190,3 @@ def needs_translation(value):
     """
     body = re.sub(r'<[^>]*>', '', value).strip()
     return len(body) > 25
-
-
-def apply_populations(data, mapping):
-    """Translate exact population labels; preserve nulls and reject unknowns."""
-    labels = {r['population'] for g in data['guidelines'] for r in g['recommendations']
-              if r.get('population') is not None}
-    missing = labels - set(mapping)
-    if missing:
-        raise ValueError('Missing population translations: ' + ', '.join(sorted(missing)))
-    for guideline in data['guidelines']:
-        for recommendation in guideline['recommendations']:
-            value = recommendation.get('population')
-            if value is not None:
-                recommendation['population'] = mapping[value]

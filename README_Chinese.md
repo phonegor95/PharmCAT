@@ -19,7 +19,7 @@ guidelines[].recommendations[].implications[]
 guidelines[].recommendations[].population
 ```
 
-Population 使用 `src/main/resources/org/pharmgkb/pharmcat/reporter/populations.zh-cn.json` 的精确英文→中文映射，并缓存到中文 guidance；null 保持不变。当前 v3.4.0 的 56 个非空标签均已覆盖。`apply.py` 自动应用映射，`verify.py` 检查覆盖、逐项对应和数字。新增标签必须补充映射；运行时无需翻译服务。GenDecoder 直接读取中文报告中已缓存的 Population，不需要运行时翻译服务。
+Population 直接保存在中文 `prescribing_guidance.json` 中；null 保持不变。当前 v3.4.0 的 56 个非空标签均已翻译。`verify.py` 直接对照英文参考检查覆盖、数字、null 值及相同标签的翻译一致性。GenDecoder 从中文报告读取 Population，无需独立映射文件或运行时翻译服务。
 
 其他结构和字段必须与对应上游版本一致。不引入中文专用 Java、模板、匹配、表型推断或序列化逻辑。相邻的 `prescribing_guidance.v3.4.0.json` 是翻译工具的英文参考；真正的上游结构比较使用 Git tag 中的文件，不应通过修改检查器来掩盖差异。
 
@@ -48,13 +48,7 @@ python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
 
 必须看到 `structure OK`，不能只看退出码：缺少 Git tag 或在错误仓库运行会导致结构检查被跳过。检查覆盖率、HTML 实体/标签/嵌套、数字、剂量、标识符和规范术语。自动检查不等于临床正确性验证。
 
-生成本地审校页：
-
-```bash
-python3 src/scripts/translation/make_review.py --all -o /path/to/scratch/pharmcat-zh-cn-review.html
-```
-
-由临床医生或药师审阅新增或实质变化的临床文本；机械 HTML 对齐不能替代审阅。不要提交 JAR、SIF、审校 HTML、翻译记忆或临时工作文件。
+新增或实质变化的临床文本应逐项对照英文审阅。不要提交 JAR、SIF 或临时工作文件。
 
 ## 构建 pharmcat-3.4.0-bilingual.sif
 
@@ -113,14 +107,15 @@ done
 )
 bash "$GENDECODER/bin/build_pharmcat_image.sh" 3.4.0 "$FORK"
 
-IMAGE="$SINGULARITY_IMAGE_DIR/pharmcat-3.4.0-bilingual.sif"
+SOURCE_COMMIT=$(git -C "$FORK" rev-parse --short=8 HEAD)
+IMAGE="$SINGULARITY_IMAGE_DIR/pharmcat-3.4.0-bilingual-zhcn-$SOURCE_COMMIT.sif"
 singularity exec "$IMAGE" java -jar /pharmcat/pharmcat.jar -version
 singularity exec "$IMAGE" java -jar /pharmcat/pharmcat-zh-cn.jar -version
 singularity inspect --labels "$IMAGE"
 sha256sum "$IMAGE" > "$IMAGE.sha256"
 ```
 
-主线脚本只接受版本和 fork 路径两个参数；不要依赖其他未合并分支的第三个 suffix 参数。重建相同版本时更换 `SINGULARITY_IMAGE_DIR`。已存在的基础 `pharmcat-3.4.0.sif` 会被复用，因此应确认基础镜像来源可信。
+镜像文件名记录源提交。重建相同版本时使用新的输出路径；不要覆盖正在使用的镜像。已存在的基础 `pharmcat-3.4.0.sif` 会被复用，因此应确认基础镜像来源可信。
 
 在计算节点用公共/测试 VCF 分别生成英文和中文报告，确认版本一致、中文处方正文存在且结构化调用一致，再推广镜像。使用本版本支持的 CLI 参数（`java -jar ... -help`），不要以真实患者样本作为文档示例。版本输出本身不能证明翻译或临床报告正确。
 
@@ -128,53 +123,10 @@ sha256sum "$IMAGE" > "$IMAGE.sha256"
 
 ## 升级上游版本
 
-以下以将来 `v3.5.0` 为例，不表示该版本已翻译。先建立翻译记忆，再合并；不要尝试 stash 未解决的合并冲突。
+获取对应上游 tag，在合并时保留匹配的英文参考。直接编辑中文 guidance 中的三个翻译字段，保持其他字段与上游一致。更新英文参考文件名后运行 `verify.py --upstream-tag <tag>`、Python 验证测试以及 Gradle 构建。人工审阅语义变化后，用新版本和提交命名的新镜像发布。
 
-```bash
-# 在干净的 PharmCAT checkout 中执行，SCRATCH 必须指向可写目录。
-SCRATCH=/path/to/scratch/pharmcat-upgrade
-mkdir -p "$SCRATCH"
-python3 src/scripts/translation/build_tm.py -o "$SCRATCH/tm.json"
-git fetch upstream --tags
-git show v3.5.0:src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.json > "$SCRATCH/new.json"
-python3 src/scripts/translation/plan_merge.py --tm "$SCRATCH/tm.json" --new "$SCRATCH/new.json" -o "$SCRATCH/todo.json"
-git merge v3.5.0
-```
+英文参考历史上修正过少量转义字符；结构检查仍以上游 tag 为准。HTML 实体、标签、剂量、变异和人群限制必须完整保留。已知上游页脚例外由 `pgcore.UPSTREAM_ARTIFACTS` 明确记录，不应削弱一般检查。
 
-合并 guidance 冲突是预期情况。暂停并检查其他冲突，不手工文本合并大型 guidance JSON。根据英文和最近似的中文逐项填写 `todo.json` 中的 `cn`，然后生成结果：
+## 验证工具
 
-```bash
-python3 src/scripts/translation/apply.py \
-    --tm "$SCRATCH/tm.json" --new "$SCRATCH/new.json" --todo "$SCRATCH/todo.json" \
-    --reference-out src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.v3.5.0.json
-git rm src/main/resources/org/pharmgkb/pharmcat/reporter/prescribing_guidance.v3.4.0.json
-python3 src/scripts/translation/html_align.py --write
-python3 src/scripts/translation/verify.py --upstream-tag v3.5.0
-python3 -m unittest discover -s src/test/python/translation -p 'test_*.py' -v
-python3 src/scripts/translation/make_review.py --base-rev v3.4.0 -o "$SCRATCH/review.html"
-./gradlew test shadowJar
-```
-
-确认新英文参考被工具正确选择，解决其余冲突，审阅并完成合并；再按上一节用新版本号和新输出目录构建镜像。翻译记忆优先精确匹配，其次进行 markup 规范化匹配，不要把旧翻译覆盖到语义已经变化的上游文本上。
-
-### 已知陷阱
-
-- v3.2.0 上游删除了旧 `Other Considerations` 内容，不应在翻译中自行恢复。
-- 英文参考历史上修正过少量转义字符，不一定逐字等于 tag 原文。结构比较以 tag 为准，复用匹配由 `pgcore.match_key()` 处理。
-- `&quot;` 可能标记 FDA/EMA 标签的原文引用，不能为了通过检查而随意删除；引用范围需要人工判断。
-- 上游抓取的页脚垃圾由 `pgcore.UPSTREAM_ARTIFACTS` 明确豁免；新增豁免必须有理由，不要削弱一般检查。
-- 审校范围包括此次改动的旧翻译，而不只是新增字符串。自动生成的审阅意见也需要对照真实英文核实。
-
-## 翻译工具速查
-
-工具均在 `src/scripts/translation/`，参数以各自 `--help` 为准。
-
-| 工具 | 用途 |
-|---|---|
-| `pgcore.py` | 结构比较、规范术语、已知上游例外 |
-| `build_tm.py` | 从当前英中数据构建翻译记忆 |
-| `plan_merge.py` | 计算新版本复用覆盖率和待翻译内容 |
-| `apply.py` | 应用记忆和新翻译，生成 guidance/英文参考 |
-| `html_align.py` | HTML 的机械对齐，不替代临床审校 |
-| `verify.py` | 结构、覆盖、实体、标签、数字和术语门禁 |
-| `make_review.py` | 本地英中并排审校页 |
+`src/scripts/translation/verify.py` 是构建和 CI 的验证入口，`pgcore.py` 提供共享规则和参考读取功能。中文 guidance 本身是翻译结果的唯一来源。
