@@ -70,6 +70,7 @@ python3 src/scripts/translation/make_review.py --all -o /path/to/scratch/pharmca
 
 - 已授权访问 GenDecoder，并准备好两个仓库的明确提交及 PharmCAT 的 `v3.4.0` tag。
 - Java 17、Python 3、Git、可用的 Gradle wrapper/依赖，以及支持 `--fakeroot` 的 Singularity。
+- 构建版本由可达的 `v*` 发布 tag 推导；例如 `v3.4.0` 之后的 fork 提交生成 `3.4.0-<提交数>-g<提交>`。缺少 tag 时构建会失败，不再生成 `0.0.0`。先获取匹配的上游 tag 及历史，再重建 JAR 和新命名的 SIF；不要修改已有镜像的 manifest。
 - 有足够空间且适合 Singularity sandbox 提取的**本地 scratch**。此部署 `/mnt/SA127` 是 `nodev`，不能拿它做 sandbox 临时目录；不要默认 `/tmp` 足够大。
 - 在已分配的 SLURM **计算节点**上执行以下构建和 Singularity 验证，不在登录节点执行。按站点配置申请资源。
 - 首次预置 Gradle 依赖和基础镜像可能需要联网；离线生产运行前必须完成缓存。

@@ -10,14 +10,14 @@ def getDevVersionName() {
   try {
     def output = providers.exec {
       executable 'git'
-      args = ['describe', '--tags']
+      args = ['describe', '--tags', '--match', 'v[0-9]*']
     }.standardOutput.asText.get().trim()
     // strip of leading "v"
     return output.substring(1)
-  } catch (ignore) {
-    println(ignore)
-    logger.info('Error running git describe (' + ignore + '), defaulting to 0.0.0')
-    return '0.0.0'
+  } catch (Exception error) {
+    throw new GradleException(
+        'Cannot determine the PharmCAT version from Git release tags. ' +
+        'Fetch the matching upstream release tag and its history before building.', error)
   }
 }
 
@@ -25,14 +25,14 @@ def getVersionName() {
   try {
     def output = providers.exec {
       executable 'git'
-      args = ['describe', '--tags', '--abbrev=0']
+      args = ['describe', '--tags', '--match', 'v[0-9]*', '--abbrev=0']
     }.standardOutput.asText.get().trim()
     // strip of leading "v"
     output = output.substring(1)
-  } catch (ignore) {
-    println(ignore)
-    logger.info('Error running git describe (' + ignore + '), defaulting to 0.0.0')
-    return '0.0.0'
+  } catch (Exception error) {
+    throw new GradleException(
+        'Cannot determine the PharmCAT version from Git release tags. ' +
+        'Fetch the matching upstream release tag and its history before building.', error)
   }
 }
 
