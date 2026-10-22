@@ -1,9 +1,7 @@
 name: PharmCAT CI
 
 on:
-  workflow_dispatch:
-    branches:
-      - '*'
+  workflow_dispatch: {}
   push:
     branches:
       - '**'
@@ -24,12 +22,18 @@ jobs:
   build:
     name: Build project
     runs-on: ubuntu-latest
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Fetch upstream release tags
+        # Forks may not contain the tags needed for versioning and translation validation.
+        run: git fetch --no-tags https://github.com/PharmGKB/PharmCAT.git 'refs/tags/v*:refs/tags/v*'
 
       - name: Set up JDK
         uses: actions/setup-java@v5
@@ -86,7 +90,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Send Slack notification on failure
-        if: failure()
+        if: failure() && env.SLACK_BOT_TOKEN != ''
         uses: slackapi/slack-github-action@v1
         with:
           channel-id: 'dev'
@@ -121,5 +125,3 @@ jobs:
                 ]
             }]
             }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
