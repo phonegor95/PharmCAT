@@ -21,17 +21,8 @@ class CliUtilsTest {
     String version = StringUtils.stripToNull(CliUtils.getVersion());
     assertNotNull(version);
     System.out.println("Version: [" + version + "]");
-    String githubAction = System.getenv("GITHUB_ACTION");
-    if (githubAction != null) {
-      System.out.println("GITHUB_EVENT_NAME: " + System.getenv("GITHUB_EVENT_NAME"));
-      if ("published".equalsIgnoreCase(System.getenv("GITHUB_EVENT_NAME"))) {
-        assertTrue(sf_versionPattern.matcher(version).matches());
-      } else {
-        // when running via GH Actions, won't get anything get via git on push event
-        assertEquals("development", version);
-      }
-    } else {
-      assertTrue(sf_versionPattern.matcher(version).matches());
-    }
+    // Builds require a reachable release tag, including GitHub Actions checkouts.
+    assertTrue(sf_versionPattern.matcher(version).matches(),
+        "Expected a release-tagged version but got: " + version);
   }
 }
