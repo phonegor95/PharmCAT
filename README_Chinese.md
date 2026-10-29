@@ -21,6 +21,15 @@ guidelines[].recommendations[].population
 
 Population 直接保存在中文 `prescribing_guidance.json` 中；null 保持不变。当前 v3.4.0 的 56 个非空标签均已翻译。`verify.py` 直接对照英文参考检查覆盖、数字、null 值及相同标签的翻译一致性。GenDecoder 从中文报告读取 Population，无需独立映射文件或运行时翻译服务。
 
+维护 Population 时使用 GenDecoder 的 `assets/delivery_locale_catalog/data/pgx_population_translations.json` 预设；`general` 译为“一般人群”，只有 `-` 不翻译。以下命令按原生指南/建议 ID 同步，仅修改 population，保留 null 及所有其他字段。省略 `--apply` 为只读一致性检查；缺少、多余或重复标签会报错。
+
+```bash
+python3 -I src/scripts/translation/sync_populations.py \
+  --preset /path/to/GenDecoder/assets/delivery_locale_catalog/data/pgx_population_translations.json --apply
+python3 -I src/scripts/translation/sync_populations.py \
+  --preset /path/to/GenDecoder/assets/delivery_locale_catalog/data/pgx_population_translations.json
+```
+
 其他结构和字段必须与对应上游版本一致。不引入中文专用 Java、模板、匹配、表型推断或序列化逻辑。相邻的 `prescribing_guidance.v3.4.0.json` 是翻译工具的英文参考；真正的上游结构比较使用 Git tag 中的文件，不应通过修改检查器来掩盖差异。
 
 药物名称、基因型、表型、来源和建议等级等结构化字段保持英文，由 GenDecoder 的 `assets/pharmcat/data/zh-cn/*.json` 在提取 CSV 时翻译。`recommendation.json` 是建议等级词典，不是临床处方正文。修改术语时同步检查这些词典和 `src/scripts/translation/pgcore.py` 中的规范；当前 GenDecoder main 没有可供调用的独立跨层校验器，不应把它写成已存在的发布门禁。
